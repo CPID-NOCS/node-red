@@ -1712,7 +1712,8 @@
         "y": 640,
         "wires": [
             [
-                "519a6c42b226c872"
+                "519a6c42b226c872",
+                "f35a0dda2732daa5"
             ]
         ]
     },
@@ -6406,11 +6407,13 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 650,
+        "x": 730,
         "y": 3060,
         "wires": [
             [
-                "65b1709158ba9c72"
+                "65b1709158ba9c72",
+                "26413c8835c6a562",
+                "c87965835d504c35"
             ]
         ]
     },
@@ -6726,7 +6729,7 @@
         "links": [
             "ab6fdac04d704410"
         ],
-        "x": 995,
+        "x": 1165,
         "y": 3060,
         "wires": []
     },
@@ -6744,7 +6747,9 @@
         "x": 115,
         "y": 3120,
         "wires": [
-            []
+            [
+                "d10821c7a4a2fcaa"
+            ]
         ]
     },
     {
@@ -6862,15 +6867,22 @@
         "propertyType": "msg",
         "rules": [
             {
+                "t": "nempty"
+            },
+            {
                 "t": "empty"
             }
         ],
         "checkall": "true",
         "repair": false,
-        "outputs": 1,
+        "outputs": 2,
         "x": 890,
         "y": 3120,
         "wires": [
+            [
+                "65b1709158ba9c72",
+                "47b620bf5dcc9741"
+            ],
             [
                 "8dca163139f1046b"
             ]
@@ -6953,7 +6965,7 @@
         "type": "debug",
         "z": "e8287d7944e724f7",
         "name": "debug 30",
-        "active": false,
+        "active": true,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -6961,7 +6973,7 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1080,
+        "x": 1260,
         "y": 3040,
         "wires": []
     },
@@ -6970,7 +6982,7 @@
         "type": "debug",
         "z": "e8287d7944e724f7",
         "name": "debug 31",
-        "active": false,
+        "active": true,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -6978,7 +6990,7 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1080,
+        "x": 1260,
         "y": 3080,
         "wires": []
     },
@@ -7010,40 +7022,16 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 870,
+        "x": 1040,
         "y": 3060,
         "wires": [
             [
-                "c11b755ce7f344e3",
-                "26413c8835c6a562",
-                "c87965835d504c35"
+                "c11b755ce7f344e3"
             ]
         ]
     },
     {
-        "id": "0ace7a545cc23d1c",
-        "type": "exec",
-        "z": "e8287d7944e724f7",
-        "command": "sudo su && sudo ls",
-        "addpay": "",
-        "append": "",
-        "useSpawn": "false",
-        "timer": "",
-        "winHide": false,
-        "oldrc": false,
-        "name": "",
-        "x": 410,
-        "y": 3640,
-        "wires": [
-            [
-                "8e4e45d7bae52836"
-            ],
-            [],
-            []
-        ]
-    },
-    {
-        "id": "8e4e45d7bae52836",
+        "id": "47b620bf5dcc9741",
         "type": "debug",
         "z": "e8287d7944e724f7",
         "name": "debug 33",
@@ -7051,41 +7039,13 @@
         "tosidebar": true,
         "console": false,
         "tostatus": false,
-        "complete": "false",
+        "complete": "last_update_id",
+        "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 620,
-        "y": 3640,
+        "x": 1000,
+        "y": 3220,
         "wires": []
-    },
-    {
-        "id": "755a177ede909f96",
-        "type": "inject",
-        "z": "e8287d7944e724f7",
-        "name": "",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 220,
-        "y": 3640,
-        "wires": [
-            [
-                "0ace7a545cc23d1c"
-            ]
-        ]
     },
     {
         "id": "b07115169e0aa838",
