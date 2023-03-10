@@ -1678,7 +1678,7 @@
         "name": "Inserção",
         "info": "",
         "x": 100,
-        "y": 440,
+        "y": 500,
         "wires": []
     },
     {
@@ -1690,7 +1690,7 @@
             "bf124cdbf4ec0574"
         ],
         "x": 75,
-        "y": 500,
+        "y": 560,
         "wires": [
             [
                 "09b3e2ad263f23bd"
@@ -1709,7 +1709,7 @@
         "finalize": "",
         "libs": [],
         "x": 530,
-        "y": 640,
+        "y": 700,
         "wires": [
             [
                 "519a6c42b226c872",
@@ -1734,7 +1734,7 @@
         "limit_drop_if_in_queue": false,
         "outputs": false,
         "x": 690,
-        "y": 600,
+        "y": 660,
         "wires": []
     },
     {
@@ -1750,7 +1750,7 @@
             "6b04c5d9851047ec"
         ],
         "x": 75,
-        "y": 640,
+        "y": 700,
         "wires": [
             [
                 "09054622441f5068"
@@ -1768,7 +1768,7 @@
             "adb4771166d6ab3d"
         ],
         "x": 775,
-        "y": 500,
+        "y": 560,
         "wires": []
     },
     {
@@ -1781,7 +1781,7 @@
         "split": false,
         "rowsPerMsg": 1,
         "outputs": 1,
-        "x": 370,
+        "x": 630,
         "y": 100,
         "wires": [
             [
@@ -1794,17 +1794,20 @@
         "type": "function",
         "z": "e8287d7944e724f7",
         "name": "Verifica Cadastro no banco",
-        "func": "var msg2 = {}\nif (typeof msg.payload[0] != 'undefined'){\n    msg2.payload = msg.temp\n    return msg2;\n}",
-        "outputs": 1,
+        "func": "var msg2 = {}\nif (typeof msg.payload[0] != 'undefined'){\n    msg2.payload = msg.temp\n    return [msg2, null];\n}\nreturn [null, msg2];",
+        "outputs": 2,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 600,
+        "x": 860,
         "y": 100,
         "wires": [
             [
                 "deff96f79e54b357"
+            ],
+            [
+                "02eeddee083c7123"
             ]
         ]
     },
@@ -1828,8 +1831,8 @@
             "0d8da4b0b2f580aa",
             "a1fb4b81c744e5fb"
         ],
-        "x": 775,
-        "y": 100,
+        "x": 1035,
+        "y": 80,
         "wires": []
     },
     {
@@ -1855,7 +1858,7 @@
         "name": "Parametros do postgres",
         "info": "",
         "x": 140,
-        "y": 580,
+        "y": 640,
         "wires": []
     },
     {
@@ -1913,7 +1916,7 @@
         "repair": false,
         "outputs": 3,
         "x": 370,
-        "y": 500,
+        "y": 560,
         "wires": [
             [
                 "4680b8f0318a2a42"
@@ -1922,8 +1925,7 @@
                 "74e49b95733b6991"
             ],
             [
-                "6d107b568d4b8339",
-                "6efe5ab7e3abe651"
+                "6d107b568d4b8339"
             ]
         ]
     },
@@ -1939,7 +1941,7 @@
         "template": "INSERT INTO public.organic_nodes_control_measurement(\n\tdate_time_stamp,\tmessage_counter,\tsetup_id,\tsource)\n\tVALUES ('{{payload.date_time_stamp}}', {{payload.message_counter}}, (SELECT id FROM public.organic_nodes_control_setup WHERE (device_id = (SELECT device_id FROM public.organic_nodes_control_mqttdevice WHERE (mqtt_access_id = (SELECT id FROM public.organic_nodes_control_mqttaccess WHERE (mqtt_id = '{{payload.id}}')))))), 0);\n\nINSERT INTO public.organic_nodes_control_frequencymeasure(\n\tfrequency,\tfrequency_sf,\tmeasurement_id)\n\tVALUES ({{payload.frequency}}, {{payload.frequency_sf}}, (SELECT id FROM public.organic_nodes_control_measurement WHERE (message_counter = {{payload.message_counter}} AND date_time_stamp = '{{payload.date_time_stamp}}') LIMIT 1));\n\nINSERT INTO public.organic_nodes_control_sensormeasure(\n\ttemperature,\ttemperature_sf,\tmeasurement_id)\n\tVALUES ({{payload.temperature}}, {{payload.temperature_sf}}, (SELECT id FROM public.organic_nodes_control_measurement WHERE (message_counter = {{payload.message_counter}} AND date_time_stamp = '{{payload.date_time_stamp}}') LIMIT 1));\n\t\nINSERT INTO public.organic_nodes_control_energymeasure(\n\tphase, current, current_sf, voltage, voltage_sf, measurement_id)\n\tVALUES ('{{payload.phase_A}}', {{payload.current_A}},{{payload.current_A_sf}},{{payload.voltage_A}},{{payload.voltage_A_sf}}, (SELECT id FROM public.organic_nodes_control_measurement WHERE (message_counter = {{payload.message_counter}} AND date_time_stamp = '{{payload.date_time_stamp}}') LIMIT 1));\n\nINSERT INTO public.organic_nodes_control_powermeasure(\n\tphase, voltage_current_angle, voltage_current_angle_sf,\tpower_factor,\tactive_power,\tactive_power_sf,\treactive_power,\treactive_power_sf,\tapparent_power,\tapparent_power_sf\t, measurement_id)\n\tVALUES ('{{payload.phase_A}}', {{payload.voltage_current_angle_A}},{{payload.voltage_current_angle_A_sf}},{{payload.power_factor_A}},{{payload.active_power_A}}, {{payload.active_power_A_sf}}, {{payload.reactive_power_A}}, {{payload.reactive_power_A_sf}}, {{payload.apparent_power_A}}, {{payload.apparent_power_A_sf}}, (SELECT id FROM public.organic_nodes_control_measurement WHERE (message_counter = {{payload.message_counter}} AND date_time_stamp = '{{payload.date_time_stamp}}') LIMIT 1));\n",
         "output": "str",
         "x": 610,
-        "y": 460,
+        "y": 520,
         "wires": [
             [
                 "52915c65d06f0b9e"
@@ -1957,7 +1959,7 @@
         "rowsPerMsg": 1,
         "outputs": 1,
         "x": 630,
-        "y": 240,
+        "y": 300,
         "wires": [
             [
                 "c992aecb58b60c73"
@@ -1984,7 +1986,7 @@
         "to": "",
         "reg": false,
         "x": 200,
-        "y": 240,
+        "y": 300,
         "wires": [
             [
                 "748f92b85208a9a3"
@@ -2000,7 +2002,7 @@
             "09b3e2ad263f23bd"
         ],
         "x": 75,
-        "y": 240,
+        "y": 300,
         "wires": [
             [
                 "b0c5a62ecd36045b"
@@ -2014,7 +2016,7 @@
         "name": "Pega Fases",
         "info": "",
         "x": 110,
-        "y": 180,
+        "y": 240,
         "wires": []
     },
     {
@@ -2027,7 +2029,7 @@
             "b83f2dc011b3809a"
         ],
         "x": 915,
-        "y": 240,
+        "y": 300,
         "wires": []
     },
     {
@@ -2042,7 +2044,7 @@
         "finalize": "",
         "libs": [],
         "x": 790,
-        "y": 240,
+        "y": 300,
         "wires": [
             [
                 "7e2d8bedaef930eb"
@@ -2061,7 +2063,7 @@
         "template": "INSERT INTO public.organic_nodes_control_measurement(\n\tdate_time_stamp,\tmessage_counter,\tsetup_id,\tsource)\n\tVALUES ('{{payload.date_time_stamp}}', {{payload.message_counter}}, (SELECT id FROM public.organic_nodes_control_setup WHERE (device_id = (SELECT device_id FROM public.organic_nodes_control_mqttdevice WHERE (mqtt_access_id = (SELECT id FROM public.organic_nodes_control_mqttaccess WHERE (mqtt_id = '{{payload.id}}')))))), 0);\n\nINSERT INTO public.organic_nodes_control_frequencymeasure(\n\tfrequency,\tfrequency_sf,\tmeasurement_id)\n\tVALUES ({{payload.frequency}}, {{payload.frequency_sf}}, (SELECT id FROM public.organic_nodes_control_measurement WHERE (message_counter = {{payload.message_counter}} AND date_time_stamp = '{{payload.date_time_stamp}}') LIMIT 1));\n\nINSERT INTO public.organic_nodes_control_sensormeasure(\n\ttemperature,\ttemperature_sf,\tmeasurement_id)\n\tVALUES ({{payload.temperature}}, {{payload.temperature_sf}}, (SELECT id FROM public.organic_nodes_control_measurement WHERE (message_counter = {{payload.message_counter}} AND date_time_stamp = '{{payload.date_time_stamp}}') LIMIT 1));\n\t\nINSERT INTO public.organic_nodes_control_energymeasure(\n\tphase, current, current_sf, voltage, voltage_sf, measurement_id)\n\tVALUES ('{{payload.phase_A}}', {{payload.current_A}},{{payload.current_A_sf}},{{payload.voltage_A}},{{payload.voltage_A_sf}}, (SELECT id FROM public.organic_nodes_control_measurement WHERE (message_counter = {{payload.message_counter}} AND date_time_stamp = '{{payload.date_time_stamp}}') LIMIT 1));\n\nINSERT INTO public.organic_nodes_control_powermeasure(\n\tphase, voltage_current_angle, voltage_current_angle_sf,\tpower_factor,\tactive_power,\tactive_power_sf,\treactive_power,\treactive_power_sf,\tapparent_power,\tapparent_power_sf\t, measurement_id)\n\tVALUES ('{{payload.phase_A}}', {{payload.voltage_current_angle_A}},{{payload.voltage_current_angle_A_sf}},{{payload.power_factor_A}},{{payload.active_power_A}}, {{payload.active_power_A_sf}}, {{payload.reactive_power_A}}, {{payload.reactive_power_A_sf}}, {{payload.apparent_power_A}}, {{payload.apparent_power_A_sf}}, (SELECT id FROM public.organic_nodes_control_measurement WHERE (message_counter = {{payload.message_counter}} AND date_time_stamp = '{{payload.date_time_stamp}}') LIMIT 1));\n\nINSERT INTO public.organic_nodes_control_energymeasure(\n\tphase, current, current_sf, voltage, voltage_sf, measurement_id)\n\tVALUES ('{{payload.phase_B}}', {{payload.current_B}},{{payload.current_B_sf}},{{payload.voltage_B}},{{payload.voltage_B_sf}}, (SELECT id FROM public.organic_nodes_control_measurement WHERE (message_counter = {{payload.message_counter}} AND date_time_stamp = '{{payload.date_time_stamp}}') LIMIT 1));\n\nINSERT INTO public.organic_nodes_control_powermeasure(\n\tphase, voltage_current_angle, voltage_current_angle_sf,\tpower_factor,\tactive_power,\tactive_power_sf,\treactive_power,\treactive_power_sf,\tapparent_power,\tapparent_power_sf\t, measurement_id)\n\tVALUES ('{{payload.phase_B}}', {{payload.voltage_current_angle_B}},{{payload.voltage_current_angle_B_sf}},{{payload.power_factor_B}},{{payload.active_power_B}}, {{payload.active_power_B_sf}}, {{payload.reactive_power_B}}, {{payload.reactive_power_B_sf}}, {{payload.apparent_power_B}}, {{payload.apparent_power_B_sf}}, (SELECT id FROM public.organic_nodes_control_measurement WHERE (message_counter = {{payload.message_counter}} AND date_time_stamp = '{{payload.date_time_stamp}}') LIMIT 1));\n\nINSERT INTO public.organic_nodes_control_voltagelagmeasure(\n\tangle, angle_sf,\tphase_combination, measurement_id)\n\tVALUES ({{payload.angle_voltage_A_B}}, {{payload.angle_voltage_A_B_sf}}, '{{payload.phase_A}}{{payload.phase_B}}', (SELECT id FROM public.organic_nodes_control_measurement WHERE (message_counter = {{payload.message_counter}} AND date_time_stamp = '{{payload.date_time_stamp}}') LIMIT 1));",
         "output": "str",
         "x": 600,
-        "y": 500,
+        "y": 560,
         "wires": [
             [
                 "52915c65d06f0b9e"
@@ -2080,7 +2082,7 @@
         "template": "INSERT INTO public.organic_nodes_control_measurement(\n\tdate_time_stamp,\tmessage_counter,\tsetup_id,\tsource)\n\tVALUES ('{{payload.date_time_stamp}}', {{payload.message_counter}}, (SELECT id FROM public.organic_nodes_control_setup WHERE (device_id = (SELECT device_id FROM public.organic_nodes_control_mqttdevice WHERE (mqtt_access_id = (SELECT id FROM public.organic_nodes_control_mqttaccess WHERE (mqtt_id = '{{payload.id}}')))))), 0);\n\nINSERT INTO public.organic_nodes_control_frequencymeasure(\n\tfrequency,\tfrequency_sf,\tmeasurement_id)\n\tVALUES ({{payload.frequency}}, {{payload.frequency_sf}}, (SELECT id FROM public.organic_nodes_control_measurement WHERE (message_counter = {{payload.message_counter}} AND date_time_stamp = '{{payload.date_time_stamp}}') LIMIT 1));\n\nINSERT INTO public.organic_nodes_control_sensormeasure(\n\ttemperature,\ttemperature_sf,\tmeasurement_id)\n\tVALUES ({{payload.temperature}}, {{payload.temperature_sf}}, (SELECT id FROM public.organic_nodes_control_measurement WHERE (message_counter = {{payload.message_counter}} AND date_time_stamp = '{{payload.date_time_stamp}}') LIMIT 1));\n\t\nINSERT INTO public.organic_nodes_control_energymeasure(\n\tphase, current, current_sf, voltage, voltage_sf, measurement_id)\n\tVALUES ('{{payload.phase_A}}', {{payload.current_A}},{{payload.current_A_sf}},{{payload.voltage_A}},{{payload.voltage_A_sf}}, (SELECT id FROM public.organic_nodes_control_measurement WHERE (message_counter = {{payload.message_counter}} AND date_time_stamp = '{{payload.date_time_stamp}}') LIMIT 1));\n\nINSERT INTO public.organic_nodes_control_powermeasure(\n\tphase, voltage_current_angle, voltage_current_angle_sf,\tpower_factor,\tactive_power,\tactive_power_sf,\treactive_power,\treactive_power_sf,\tapparent_power,\tapparent_power_sf\t, measurement_id)\n\tVALUES ('{{payload.phase_A}}', {{payload.voltage_current_angle_A}},{{payload.voltage_current_angle_A_sf}},{{payload.power_factor_A}},{{payload.active_power_A}}, {{payload.active_power_A_sf}}, {{payload.reactive_power_A}}, {{payload.reactive_power_A_sf}}, {{payload.apparent_power_A}}, {{payload.apparent_power_A_sf}}, (SELECT id FROM public.organic_nodes_control_measurement WHERE (message_counter = {{payload.message_counter}} AND date_time_stamp = '{{payload.date_time_stamp}}') LIMIT 1));\n\nINSERT INTO public.organic_nodes_control_energymeasure(\n\tphase, current, current_sf, voltage, voltage_sf, measurement_id)\n\tVALUES ('{{payload.phase_B}}', {{payload.current_B}},{{payload.current_B_sf}},{{payload.voltage_B}},{{payload.voltage_B_sf}}, (SELECT id FROM public.organic_nodes_control_measurement WHERE (message_counter = {{payload.message_counter}} AND date_time_stamp = '{{payload.date_time_stamp}}') LIMIT 1));\n\nINSERT INTO public.organic_nodes_control_powermeasure(\n\tphase, voltage_current_angle, voltage_current_angle_sf,\tpower_factor,\tactive_power,\tactive_power_sf,\treactive_power,\treactive_power_sf,\tapparent_power,\tapparent_power_sf\t, measurement_id)\n\tVALUES ('{{payload.phase_B}}', {{payload.voltage_current_angle_B}},{{payload.voltage_current_angle_B_sf}},{{payload.power_factor_B}},{{payload.active_power_B}}, {{payload.active_power_B_sf}}, {{payload.reactive_power_B}}, {{payload.reactive_power_B_sf}}, {{payload.apparent_power_B}}, {{payload.apparent_power_B_sf}}, (SELECT id FROM public.organic_nodes_control_measurement WHERE (message_counter = {{payload.message_counter}} AND date_time_stamp = '{{payload.date_time_stamp}}') LIMIT 1));\n\nINSERT INTO public.organic_nodes_control_voltagelagmeasure(\n\tangle, angle_sf,\tphase_combination, measurement_id)\n\tVALUES ({{payload.angle_voltage_A_B}}, {{payload.angle_voltage_A_B_sf}}, '{{payload.phase_A}}{{payload.phase_B}}', (SELECT id FROM public.organic_nodes_control_measurement WHERE (message_counter = {{payload.message_counter}} AND date_time_stamp = '{{payload.date_time_stamp}}') LIMIT 1));\n\t\nINSERT INTO public.organic_nodes_control_energymeasure(\n\tphase, current, current_sf, voltage, voltage_sf, measurement_id)\n\tVALUES ('{{payload.phase_C}}', {{payload.current_C}},{{payload.current_C_sf}},{{payload.voltage_C}},{{payload.voltage_C_sf}}, (SELECT id FROM public.organic_nodes_control_measurement WHERE (message_counter = {{payload.message_counter}} AND date_time_stamp = '{{payload.date_time_stamp}}') LIMIT 1));\n\nINSERT INTO public.organic_nodes_control_powermeasure(\n\tphase, voltage_current_angle, voltage_current_angle_sf,\tpower_factor,\tactive_power,\tactive_power_sf,\treactive_power,\treactive_power_sf,\tapparent_power,\tapparent_power_sf\t, measurement_id)\n\tVALUES ('{{payload.phase_C}}', {{payload.voltage_current_angle_C}},{{payload.voltage_current_angle_C_sf}},{{payload.power_factor_C}},{{payload.active_power_C}}, {{payload.active_power_C_sf}}, {{payload.reactive_power_C}}, {{payload.reactive_power_C_sf}}, {{payload.apparent_power_C}}, {{payload.apparent_power_C_sf}}, (SELECT id FROM public.organic_nodes_control_measurement WHERE (message_counter = {{payload.message_counter}} AND date_time_stamp = '{{payload.date_time_stamp}}') LIMIT 1));\n\nINSERT INTO public.organic_nodes_control_voltagelagmeasure(\n\tangle, angle_sf,\tphase_combination, measurement_id)\n\tVALUES ({{payload.angle_voltage_A_C}}, {{payload.angle_voltage_A_C_sf}}, '{{payload.phase_A}}{{payload.phase_C}}', (SELECT id FROM public.organic_nodes_control_measurement WHERE (message_counter = {{payload.message_counter}} AND date_time_stamp = '{{payload.date_time_stamp}}') LIMIT 1));\n\nINSERT INTO public.organic_nodes_control_voltagelagmeasure(\n\tangle, angle_sf,\tphase_combination, measurement_id)\n\tVALUES ({{payload.angle_voltage_B_C}}, {{payload.angle_voltage_B_C_sf}}, '{{payload.phase_B}}{{payload.phase_C}}', (SELECT id FROM public.organic_nodes_control_measurement WHERE (message_counter = {{payload.message_counter}} AND date_time_stamp = '{{payload.date_time_stamp}}') LIMIT 1));",
         "output": "str",
         "x": 600,
-        "y": 540,
+        "y": 600,
         "wires": [
             [
                 "52915c65d06f0b9e"
@@ -2104,7 +2106,7 @@
         "limit_drop_if_in_queue": false,
         "outputs": false,
         "x": 690,
-        "y": 680,
+        "y": 740,
         "wires": []
     },
     {
@@ -2114,7 +2116,7 @@
         "name": "Sincronismo",
         "info": "",
         "x": 110,
-        "y": 820,
+        "y": 880,
         "wires": []
     },
     {
@@ -2128,7 +2130,7 @@
         "rowsPerMsg": 1,
         "outputs": 1,
         "x": 390,
-        "y": 2660,
+        "y": 2720,
         "wires": [
             [
                 "1552a62fd20e76bb"
@@ -2155,7 +2157,7 @@
         "to": "",
         "reg": false,
         "x": 560,
-        "y": 2660,
+        "y": 2720,
         "wires": [
             [
                 "9597c176c2aeca7c"
@@ -2169,7 +2171,7 @@
         "name": "setup",
         "info": "",
         "x": 230,
-        "y": 2620,
+        "y": 2680,
         "wires": []
     },
     {
@@ -2183,7 +2185,7 @@
         "rowsPerMsg": 1,
         "outputs": 1,
         "x": 730,
-        "y": 2660,
+        "y": 2720,
         "wires": [
             [
                 "4381d0b132a4cbce"
@@ -2210,7 +2212,7 @@
         "to": "",
         "reg": false,
         "x": 900,
-        "y": 2660,
+        "y": 2720,
         "wires": [
             [
                 "2108fcca15d3ed65"
@@ -2222,14 +2224,14 @@
         "type": "function",
         "z": "e8287d7944e724f7",
         "name": "criação e atualizção ",
-        "func": "let count = global.get(\"setup\") | 0\ncount = count + 1;\nglobal.set(\"setup\", count)\n\nmsg.payload = \"\"\n\nlet setup_nocs = JSON.parse(JSON.stringify(msg.nocs))[0]\nlet setup_local = JSON.parse(JSON.stringify(msg.local))[0]\n\nif (typeof setup_local != \"undefined\") {\n    if (typeof setup_nocs == \"undefined\") // Deleta dados no banco caso o não existam no remoto\n        msg.payload = msg.payload + \"DELETE FROM public.organic_nodes_control_setup WHERE id = \" + setup_local.id + \";\"\n    else if (JSON.stringify(setup_nocs) != JSON.stringify(setup_local)) // Atualiza dados no banco local caso ele exista\n        msg.payload = msg.payload + \"UPDATE public.organic_nodes_control_setup SET id = \" + setup_nocs.id + \",date_setup = '\" + setup_nocs.date_setup + \"', status = '\" + setup_nocs.status + \"', description = '\" + setup_nocs.description + \"', area_id = \" + setup_nocs.area_id + \", circuit_id = \" + setup_nocs.circuit_id + \", device_id = \" + setup_nocs.device_id + \", monitored_device_id = \" + setup_nocs.monitored_device_id + \" WHERE id = \" + setup_nocs.id + \";\" \n}\nelse if (typeof setup_nocs != \"undefined\") // Cria dados no banco caso eles não existão\n    msg.payload = msg.payload + \"INSERT INTO public.organic_nodes_control_setup VALUES(\" + setup_nocs.id + \", '\" + setup_nocs.date_setup + \"', '\" + setup_nocs.status + \"', '\" + setup_nocs.description + \"', \" + setup_nocs.area_id + \", \" + setup_nocs.circuit_id + \", \" + setup_nocs.device_id + \", \" + setup_nocs.monitored_device_id + \");\"\nelse\n    global.set(\"setup\", 1)\n\nmsg.queryParameters = msg.payload\nreturn msg;",
+        "func": "let count = global.get(\"setup\") | 0\ncount = count + 1;\nglobal.set(\"setup\", count)\n\nmsg.payload = \"\"\n\nlet setup_nocs = JSON.parse(JSON.stringify(msg.nocs))[0]\nlet setup_local = JSON.parse(JSON.stringify(msg.local))[0]\n\nif (typeof setup_local != \"undefined\") {\n    if (typeof setup_nocs == \"undefined\") // Deleta dados no banco caso o não existam no remoto\n        msg.payload = msg.payload + \"DELETE FROM public.organic_nodes_control_setup WHERE id = \" + setup_local.id + \";\"\n    else if (JSON.stringify(setup_nocs) != JSON.stringify(setup_local)) // Atualiza dados no banco local caso ele exista\n        msg.payload = msg.payload + \"UPDATE public.organic_nodes_control_setup SET id = \" + setup_nocs.id + \",date_setup = '\" + setup_nocs.date_setup + \"', status = '\" + setup_nocs.status + \"', description = '\" + setup_nocs.description + \"', area_id = \" + setup_nocs.area_id + \", circuit_id = \" + setup_nocs.circuit_id + \", device_id = \" + setup_nocs.device_id + \", monitored_device_id = \" + setup_nocs.monitored_device_id + \" WHERE id = \" + setup_local.id + \";\" \n}\nelse if (typeof setup_nocs != \"undefined\") // Cria dados no banco caso eles não existão\n    msg.payload = msg.payload + \"INSERT INTO public.organic_nodes_control_setup VALUES(\" + setup_nocs.id + \", '\" + setup_nocs.date_setup + \"', '\" + setup_nocs.status + \"', '\" + setup_nocs.description + \"', \" + setup_nocs.area_id + \", \" + setup_nocs.circuit_id + \", \" + setup_nocs.device_id + \", \" + setup_nocs.monitored_device_id + \");\"\nelse\n    global.set(\"setup\", 1)\n\nmsg.queryParameters = msg.payload\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
         "x": 1120,
-        "y": 2660,
+        "y": 2720,
         "wires": [
             [
                 "40fe20885fe85a87",
@@ -2248,7 +2250,7 @@
         "rowsPerMsg": 1,
         "outputs": 1,
         "x": 390,
-        "y": 1760,
+        "y": 1820,
         "wires": [
             [
                 "6c8c2c1939005cbf"
@@ -2275,7 +2277,7 @@
         "to": "",
         "reg": false,
         "x": 560,
-        "y": 1760,
+        "y": 1820,
         "wires": [
             [
                 "420e4921d68167bc"
@@ -2289,7 +2291,7 @@
         "name": "area",
         "info": "",
         "x": 230,
-        "y": 1720,
+        "y": 1780,
         "wires": []
     },
     {
@@ -2303,7 +2305,7 @@
         "rowsPerMsg": 1,
         "outputs": 1,
         "x": 730,
-        "y": 1760,
+        "y": 1820,
         "wires": [
             [
                 "491d7eba2d6b964c"
@@ -2330,7 +2332,7 @@
         "to": "",
         "reg": false,
         "x": 900,
-        "y": 1760,
+        "y": 1820,
         "wires": [
             [
                 "c42dacb390a4b879"
@@ -2342,14 +2344,14 @@
         "type": "function",
         "z": "e8287d7944e724f7",
         "name": "criação e atualizção ",
-        "func": "let count = global.get(\"area\") | 0\ncount = count + 1;\nglobal.set(\"area\", count)\n\nmsg.payload = \"\"\n\nlet area_nocs = JSON.parse(JSON.stringify(msg.nocs))[0]\nlet area_local = JSON.parse(JSON.stringify(msg.local))[0]\n\nif (typeof area_local != \"undefined\") {\n    if (typeof area_nocs == \"undefined\") // Deleta dados no banco caso o não existam no remoto\n        msg.payload = msg.payload + \"DELETE FROM public.organic_nodes_control_area WHERE id = \" + area_local.id + \";\"\n    else if (JSON.stringify(area_nocs) != JSON.stringify(area_local)) // Atualiza dados no banco local caso ele exista\n        msg.payload = msg.payload + \"UPDATE public.organic_nodes_control_area SET id = \" + area_nocs.id + \",name = '\" + area_nocs.name + \"', description = '\" + area_nocs.description + \"', company_id = \" + area_nocs.company_id + \" WHERE id = \" + area_nocs.id + \";\" \n}\nelse if (typeof area_nocs != \"undefined\") // Cria dados no banco caso eles não existão\n    msg.payload = msg.payload + \"INSERT INTO public.organic_nodes_control_area VALUES(\" + area_nocs.id + \", '\" + area_nocs.name + \"', '\" + area_nocs.description + \"', \" + area_nocs.company_id + \");\"\n\nelse\n    global.set(\"area\", 1)\n\nmsg.queryParameters = msg.payload\nreturn msg;\n\n",
+        "func": "let count = global.get(\"area\") | 0\ncount = count + 1;\nglobal.set(\"area\", count)\n\nmsg.payload = \"\"\n\nlet area_nocs = JSON.parse(JSON.stringify(msg.nocs))[0]\nlet area_local = JSON.parse(JSON.stringify(msg.local))[0]\n\nif (typeof area_local != \"undefined\") {\n    if (typeof area_nocs == \"undefined\") // Deleta dados no banco caso o não existam no remoto\n        msg.payload = msg.payload + \"DELETE FROM public.organic_nodes_control_area WHERE id = \" + area_local.id + \";\"\n    else if (JSON.stringify(area_nocs) != JSON.stringify(area_local)) // Atualiza dados no banco local caso ele exista\n        msg.payload = msg.payload + \"UPDATE public.organic_nodes_control_area SET id = \" + area_nocs.id + \",name = '\" + area_nocs.name + \"', description = '\" + area_nocs.description + \"', company_id = \" + area_nocs.company_id + \" WHERE id = \" + area_local.id + \";\" \n}\nelse if (typeof area_nocs != \"undefined\") // Cria dados no banco caso eles não existão\n    msg.payload = msg.payload + \"INSERT INTO public.organic_nodes_control_area VALUES(\" + area_nocs.id + \", '\" + area_nocs.name + \"', '\" + area_nocs.description + \"', \" + area_nocs.company_id + \");\"\n\nelse\n    global.set(\"area\", 1)\n\nmsg.queryParameters = msg.payload\nreturn msg;\n\n",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
         "x": 1120,
-        "y": 1760,
+        "y": 1820,
         "wires": [
             [
                 "9a6e880ed2dc6cb4",
@@ -2374,7 +2376,7 @@
         "limit_drop_if_in_queue": false,
         "outputs": false,
         "x": 1310,
-        "y": 1660,
+        "y": 1720,
         "wires": []
     },
     {
@@ -2388,7 +2390,7 @@
         "rowsPerMsg": 1,
         "outputs": 1,
         "x": 390,
-        "y": 1660,
+        "y": 1720,
         "wires": [
             [
                 "30be2b5cebbbf31d"
@@ -2415,7 +2417,7 @@
         "to": "",
         "reg": false,
         "x": 560,
-        "y": 1660,
+        "y": 1720,
         "wires": [
             [
                 "d7650787d91f0e9e"
@@ -2429,7 +2431,7 @@
         "name": "company",
         "info": "",
         "x": 240,
-        "y": 1620,
+        "y": 1680,
         "wires": []
     },
     {
@@ -2443,7 +2445,7 @@
         "rowsPerMsg": 1,
         "outputs": 1,
         "x": 730,
-        "y": 1660,
+        "y": 1720,
         "wires": [
             [
                 "5937752859ed6058"
@@ -2470,7 +2472,7 @@
         "to": "",
         "reg": false,
         "x": 900,
-        "y": 1660,
+        "y": 1720,
         "wires": [
             [
                 "ff81876be6468c81"
@@ -2482,14 +2484,14 @@
         "type": "function",
         "z": "e8287d7944e724f7",
         "name": "criação e atualizção ",
-        "func": "let count = global.get(\"company\") | 0\ncount = count + 1;\nglobal.set(\"company\", count)\n\nmsg.payload = \"\"\n\nlet company_nocs = JSON.parse(JSON.stringify(msg.nocs))[0]\nlet company_local = JSON.parse(JSON.stringify(msg.local))[0]\n\nif (typeof company_local != \"undefined\") {\n    if (typeof company_nocs == \"undefined\") // Deleta dados no banco caso o não existam no remoto\n        msg.payload = msg.payload + \"DELETE FROM public.core_registration_company WHERE id = \" + company_local.id + \";\"\n    else if (JSON.stringify(company_nocs) != JSON.stringify(company_local)) // Atualiza dados no banco local caso ele exista\n        msg.payload = msg.payload + \"UPDATE public.core_registration_company SET id = \" + company_nocs.id + \",registration_date = '\" + company_nocs.registration_date + \"', description = '\" + company_nocs.description + \"', address = '\" + company_nocs.address + \"', city_id = \" + company_nocs.city_id + \", user_id = \" + company_nocs.user_id + \" WHERE id = \" + company_nocs.id + \";\" \n}\nelse if (typeof company_nocs != \"undefined\") // Cria dados no banco caso eles não existão\n    msg.payload = msg.payload + \"INSERT INTO public.core_registration_company VALUES(\" + company_nocs.id + \", '\" + company_nocs.registration_date + \"', '\" + company_nocs.description + \"', '\" + company_nocs.address + \"', \" + company_nocs.city_id + \", \" + company_nocs.user_id + \");\"\nelse\n    global.set(\"company\", 1)\n\nmsg.queryParameters = msg.payload\nreturn msg;",
+        "func": "let count = global.get(\"company\") | 0\ncount = count + 1;\nglobal.set(\"company\", count)\n\nmsg.payload = \"\"\n\nlet company_nocs = JSON.parse(JSON.stringify(msg.nocs))[0]\nlet company_local = JSON.parse(JSON.stringify(msg.local))[0]\n\nif (typeof company_local != \"undefined\") {\n    if (typeof company_nocs == \"undefined\") // Deleta dados no banco caso o não existam no remoto\n        msg.payload = msg.payload + \"DELETE FROM public.core_registration_company WHERE id = \" + company_local.id + \";\"\n    else if (JSON.stringify(company_nocs) != JSON.stringify(company_local)) // Atualiza dados no banco local caso ele exista\n        msg.payload = msg.payload + \"UPDATE public.core_registration_company SET id = \" + company_nocs.id + \",registration_date = '\" + company_nocs.registration_date + \"', description = '\" + company_nocs.description + \"', address = '\" + company_nocs.address + \"', city_id = \" + company_nocs.city_id + \", user_id = \" + company_nocs.user_id + \" WHERE id = \" + company_local.id + \";\" \n}\nelse if (typeof company_nocs != \"undefined\") // Cria dados no banco caso eles não existão\n    msg.payload = msg.payload + \"INSERT INTO public.core_registration_company VALUES(\" + company_nocs.id + \", '\" + company_nocs.registration_date + \"', '\" + company_nocs.description + \"', '\" + company_nocs.address + \"', \" + company_nocs.city_id + \", \" + company_nocs.user_id + \");\"\nelse\n    global.set(\"company\", 1)\n\nmsg.queryParameters = msg.payload\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
         "x": 1120,
-        "y": 1660,
+        "y": 1720,
         "wires": [
             [
                 "9feefbc233b512e6",
@@ -2508,7 +2510,7 @@
         "rowsPerMsg": 1,
         "outputs": 1,
         "x": 390,
-        "y": 1560,
+        "y": 1620,
         "wires": [
             [
                 "36ed55996c45840d"
@@ -2535,7 +2537,7 @@
         "to": "",
         "reg": false,
         "x": 560,
-        "y": 1560,
+        "y": 1620,
         "wires": [
             [
                 "b857d6b20151d3df"
@@ -2549,7 +2551,7 @@
         "name": "city",
         "info": "",
         "x": 230,
-        "y": 1520,
+        "y": 1580,
         "wires": []
     },
     {
@@ -2563,7 +2565,7 @@
         "rowsPerMsg": 1,
         "outputs": 1,
         "x": 730,
-        "y": 1560,
+        "y": 1620,
         "wires": [
             [
                 "1b220cde187629e7"
@@ -2590,7 +2592,7 @@
         "to": "",
         "reg": false,
         "x": 900,
-        "y": 1560,
+        "y": 1620,
         "wires": [
             [
                 "f3ae9370d89648c9"
@@ -2608,7 +2610,7 @@
         "rowsPerMsg": 1,
         "outputs": 1,
         "x": 390,
-        "y": 1460,
+        "y": 1520,
         "wires": [
             [
                 "6c3001344b7413a3"
@@ -2635,7 +2637,7 @@
         "to": "",
         "reg": false,
         "x": 560,
-        "y": 1460,
+        "y": 1520,
         "wires": [
             [
                 "06d8205bf25c35b4"
@@ -2649,7 +2651,7 @@
         "name": "state",
         "info": "",
         "x": 230,
-        "y": 1420,
+        "y": 1480,
         "wires": []
     },
     {
@@ -2663,7 +2665,7 @@
         "rowsPerMsg": 1,
         "outputs": 1,
         "x": 730,
-        "y": 1460,
+        "y": 1520,
         "wires": [
             [
                 "ade39374458a6a66"
@@ -2690,7 +2692,7 @@
         "to": "",
         "reg": false,
         "x": 900,
-        "y": 1460,
+        "y": 1520,
         "wires": [
             [
                 "4f4ca3e10733d060"
@@ -2702,14 +2704,14 @@
         "type": "function",
         "z": "e8287d7944e724f7",
         "name": "criação e atualizção ",
-        "func": "let count = global.get(\"state\") | 0\ncount = count + 1;\nglobal.set(\"state\", count)\n\nmsg.payload = \"\"\n\nlet state_nocs = JSON.parse(JSON.stringify(msg.nocs))[0]\nlet state_local = JSON.parse(JSON.stringify(msg.local))[0]\n\nif (typeof state_local != \"undefined\") {\n    if (typeof state_nocs == \"undefined\") // Deleta dados no banco caso o não existam no remoto\n        msg.payload = msg.payload + \"DELETE FROM public.core_registration_state WHERE id = \" + state_local.id + \";\"\n    else if (JSON.stringify(state_nocs) != JSON.stringify(state_local)) // Atualiza dados no banco local caso ele exista\n        msg.payload = msg.payload + \"UPDATE public.core_registration_state SET id = \" + state_nocs.id + \", description = '\" + state_nocs.description + \"', acronym = '\" + state_nocs.acronym + \"', state_id = \" + state_nocs.state_id + \" WHERE id = \" + state_nocs.id + \";\" \n}\nelse if (typeof state_nocs != \"undefined\") // Cria dados no banco caso eles não existão\n    msg.payload = msg.payload + \"INSERT INTO public.core_registration_state VALUES(\" + state_nocs.id + \", '\" + state_nocs.description + \"', '\" + state_nocs.acronym + \"', \" + state_nocs.state_id + \");\"\nelse\n    global.set(\"state\", 1)\n\nmsg.queryParameters = msg.payload\nreturn msg;",
+        "func": "let count = global.get(\"state\") | 0\ncount = count + 1;\nglobal.set(\"state\", count)\n\nmsg.payload = \"\"\n\nlet state_nocs = JSON.parse(JSON.stringify(msg.nocs))[0]\nlet state_local = JSON.parse(JSON.stringify(msg.local))[0]\n\nif (typeof state_local != \"undefined\") {\n    if (typeof state_nocs == \"undefined\") // Deleta dados no banco caso o não existam no remoto\n        msg.payload = msg.payload + \"DELETE FROM public.core_registration_state WHERE id = \" + state_local.id + \";\"\n    else if (JSON.stringify(state_nocs) != JSON.stringify(state_local)) // Atualiza dados no banco local caso ele exista\n        msg.payload = msg.payload + \"UPDATE public.core_registration_state SET id = \" + state_nocs.id + \", description = '\" + state_nocs.description + \"', acronym = '\" + state_nocs.acronym + \"', country_id = \" + state_nocs.country_id + \" WHERE id = \" + state_local.id + \";\" \n}\nelse if (typeof state_nocs != \"undefined\") // Cria dados no banco caso eles não existão\n    msg.payload = msg.payload + \"INSERT INTO public.core_registration_state VALUES(\" + state_nocs.id + \", '\" + state_nocs.description + \"', '\" + state_nocs.acronym + \"', \" + state_nocs.country_id + \");\"\nelse\n    global.set(\"state\", 1)\n\nmsg.queryParameters = msg.payload\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
         "x": 1120,
-        "y": 1460,
+        "y": 1520,
         "wires": [
             [
                 "138d3ec958c0c2db",
@@ -2728,7 +2730,7 @@
         "rowsPerMsg": 1,
         "outputs": 1,
         "x": 390,
-        "y": 1360,
+        "y": 1420,
         "wires": [
             [
                 "483e120d5aa10e40"
@@ -2755,7 +2757,7 @@
         "to": "",
         "reg": false,
         "x": 560,
-        "y": 1360,
+        "y": 1420,
         "wires": [
             [
                 "3255f96467d86c46"
@@ -2769,7 +2771,7 @@
         "name": "country",
         "info": "",
         "x": 230,
-        "y": 1320,
+        "y": 1380,
         "wires": []
     },
     {
@@ -2783,7 +2785,7 @@
         "rowsPerMsg": 1,
         "outputs": 1,
         "x": 730,
-        "y": 1360,
+        "y": 1420,
         "wires": [
             [
                 "be135fd442fd14f2"
@@ -2810,7 +2812,7 @@
         "to": "",
         "reg": false,
         "x": 900,
-        "y": 1360,
+        "y": 1420,
         "wires": [
             [
                 "3a844cfcef49d6a3"
@@ -2822,14 +2824,14 @@
         "type": "function",
         "z": "e8287d7944e724f7",
         "name": "criação e atualizção ",
-        "func": "let count = global.get(\"country\") | 0\ncount = count + 1;\nglobal.set(\"country\", count)\n\nmsg.payload = \"\"\n\nlet country_nocs = JSON.parse(JSON.stringify(msg.nocs))[0]\nlet country_local = JSON.parse(JSON.stringify(msg.local))[0]\n\nif (typeof country_local != \"undefined\") {\n    if (typeof country_nocs == \"undefined\") // Deleta dados no banco caso o não existam no remoto\n        msg.payload = msg.payload + \"DELETE FROM public.core_registration_country WHERE id = \" + country_local.id + \";\"\n    else if (JSON.stringify(country_nocs) != JSON.stringify(country_local)) // Atualiza dados no banco local caso ele exista\n        msg.payload = msg.payload + \"UPDATE public.core_registration_country SET id = \" + country_nocs.id + \", description = '\" + country_nocs.description + \"' WHERE id = \" + country_nocs.id + \";\"\n}\nelse if (typeof country_nocs != \"undefined\") // Cria dados no banco caso eles não existão\n    msg.payload = msg.payload + \"INSERT INTO public.core_registration_country VALUES(\" + country_nocs.id + \", '\" + country_nocs.description + \"');\"\n\nelse\n    global.set(\"country\", 1)\n\nmsg.queryParameters = msg.payload\nreturn msg;",
+        "func": "let count = global.get(\"country\") | 0\ncount = count + 1;\nglobal.set(\"country\", count)\n\nmsg.payload = \"\"\n\nlet country_nocs = JSON.parse(JSON.stringify(msg.nocs))[0]\nlet country_local = JSON.parse(JSON.stringify(msg.local))[0]\n\nif (typeof country_local != \"undefined\") {\n    if (typeof country_nocs == \"undefined\") // Deleta dados no banco caso o não existam no remoto\n        msg.payload = msg.payload + \"DELETE FROM public.core_registration_country WHERE id = \" + country_local.id + \";\"\n    else if (JSON.stringify(country_nocs) != JSON.stringify(country_local)) // Atualiza dados no banco local caso ele exista\n        msg.payload = msg.payload + \"UPDATE public.core_registration_country SET id = \" + country_nocs.id + \", description = '\" + country_nocs.description + \"' WHERE id = \" + country_local.id + \";\"\n}\nelse if (typeof country_nocs != \"undefined\") // Cria dados no banco caso eles não existão\n    msg.payload = msg.payload + \"INSERT INTO public.core_registration_country VALUES(\" + country_nocs.id + \", '\" + country_nocs.description + \"');\"\n\nelse\n    global.set(\"country\", 1)\n\nmsg.queryParameters = msg.payload\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
         "x": 1120,
-        "y": 1360,
+        "y": 1420,
         "wires": [
             [
                 "0913dc91f3dc051f",
@@ -2848,7 +2850,7 @@
         "rowsPerMsg": 1,
         "outputs": 1,
         "x": 390,
-        "y": 1260,
+        "y": 1320,
         "wires": [
             [
                 "ae10dcd5239babe5"
@@ -2875,7 +2877,7 @@
         "to": "",
         "reg": false,
         "x": 560,
-        "y": 1260,
+        "y": 1320,
         "wires": [
             [
                 "fac2a2062e46a545"
@@ -2889,7 +2891,7 @@
         "name": "access_user",
         "info": "",
         "x": 250,
-        "y": 1220,
+        "y": 1280,
         "wires": []
     },
     {
@@ -2903,7 +2905,7 @@
         "rowsPerMsg": 1,
         "outputs": 1,
         "x": 730,
-        "y": 1260,
+        "y": 1320,
         "wires": [
             [
                 "f1f26efc0d1a33a9"
@@ -2930,7 +2932,7 @@
         "to": "",
         "reg": false,
         "x": 900,
-        "y": 1260,
+        "y": 1320,
         "wires": [
             [
                 "9bf179e182e487e7"
@@ -2942,14 +2944,14 @@
         "type": "function",
         "z": "e8287d7944e724f7",
         "name": "criação e atualizção ",
-        "func": "let count = global.get(\"city\") | 0\ncount = count + 1;\nglobal.set(\"city\", count)\n\nmsg.payload = \"\"\n\nlet city_nocs = JSON.parse(JSON.stringify(msg.nocs))[0]\nlet city_local = JSON.parse(JSON.stringify(msg.local))[0]\n\nif (typeof city_local != \"undefined\") {\n    if (typeof city_nocs == \"undefined\") // Deleta dados no banco caso o não existam no remoto\n        msg.payload = msg.payload + \"DELETE FROM public.core_registration_city WHERE id = \" + city_local.id + \";\"\n    else if (JSON.stringify(city_nocs) != JSON.stringify(city_local)) // Atualiza dados no banco local caso ele exista\n        msg.payload = msg.payload + \"UPDATE public.core_registration_city SET id = \" + city_nocs.id + \", description = '\" + city_nocs.description + \"', city_id = \" + city_nocs.city_id + \" WHERE id = \" + city_nocs.id + \";\" \n}\nelse if (typeof city_nocs != \"undefined\") // Cria dados no banco caso eles não existão\n    msg.payload = msg.payload + \"INSERT INTO public.core_registration_city VALUES(\" + city_nocs.id + \", '\" + city_nocs.description + \"', \" + city_nocs.city_id + \");\"\nelse\n    global.set(\"city\", 1)\n\nmsg.queryParameters = msg.payload\nreturn msg;",
+        "func": "let count = global.get(\"city\") | 0\ncount = count + 1;\nglobal.set(\"city\", count)\n\nmsg.payload = \"\"\n\nlet city_nocs = JSON.parse(JSON.stringify(msg.nocs))[0]\nlet city_local = JSON.parse(JSON.stringify(msg.local))[0]\n\nif (typeof city_local != \"undefined\") {\n    if (typeof city_nocs == \"undefined\") // Deleta dados no banco caso o não existam no remoto\n        msg.payload = msg.payload + \"DELETE FROM public.core_registration_city WHERE id = \" + city_local.id + \";\"\n    else if (JSON.stringify(city_nocs) != JSON.stringify(city_local)) // Atualiza dados no banco local caso ele exista\n        msg.payload = msg.payload + \"UPDATE public.core_registration_city SET id = \" + city_nocs.id + \", description = '\" + city_nocs.description + \"', state_id = \" + city_nocs.state_id + \" WHERE id = \" + city_local.id + \";\" \n}\nelse if (typeof city_nocs != \"undefined\") // Cria dados no banco caso eles não existão\n    msg.payload = msg.payload + \"INSERT INTO public.core_registration_city VALUES(\" + city_nocs.id + \", '\" + city_nocs.description + \"', \" + city_nocs.state_id + \");\"\nelse\n    global.set(\"city\", 1)\n\nmsg.queryParameters = msg.payload\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
         "x": 1120,
-        "y": 1560,
+        "y": 1620,
         "wires": [
             [
                 "e1074e9d24e2f36b",
@@ -2974,7 +2976,7 @@
         "limit_drop_if_in_queue": false,
         "outputs": false,
         "x": 1310,
-        "y": 1560,
+        "y": 1620,
         "wires": []
     },
     {
@@ -2994,7 +2996,7 @@
         "limit_drop_if_in_queue": false,
         "outputs": false,
         "x": 1310,
-        "y": 1760,
+        "y": 1820,
         "wires": []
     },
     {
@@ -3014,7 +3016,7 @@
         "limit_drop_if_in_queue": false,
         "outputs": false,
         "x": 1310,
-        "y": 2660,
+        "y": 2720,
         "wires": []
     },
     {
@@ -3024,7 +3026,7 @@
         "name": "sincronimos dados cadastrais",
         "info": "",
         "x": 180,
-        "y": 1080,
+        "y": 1140,
         "wires": []
     },
     {
@@ -3037,10 +3039,12 @@
             "25ef75617a22f23c",
             "27d90fe1cf3fa5b2",
             "3e3a8ecc9488f2e8",
-            "7318983264bb4a17"
+            "7318983264bb4a17",
+            "2a4970a4a6d47d68",
+            "02eeddee083c7123"
         ],
         "x": 115,
-        "y": 1260,
+        "y": 1320,
         "wires": [
             [
                 "6ced2d410a2797d6"
@@ -3073,8 +3077,8 @@
             "c09678c95e40e63c",
             "b7813722c2d05777"
         ],
-        "x": 355,
-        "y": 1180,
+        "x": 575,
+        "y": 1240,
         "wires": []
     },
     {
@@ -3087,10 +3091,12 @@
             "25ef75617a22f23c",
             "27d90fe1cf3fa5b2",
             "3e3a8ecc9488f2e8",
-            "76254303b59dcaed"
+            "76254303b59dcaed",
+            "2a4970a4a6d47d68",
+            "02eeddee083c7123"
         ],
         "x": 115,
-        "y": 1360,
+        "y": 1420,
         "wires": [
             [
                 "4faefaadccf1f517"
@@ -3123,10 +3129,12 @@
             "db41310cdc26bb39",
             "eef7cba911c17494",
             "7fa1127692c1f589",
-            "7bcd3b703546eeec"
+            "7bcd3b703546eeec",
+            "2a4970a4a6d47d68",
+            "02eeddee083c7123"
         ],
         "x": 115,
-        "y": 1460,
+        "y": 1520,
         "wires": [
             [
                 "a01c69eaa2f39198"
@@ -3143,10 +3151,12 @@
             "25ef75617a22f23c",
             "27d90fe1cf3fa5b2",
             "3e3a8ecc9488f2e8",
-            "c7cc5389035fde6a"
+            "c7cc5389035fde6a",
+            "2a4970a4a6d47d68",
+            "02eeddee083c7123"
         ],
         "x": 115,
-        "y": 1560,
+        "y": 1620,
         "wires": [
             [
                 "ad3d4f3b284acdb9"
@@ -3163,10 +3173,12 @@
             "25ef75617a22f23c",
             "27d90fe1cf3fa5b2",
             "3e3a8ecc9488f2e8",
-            "9973088018bb2f7e"
+            "9973088018bb2f7e",
+            "2a4970a4a6d47d68",
+            "02eeddee083c7123"
         ],
         "x": 115,
-        "y": 1660,
+        "y": 1720,
         "wires": [
             [
                 "32643627eb2e410e"
@@ -3182,10 +3194,12 @@
             "186a4deaf5124833",
             "27d90fe1cf3fa5b2",
             "3e3a8ecc9488f2e8",
-            "d5fb01c4a4ca2af9"
+            "d5fb01c4a4ca2af9",
+            "2a4970a4a6d47d68",
+            "02eeddee083c7123"
         ],
         "x": 115,
-        "y": 1760,
+        "y": 1820,
         "wires": [
             [
                 "df5eaaf83fe36e6a"
@@ -3201,10 +3215,12 @@
             "186a4deaf5124833",
             "27d90fe1cf3fa5b2",
             "3e3a8ecc9488f2e8",
-            "89b111b974b09917"
+            "89b111b974b09917",
+            "2a4970a4a6d47d68",
+            "02eeddee083c7123"
         ],
         "x": 115,
-        "y": 2660,
+        "y": 2720,
         "wires": [
             [
                 "bd3768c277a8722c"
@@ -3228,7 +3244,7 @@
         "limit_drop_if_in_queue": false,
         "outputs": false,
         "x": 1310,
-        "y": 1460,
+        "y": 1520,
         "wires": []
     },
     {
@@ -3248,7 +3264,7 @@
         "limit_drop_if_in_queue": false,
         "outputs": false,
         "x": 1310,
-        "y": 1360,
+        "y": 1420,
         "wires": []
     },
     {
@@ -3268,7 +3284,7 @@
         "limit_drop_if_in_queue": false,
         "outputs": false,
         "x": 1310,
-        "y": 1260,
+        "y": 1320,
         "wires": []
     },
     {
@@ -3282,7 +3298,7 @@
         "rowsPerMsg": 1,
         "outputs": 1,
         "x": 390,
-        "y": 2560,
+        "y": 2620,
         "wires": [
             [
                 "195df61de2124849"
@@ -3309,7 +3325,7 @@
         "to": "",
         "reg": false,
         "x": 560,
-        "y": 2560,
+        "y": 2620,
         "wires": [
             [
                 "17f51283c5427f84"
@@ -3323,7 +3339,7 @@
         "name": "circuit",
         "info": "",
         "x": 230,
-        "y": 2520,
+        "y": 2580,
         "wires": []
     },
     {
@@ -3337,7 +3353,7 @@
         "rowsPerMsg": 1,
         "outputs": 1,
         "x": 730,
-        "y": 2560,
+        "y": 2620,
         "wires": [
             [
                 "a9b1a8b26dac34c1"
@@ -3364,7 +3380,7 @@
         "to": "",
         "reg": false,
         "x": 900,
-        "y": 2560,
+        "y": 2620,
         "wires": [
             [
                 "f94e9ce530652d75"
@@ -3376,14 +3392,14 @@
         "type": "function",
         "z": "e8287d7944e724f7",
         "name": "criação e atualizção ",
-        "func": "let count = global.get(\"circuit\") | 0\ncount = count + 1;\nglobal.set(\"circuit\", count)\n\nmsg.payload = \"\"\n\nlet circuit_nocs = JSON.parse(JSON.stringify(msg.nocs))[0]\nlet circuit_local = JSON.parse(JSON.stringify(msg.local))[0]\n\nif (typeof circuit_local != \"undefined\") {\n    if (typeof circuit_nocs == \"undefined\") // Deleta dados no banco caso o não existam no remoto\n        msg.payload = msg.payload + \"DELETE FROM public.organic_nodes_control_circuit WHERE id = \" + circuit_local.id + \";\"\n    else if (JSON.stringify(circuit_nocs) != JSON.stringify(circuit_local)) // Atualiza dados no banco local caso ele exista\n        msg.payload = msg.payload + \"UPDATE public.organic_nodes_control_circuit SET id = \" + circuit_nocs.id + \",phase = '\" + circuit_nocs.phase + \"', breaker = '\" + circuit_nocs.breaker + \"', name = '\" + circuit_nocs.name + \"', description = '\" + circuit_nocs.description + \"' WHERE id = \" + circuit_nocs.id + \";\"  \n\n}\nelse if (typeof circuit_nocs != \"undefined\") // Cria dados no banco caso eles não existão\n    msg.payload = msg.payload + \"INSERT INTO public.organic_nodes_control_circuit VALUES(\" + circuit_nocs.id + \", '\" + circuit_nocs.phase + \"', '\" + circuit_nocs.breaker + \"', '\" + circuit_nocs.name + \"', '\" + circuit_nocs.description + \"');\"\n\nelse\n    global.set(\"circuit\", 1)\n\nmsg.queryParameters = msg.payload\nreturn msg;",
+        "func": "let count = global.get(\"circuit\") | 0\ncount = count + 1;\nglobal.set(\"circuit\", count)\n\nmsg.payload = \"\"\n\nlet circuit_nocs = JSON.parse(JSON.stringify(msg.nocs))[0]\nlet circuit_local = JSON.parse(JSON.stringify(msg.local))[0]\n\nif (typeof circuit_local != \"undefined\") {\n    if (typeof circuit_nocs == \"undefined\") // Deleta dados no banco caso o não existam no remoto\n        msg.payload = msg.payload + \"DELETE FROM public.organic_nodes_control_circuit WHERE id = \" + circuit_local.id + \";\"\n    else if (JSON.stringify(circuit_nocs) != JSON.stringify(circuit_local)) // Atualiza dados no banco local caso ele exista\n        msg.payload = msg.payload + \"UPDATE public.organic_nodes_control_circuit SET id = \" + circuit_nocs.id + \",phase = '\" + circuit_nocs.phase + \"', breaker = '\" + circuit_nocs.breaker + \"', name = '\" + circuit_nocs.name + \"', description = '\" + circuit_nocs.description + \"' WHERE id = \" + circuit_local.id + \";\"  \n\n}\nelse if (typeof circuit_nocs != \"undefined\") // Cria dados no banco caso eles não existão\n    msg.payload = msg.payload + \"INSERT INTO public.organic_nodes_control_circuit VALUES(\" + circuit_nocs.id + \", '\" + circuit_nocs.phase + \"', '\" + circuit_nocs.breaker + \"', '\" + circuit_nocs.name + \"', '\" + circuit_nocs.description + \"');\"\n\nelse\n    global.set(\"circuit\", 1)\n\nmsg.queryParameters = msg.payload\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
         "x": 1120,
-        "y": 2560,
+        "y": 2620,
         "wires": [
             [
                 "e0e3a26fc57b31be",
@@ -3408,7 +3424,7 @@
         "limit_drop_if_in_queue": false,
         "outputs": false,
         "x": 1310,
-        "y": 2560,
+        "y": 2620,
         "wires": []
     },
     {
@@ -3420,10 +3436,12 @@
             "186a4deaf5124833",
             "27d90fe1cf3fa5b2",
             "3e3a8ecc9488f2e8",
-            "76e1faa977a43f81"
+            "76e1faa977a43f81",
+            "2a4970a4a6d47d68",
+            "02eeddee083c7123"
         ],
         "x": 115,
-        "y": 2560,
+        "y": 2620,
         "wires": [
             [
                 "794ec6d8eb02847a"
@@ -3441,7 +3459,7 @@
         "rowsPerMsg": 1,
         "outputs": 1,
         "x": 390,
-        "y": 2860,
+        "y": 2920,
         "wires": [
             [
                 "4b83902068bf3c8e"
@@ -3468,7 +3486,7 @@
         "to": "",
         "reg": false,
         "x": 560,
-        "y": 2860,
+        "y": 2920,
         "wires": [
             [
                 "7dd2a2ea62c3edff"
@@ -3482,7 +3500,7 @@
         "name": "mqttdevice",
         "info": "",
         "x": 240,
-        "y": 2820,
+        "y": 2880,
         "wires": []
     },
     {
@@ -3496,7 +3514,7 @@
         "rowsPerMsg": 1,
         "outputs": 1,
         "x": 730,
-        "y": 2860,
+        "y": 2920,
         "wires": [
             [
                 "351c1f9869284968"
@@ -3523,7 +3541,7 @@
         "to": "",
         "reg": false,
         "x": 900,
-        "y": 2860,
+        "y": 2920,
         "wires": [
             [
                 "41a75044a7375d11"
@@ -3542,7 +3560,7 @@
         "finalize": "",
         "libs": [],
         "x": 1120,
-        "y": 2860,
+        "y": 2920,
         "wires": [
             [
                 "f563a538baa4cfb1",
@@ -3567,7 +3585,7 @@
         "limit_drop_if_in_queue": false,
         "outputs": false,
         "x": 1310,
-        "y": 2860,
+        "y": 2920,
         "wires": []
     },
     {
@@ -3581,7 +3599,7 @@
         "rowsPerMsg": 1,
         "outputs": 1,
         "x": 390,
-        "y": 2760,
+        "y": 2820,
         "wires": [
             [
                 "31ca46a6962b043b"
@@ -3608,7 +3626,7 @@
         "to": "",
         "reg": false,
         "x": 560,
-        "y": 2760,
+        "y": 2820,
         "wires": [
             [
                 "b6e5e7ded5bb71d7"
@@ -3626,7 +3644,7 @@
         "rowsPerMsg": 1,
         "outputs": 1,
         "x": 730,
-        "y": 2760,
+        "y": 2820,
         "wires": [
             [
                 "a5876519b026d1e3"
@@ -3653,7 +3671,7 @@
         "to": "",
         "reg": false,
         "x": 900,
-        "y": 2760,
+        "y": 2820,
         "wires": [
             [
                 "6db15530f124132a"
@@ -3677,7 +3695,7 @@
         "limit_drop_if_in_queue": false,
         "outputs": false,
         "x": 1310,
-        "y": 2760,
+        "y": 2820,
         "wires": []
     },
     {
@@ -3687,7 +3705,7 @@
         "name": "mqttaccess",
         "info": "",
         "x": 250,
-        "y": 2720,
+        "y": 2780,
         "wires": []
     },
     {
@@ -3702,7 +3720,7 @@
         "finalize": "",
         "libs": [],
         "x": 1120,
-        "y": 2760,
+        "y": 2820,
         "wires": [
             [
                 "eb3ec60fe9c329c8",
@@ -3721,7 +3739,7 @@
         "rowsPerMsg": 1,
         "outputs": 1,
         "x": 390,
-        "y": 1860,
+        "y": 1920,
         "wires": [
             [
                 "ee25deaecfc5f725"
@@ -3748,7 +3766,7 @@
         "to": "",
         "reg": false,
         "x": 560,
-        "y": 1860,
+        "y": 1920,
         "wires": [
             [
                 "d453604a6da66f57"
@@ -3766,7 +3784,7 @@
         "rowsPerMsg": 1,
         "outputs": 1,
         "x": 730,
-        "y": 1860,
+        "y": 1920,
         "wires": [
             [
                 "2cc41bb45dfca6c0"
@@ -3793,7 +3811,7 @@
         "to": "",
         "reg": false,
         "x": 900,
-        "y": 1860,
+        "y": 1920,
         "wires": [
             [
                 "07b048d8f783c051"
@@ -3812,7 +3830,7 @@
         "finalize": "",
         "libs": [],
         "x": 1120,
-        "y": 1860,
+        "y": 1920,
         "wires": [
             [
                 "58c0eca7df626098",
@@ -3837,7 +3855,7 @@
         "limit_drop_if_in_queue": false,
         "outputs": false,
         "x": 1310,
-        "y": 1860,
+        "y": 1920,
         "wires": []
     },
     {
@@ -3847,7 +3865,7 @@
         "name": "hardware",
         "info": "",
         "x": 240,
-        "y": 1820,
+        "y": 1880,
         "wires": []
     },
     {
@@ -3861,7 +3879,7 @@
         "rowsPerMsg": 1,
         "outputs": 1,
         "x": 390,
-        "y": 1960,
+        "y": 2020,
         "wires": [
             [
                 "0105fc0fd72d7393"
@@ -3888,7 +3906,7 @@
         "to": "",
         "reg": false,
         "x": 560,
-        "y": 1960,
+        "y": 2020,
         "wires": [
             [
                 "7552df46794dbba2"
@@ -3906,7 +3924,7 @@
         "rowsPerMsg": 1,
         "outputs": 1,
         "x": 730,
-        "y": 1960,
+        "y": 2020,
         "wires": [
             [
                 "beabe9dbd33783cc"
@@ -3933,7 +3951,7 @@
         "to": "",
         "reg": false,
         "x": 900,
-        "y": 1960,
+        "y": 2020,
         "wires": [
             [
                 "6e71c293f24c6a7c"
@@ -3952,7 +3970,7 @@
         "finalize": "",
         "libs": [],
         "x": 1120,
-        "y": 1960,
+        "y": 2020,
         "wires": [
             [
                 "d396e0c4d33b7fcd",
@@ -3977,7 +3995,7 @@
         "limit_drop_if_in_queue": false,
         "outputs": false,
         "x": 1310,
-        "y": 1960,
+        "y": 2020,
         "wires": []
     },
     {
@@ -3987,7 +4005,7 @@
         "name": "firmware",
         "info": "",
         "x": 240,
-        "y": 1920,
+        "y": 1980,
         "wires": []
     },
     {
@@ -4001,7 +4019,7 @@
         "rowsPerMsg": 1,
         "outputs": 1,
         "x": 390,
-        "y": 2060,
+        "y": 2120,
         "wires": [
             [
                 "630cbb82a7ec6b87"
@@ -4028,7 +4046,7 @@
         "to": "",
         "reg": false,
         "x": 560,
-        "y": 2060,
+        "y": 2120,
         "wires": [
             [
                 "2be35b87c3fb0eed"
@@ -4046,7 +4064,7 @@
         "rowsPerMsg": 1,
         "outputs": 1,
         "x": 730,
-        "y": 2060,
+        "y": 2120,
         "wires": [
             [
                 "9bc975cfebc2d249"
@@ -4073,7 +4091,7 @@
         "to": "",
         "reg": false,
         "x": 900,
-        "y": 2060,
+        "y": 2120,
         "wires": [
             [
                 "466c9be69b5dbde6"
@@ -4092,7 +4110,7 @@
         "finalize": "",
         "libs": [],
         "x": 1120,
-        "y": 2060,
+        "y": 2120,
         "wires": [
             [
                 "a4784e30406840ac",
@@ -4117,7 +4135,7 @@
         "limit_drop_if_in_queue": false,
         "outputs": false,
         "x": 1310,
-        "y": 2060,
+        "y": 2120,
         "wires": []
     },
     {
@@ -4127,7 +4145,7 @@
         "name": "devicesetup",
         "info": "",
         "x": 250,
-        "y": 2020,
+        "y": 2080,
         "wires": []
     },
     {
@@ -4141,7 +4159,7 @@
         "rowsPerMsg": 1,
         "outputs": 1,
         "x": 390,
-        "y": 2160,
+        "y": 2220,
         "wires": [
             [
                 "dfc7f6f4f3b7dcd2"
@@ -4168,7 +4186,7 @@
         "to": "",
         "reg": false,
         "x": 560,
-        "y": 2160,
+        "y": 2220,
         "wires": [
             [
                 "df9d8dad5edb1f23"
@@ -4186,7 +4204,7 @@
         "rowsPerMsg": 1,
         "outputs": 1,
         "x": 730,
-        "y": 2160,
+        "y": 2220,
         "wires": [
             [
                 "d2918c4e4c1ab78c"
@@ -4213,7 +4231,7 @@
         "to": "",
         "reg": false,
         "x": 900,
-        "y": 2160,
+        "y": 2220,
         "wires": [
             [
                 "c9fba1d0be06229b"
@@ -4232,7 +4250,7 @@
         "finalize": "",
         "libs": [],
         "x": 1120,
-        "y": 2160,
+        "y": 2220,
         "wires": [
             [
                 "7f3b9758e883218d",
@@ -4257,7 +4275,7 @@
         "limit_drop_if_in_queue": false,
         "outputs": false,
         "x": 1310,
-        "y": 2160,
+        "y": 2220,
         "wires": []
     },
     {
@@ -4267,7 +4285,7 @@
         "name": "devicecompany",
         "info": "",
         "x": 260,
-        "y": 2120,
+        "y": 2180,
         "wires": []
     },
     {
@@ -4281,7 +4299,7 @@
         "rowsPerMsg": 1,
         "outputs": 1,
         "x": 390,
-        "y": 2260,
+        "y": 2320,
         "wires": [
             [
                 "bd9c7bba1c27842f"
@@ -4308,7 +4326,7 @@
         "to": "",
         "reg": false,
         "x": 560,
-        "y": 2260,
+        "y": 2320,
         "wires": [
             [
                 "10bb4c182c8ac2ed"
@@ -4326,7 +4344,7 @@
         "rowsPerMsg": 1,
         "outputs": 1,
         "x": 730,
-        "y": 2260,
+        "y": 2320,
         "wires": [
             [
                 "0ce0ed3a49e8c5b1"
@@ -4353,7 +4371,7 @@
         "to": "",
         "reg": false,
         "x": 900,
-        "y": 2260,
+        "y": 2320,
         "wires": [
             [
                 "62171a254b44718c"
@@ -4372,7 +4390,7 @@
         "finalize": "",
         "libs": [],
         "x": 1120,
-        "y": 2260,
+        "y": 2320,
         "wires": [
             [
                 "eac7a092e2d9fb58",
@@ -4397,7 +4415,7 @@
         "limit_drop_if_in_queue": false,
         "outputs": false,
         "x": 1310,
-        "y": 2260,
+        "y": 2320,
         "wires": []
     },
     {
@@ -4407,7 +4425,7 @@
         "name": "devicetype",
         "info": "",
         "x": 240,
-        "y": 2220,
+        "y": 2280,
         "wires": []
     },
     {
@@ -4421,7 +4439,7 @@
         "rowsPerMsg": 1,
         "outputs": 1,
         "x": 390,
-        "y": 2360,
+        "y": 2420,
         "wires": [
             [
                 "dbb6516a6311adca"
@@ -4448,7 +4466,7 @@
         "to": "",
         "reg": false,
         "x": 560,
-        "y": 2360,
+        "y": 2420,
         "wires": [
             [
                 "93a6d906ea64bf0c"
@@ -4466,7 +4484,7 @@
         "rowsPerMsg": 1,
         "outputs": 1,
         "x": 730,
-        "y": 2360,
+        "y": 2420,
         "wires": [
             [
                 "cb11edefbb5adb57"
@@ -4493,7 +4511,7 @@
         "to": "",
         "reg": false,
         "x": 900,
-        "y": 2360,
+        "y": 2420,
         "wires": [
             [
                 "6af6bb2262092301"
@@ -4512,7 +4530,7 @@
         "finalize": "",
         "libs": [],
         "x": 1120,
-        "y": 2360,
+        "y": 2420,
         "wires": [
             [
                 "4078d4b696f286f8",
@@ -4537,7 +4555,7 @@
         "limit_drop_if_in_queue": false,
         "outputs": false,
         "x": 1310,
-        "y": 2360,
+        "y": 2420,
         "wires": []
     },
     {
@@ -4547,7 +4565,7 @@
         "name": "device",
         "info": "",
         "x": 230,
-        "y": 2320,
+        "y": 2380,
         "wires": []
     },
     {
@@ -4561,7 +4579,7 @@
         "rowsPerMsg": 1,
         "outputs": 1,
         "x": 390,
-        "y": 2460,
+        "y": 2520,
         "wires": [
             [
                 "22d8bcde5e93bb45"
@@ -4588,7 +4606,7 @@
         "to": "",
         "reg": false,
         "x": 560,
-        "y": 2460,
+        "y": 2520,
         "wires": [
             [
                 "36bfc24ad48e6dbc"
@@ -4606,7 +4624,7 @@
         "rowsPerMsg": 1,
         "outputs": 1,
         "x": 730,
-        "y": 2460,
+        "y": 2520,
         "wires": [
             [
                 "ee5737a040ccaa31"
@@ -4633,7 +4651,7 @@
         "to": "",
         "reg": false,
         "x": 900,
-        "y": 2460,
+        "y": 2520,
         "wires": [
             [
                 "58381d80a13d0ecb"
@@ -4652,7 +4670,7 @@
         "finalize": "",
         "libs": [],
         "x": 1120,
-        "y": 2460,
+        "y": 2520,
         "wires": [
             [
                 "0b772325c0b39c23",
@@ -4677,7 +4695,7 @@
         "limit_drop_if_in_queue": false,
         "outputs": false,
         "x": 1310,
-        "y": 2460,
+        "y": 2520,
         "wires": []
     },
     {
@@ -4687,7 +4705,7 @@
         "name": "monitoreddevice",
         "info": "",
         "x": 260,
-        "y": 2420,
+        "y": 2480,
         "wires": []
     },
     {
@@ -4699,10 +4717,12 @@
             "186a4deaf5124833",
             "27d90fe1cf3fa5b2",
             "3e3a8ecc9488f2e8",
-            "1965eea75b76425a"
+            "1965eea75b76425a",
+            "2a4970a4a6d47d68",
+            "02eeddee083c7123"
         ],
         "x": 115,
-        "y": 1860,
+        "y": 1920,
         "wires": [
             [
                 "9e45edc576f6a96c"
@@ -4718,10 +4738,12 @@
             "186a4deaf5124833",
             "27d90fe1cf3fa5b2",
             "3e3a8ecc9488f2e8",
-            "87ce13da5b44e15e"
+            "87ce13da5b44e15e",
+            "2a4970a4a6d47d68",
+            "02eeddee083c7123"
         ],
         "x": 115,
-        "y": 1960,
+        "y": 2020,
         "wires": [
             [
                 "f4725374161bf3ec"
@@ -4737,10 +4759,12 @@
             "186a4deaf5124833",
             "27d90fe1cf3fa5b2",
             "3e3a8ecc9488f2e8",
-            "6ec682993fd16522"
+            "6ec682993fd16522",
+            "2a4970a4a6d47d68",
+            "02eeddee083c7123"
         ],
         "x": 115,
-        "y": 2060,
+        "y": 2120,
         "wires": [
             [
                 "8244251f5395f6dd"
@@ -4756,10 +4780,12 @@
             "186a4deaf5124833",
             "27d90fe1cf3fa5b2",
             "3e3a8ecc9488f2e8",
-            "4ebb51cefe02025c"
+            "4ebb51cefe02025c",
+            "2a4970a4a6d47d68",
+            "02eeddee083c7123"
         ],
         "x": 115,
-        "y": 2160,
+        "y": 2220,
         "wires": [
             [
                 "95973be6a71222a6"
@@ -4775,10 +4801,12 @@
             "186a4deaf5124833",
             "27d90fe1cf3fa5b2",
             "3e3a8ecc9488f2e8",
-            "e1380698e782f9a4"
+            "e1380698e782f9a4",
+            "2a4970a4a6d47d68",
+            "02eeddee083c7123"
         ],
         "x": 115,
-        "y": 2260,
+        "y": 2320,
         "wires": [
             [
                 "e07e59bfd56d35c4"
@@ -4794,10 +4822,12 @@
             "186a4deaf5124833",
             "27d90fe1cf3fa5b2",
             "3e3a8ecc9488f2e8",
-            "51570bb89122861a"
+            "51570bb89122861a",
+            "2a4970a4a6d47d68",
+            "02eeddee083c7123"
         ],
         "x": 115,
-        "y": 2360,
+        "y": 2420,
         "wires": [
             [
                 "7fedddd053172d1d"
@@ -4813,10 +4843,12 @@
             "186a4deaf5124833",
             "27d90fe1cf3fa5b2",
             "3e3a8ecc9488f2e8",
-            "9d8fd81910376f0d"
+            "9d8fd81910376f0d",
+            "2a4970a4a6d47d68",
+            "02eeddee083c7123"
         ],
         "x": 115,
-        "y": 2460,
+        "y": 2520,
         "wires": [
             [
                 "b425284108ad6fec"
@@ -4832,10 +4864,12 @@
             "186a4deaf5124833",
             "27d90fe1cf3fa5b2",
             "3e3a8ecc9488f2e8",
-            "aceb508d995389b6"
+            "aceb508d995389b6",
+            "2a4970a4a6d47d68",
+            "02eeddee083c7123"
         ],
         "x": 115,
-        "y": 2760,
+        "y": 2820,
         "wires": [
             [
                 "30581c3c2ab08ecd"
@@ -4851,10 +4885,12 @@
             "186a4deaf5124833",
             "27d90fe1cf3fa5b2",
             "3e3a8ecc9488f2e8",
-            "af641b602b64537e"
+            "af641b602b64537e",
+            "2a4970a4a6d47d68",
+            "02eeddee083c7123"
         ],
         "x": 115,
-        "y": 2860,
+        "y": 2920,
         "wires": [
             [
                 "a12fa5f3cda67a41"
@@ -4871,7 +4907,7 @@
             "ecf096ad8adf8308"
         ],
         "x": 145,
-        "y": 500,
+        "y": 560,
         "wires": []
     },
     {
@@ -4883,7 +4919,7 @@
             "7e2d8bedaef930eb"
         ],
         "x": 215,
-        "y": 500,
+        "y": 560,
         "wires": [
             [
                 "24674137ef6f939e"
@@ -4899,8 +4935,8 @@
             "519a6c42b226c872"
         ],
         "uncaught": false,
-        "x": 140,
-        "y": 700,
+        "x": 160,
+        "y": 760,
         "wires": [
             [
                 "2e0d1659fe5eb481",
@@ -4915,8 +4951,8 @@
         "z": "e8287d7944e724f7",
         "name": "Espera atualização",
         "pauseType": "delay",
-        "timeout": "500",
-        "timeoutUnits": "milliseconds",
+        "timeout": "1",
+        "timeoutUnits": "seconds",
         "rate": "1",
         "nbRateUnits": "1",
         "rateUnits": "second",
@@ -4926,8 +4962,8 @@
         "drop": false,
         "allowrate": false,
         "outputs": 1,
-        "x": 410,
-        "y": 700,
+        "x": 430,
+        "y": 760,
         "wires": [
             [
                 "519a6c42b226c872"
@@ -4944,7 +4980,7 @@
         ],
         "uncaught": false,
         "x": 160,
-        "y": 300,
+        "y": 360,
         "wires": [
             [
                 "186a4deaf5124833",
@@ -4980,7 +5016,7 @@
             "b7813722c2d05777"
         ],
         "x": 355,
-        "y": 380,
+        "y": 440,
         "wires": []
     },
     {
@@ -4989,8 +5025,8 @@
         "z": "e8287d7944e724f7",
         "name": "Espera atualização",
         "pauseType": "delay",
-        "timeout": "500",
-        "timeoutUnits": "milliseconds",
+        "timeout": "1",
+        "timeoutUnits": "seconds",
         "rate": "1",
         "nbRateUnits": "1",
         "rateUnits": "second",
@@ -5001,62 +5037,12 @@
         "allowrate": false,
         "outputs": 1,
         "x": 430,
-        "y": 300,
+        "y": 360,
         "wires": [
             [
                 "748f92b85208a9a3"
             ]
         ]
-    },
-    {
-        "id": "1288cd6118d35ec1",
-        "type": "catch",
-        "z": "e8287d7944e724f7",
-        "name": "Atualiza tabelas locais",
-        "scope": [
-            "9feefbc233b512e6",
-            "e1074e9d24e2f36b",
-            "9a6e880ed2dc6cb4",
-            "40fe20885fe85a87",
-            "094f9c905935cb35",
-            "0913dc91f3dc051f",
-            "efdb62e7893d4001",
-            "e0e3a26fc57b31be",
-            "f563a538baa4cfb1",
-            "eb3ec60fe9c329c8",
-            "58c0eca7df626098",
-            "d396e0c4d33b7fcd",
-            "a4784e30406840ac",
-            "7f3b9758e883218d",
-            "eac7a092e2d9fb58",
-            "4078d4b696f286f8",
-            "0b772325c0b39c23"
-        ],
-        "uncaught": false,
-        "x": 200,
-        "y": 1140,
-        "wires": [
-            [
-                "27d90fe1cf3fa5b2",
-                "cbe32c43ab90a86a"
-            ]
-        ]
-    },
-    {
-        "id": "cbe32c43ab90a86a",
-        "type": "debug",
-        "z": "e8287d7944e724f7",
-        "name": "debug 22",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 420,
-        "y": 1140,
-        "wires": []
     },
     {
         "id": "648c0bb359772a51",
@@ -5065,7 +5051,7 @@
         "name": "sincronismo dados medidos",
         "info": "",
         "x": 180,
-        "y": 2940,
+        "y": 3000,
         "wires": []
     },
     {
@@ -5073,15 +5059,15 @@
         "type": "debug",
         "z": "e8287d7944e724f7",
         "name": "debug 23",
-        "active": true,
+        "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 380,
-        "y": 740,
+        "x": 400,
+        "y": 800,
         "wires": []
     },
     {
@@ -5110,8 +5096,8 @@
             "c09678c95e40e63c",
             "b7813722c2d05777"
         ],
-        "x": 335,
-        "y": 780,
+        "x": 355,
+        "y": 840,
         "wires": []
     },
     {
@@ -5119,7 +5105,7 @@
         "type": "debug",
         "z": "e8287d7944e724f7",
         "name": "debug 24",
-        "active": true,
+        "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -5127,7 +5113,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 400,
-        "y": 340,
+        "y": 400,
         "wires": []
     },
     {
@@ -5148,7 +5134,7 @@
         "repair": false,
         "outputs": 1,
         "x": 1310,
-        "y": 1220,
+        "y": 1280,
         "wires": [
             [
                 "7318983264bb4a17"
@@ -5165,7 +5151,7 @@
             "2a0859e4e38c1769"
         ],
         "x": 1415,
-        "y": 1220,
+        "y": 1280,
         "wires": []
     },
     {
@@ -5180,7 +5166,7 @@
         "finalize": "",
         "libs": [],
         "x": 1120,
-        "y": 1260,
+        "y": 1320,
         "wires": [
             [
                 "fd25ccdd240ba3ba",
@@ -5206,7 +5192,7 @@
         "repair": false,
         "outputs": 1,
         "x": 1310,
-        "y": 1320,
+        "y": 1380,
         "wires": [
             [
                 "76254303b59dcaed"
@@ -5223,7 +5209,7 @@
             "770753ac90d1606f"
         ],
         "x": 1415,
-        "y": 1320,
+        "y": 1380,
         "wires": []
     },
     {
@@ -5238,7 +5224,7 @@
         "finalize": "",
         "libs": [],
         "x": 240,
-        "y": 1360,
+        "y": 1420,
         "wires": [
             [
                 "b9a4dc3dc8049d67"
@@ -5257,7 +5243,7 @@
         "finalize": "",
         "libs": [],
         "x": 240,
-        "y": 1260,
+        "y": 1320,
         "wires": [
             [
                 "5081a1edc4a1a6a9"
@@ -5282,7 +5268,7 @@
         "repair": false,
         "outputs": 1,
         "x": 1310,
-        "y": 1420,
+        "y": 1480,
         "wires": [
             [
                 "43968ac0ae73d0fa"
@@ -5299,7 +5285,7 @@
             "bfbce55ef09446a0"
         ],
         "x": 1415,
-        "y": 1420,
+        "y": 1480,
         "wires": []
     },
     {
@@ -5314,7 +5300,7 @@
         "finalize": "",
         "libs": [],
         "x": 240,
-        "y": 1460,
+        "y": 1520,
         "wires": [
             [
                 "f6502ea30fb529c8"
@@ -5333,7 +5319,7 @@
         "finalize": "",
         "libs": [],
         "x": 240,
-        "y": 1560,
+        "y": 1620,
         "wires": [
             [
                 "b5be30e6173941dd"
@@ -5352,7 +5338,7 @@
         "finalize": "",
         "libs": [],
         "x": 240,
-        "y": 1660,
+        "y": 1720,
         "wires": [
             [
                 "f5bfa36f87e42c86"
@@ -5371,7 +5357,7 @@
         "finalize": "",
         "libs": [],
         "x": 240,
-        "y": 1760,
+        "y": 1820,
         "wires": [
             [
                 "3da6600b72c61230"
@@ -5390,7 +5376,7 @@
         "finalize": "",
         "libs": [],
         "x": 240,
-        "y": 1860,
+        "y": 1920,
         "wires": [
             [
                 "4d16a79ba1a4419b"
@@ -5409,7 +5395,7 @@
         "finalize": "",
         "libs": [],
         "x": 240,
-        "y": 1960,
+        "y": 2020,
         "wires": [
             [
                 "3be527713c181ee2"
@@ -5428,7 +5414,7 @@
         "finalize": "",
         "libs": [],
         "x": 240,
-        "y": 2060,
+        "y": 2120,
         "wires": [
             [
                 "2967e3b814b4d32e"
@@ -5447,7 +5433,7 @@
         "finalize": "",
         "libs": [],
         "x": 240,
-        "y": 2160,
+        "y": 2220,
         "wires": [
             [
                 "ac0f6ec64aac623b"
@@ -5466,7 +5452,7 @@
         "finalize": "",
         "libs": [],
         "x": 240,
-        "y": 2260,
+        "y": 2320,
         "wires": [
             [
                 "7bde3097bb2f4012"
@@ -5485,7 +5471,7 @@
         "finalize": "",
         "libs": [],
         "x": 240,
-        "y": 2360,
+        "y": 2420,
         "wires": [
             [
                 "f63ea2f34ed32e3b"
@@ -5504,7 +5490,7 @@
         "finalize": "",
         "libs": [],
         "x": 240,
-        "y": 2460,
+        "y": 2520,
         "wires": [
             [
                 "ee0c393751631edf"
@@ -5523,7 +5509,7 @@
         "finalize": "",
         "libs": [],
         "x": 240,
-        "y": 2560,
+        "y": 2620,
         "wires": [
             [
                 "13bde27b86c01eef"
@@ -5542,7 +5528,7 @@
         "finalize": "",
         "libs": [],
         "x": 240,
-        "y": 2660,
+        "y": 2720,
         "wires": [
             [
                 "7eb34228c28d3357"
@@ -5561,7 +5547,7 @@
         "finalize": "",
         "libs": [],
         "x": 240,
-        "y": 2760,
+        "y": 2820,
         "wires": [
             [
                 "347ad65c66104668"
@@ -5580,7 +5566,7 @@
         "finalize": "",
         "libs": [],
         "x": 240,
-        "y": 2860,
+        "y": 2920,
         "wires": [
             [
                 "046814b83f88f676"
@@ -5605,7 +5591,7 @@
         "repair": false,
         "outputs": 1,
         "x": 1310,
-        "y": 1520,
+        "y": 1580,
         "wires": [
             [
                 "c7cc5389035fde6a"
@@ -5622,7 +5608,7 @@
             "9df3803477262c78"
         ],
         "x": 1415,
-        "y": 1520,
+        "y": 1580,
         "wires": []
     },
     {
@@ -5643,7 +5629,7 @@
         "repair": false,
         "outputs": 1,
         "x": 1310,
-        "y": 1620,
+        "y": 1680,
         "wires": [
             [
                 "9973088018bb2f7e"
@@ -5660,7 +5646,7 @@
             "7c76e2c3274d4a67"
         ],
         "x": 1415,
-        "y": 1620,
+        "y": 1680,
         "wires": []
     },
     {
@@ -5681,7 +5667,7 @@
         "repair": false,
         "outputs": 1,
         "x": 1310,
-        "y": 1720,
+        "y": 1780,
         "wires": [
             [
                 "d5fb01c4a4ca2af9"
@@ -5698,7 +5684,7 @@
             "8487dd3df02ab2b2"
         ],
         "x": 1415,
-        "y": 1720,
+        "y": 1780,
         "wires": []
     },
     {
@@ -5719,7 +5705,7 @@
         "repair": false,
         "outputs": 1,
         "x": 1310,
-        "y": 1820,
+        "y": 1880,
         "wires": [
             [
                 "1965eea75b76425a"
@@ -5736,7 +5722,7 @@
             "c1a6d0f23adce4e2"
         ],
         "x": 1415,
-        "y": 1820,
+        "y": 1880,
         "wires": []
     },
     {
@@ -5757,7 +5743,7 @@
         "repair": false,
         "outputs": 1,
         "x": 1310,
-        "y": 1920,
+        "y": 1980,
         "wires": [
             [
                 "87ce13da5b44e15e"
@@ -5774,7 +5760,7 @@
             "561f9bdffa950abe"
         ],
         "x": 1415,
-        "y": 1920,
+        "y": 1980,
         "wires": []
     },
     {
@@ -5795,7 +5781,7 @@
         "repair": false,
         "outputs": 1,
         "x": 1310,
-        "y": 2020,
+        "y": 2080,
         "wires": [
             [
                 "6ec682993fd16522"
@@ -5812,7 +5798,7 @@
             "796afd436c81502a"
         ],
         "x": 1415,
-        "y": 2020,
+        "y": 2080,
         "wires": []
     },
     {
@@ -5833,7 +5819,7 @@
         "repair": false,
         "outputs": 1,
         "x": 1310,
-        "y": 2120,
+        "y": 2180,
         "wires": [
             [
                 "4ebb51cefe02025c"
@@ -5850,7 +5836,7 @@
             "aced49e2db1368f3"
         ],
         "x": 1415,
-        "y": 2120,
+        "y": 2180,
         "wires": []
     },
     {
@@ -5871,7 +5857,7 @@
         "repair": false,
         "outputs": 1,
         "x": 1310,
-        "y": 2220,
+        "y": 2280,
         "wires": [
             [
                 "e1380698e782f9a4"
@@ -5888,7 +5874,7 @@
             "9ab72ea34fa63dda"
         ],
         "x": 1415,
-        "y": 2220,
+        "y": 2280,
         "wires": []
     },
     {
@@ -5909,7 +5895,7 @@
         "repair": false,
         "outputs": 1,
         "x": 1310,
-        "y": 2320,
+        "y": 2380,
         "wires": [
             [
                 "51570bb89122861a"
@@ -5926,7 +5912,7 @@
             "dcb57c8628d72d76"
         ],
         "x": 1415,
-        "y": 2320,
+        "y": 2380,
         "wires": []
     },
     {
@@ -5947,7 +5933,7 @@
         "repair": false,
         "outputs": 1,
         "x": 1310,
-        "y": 2420,
+        "y": 2480,
         "wires": [
             [
                 "9d8fd81910376f0d"
@@ -5964,7 +5950,7 @@
             "0eeea4ed9881a06a"
         ],
         "x": 1415,
-        "y": 2420,
+        "y": 2480,
         "wires": []
     },
     {
@@ -5985,7 +5971,7 @@
         "repair": false,
         "outputs": 1,
         "x": 1310,
-        "y": 2520,
+        "y": 2580,
         "wires": [
             [
                 "76e1faa977a43f81"
@@ -6002,7 +5988,7 @@
             "e0f0bd479ad4326c"
         ],
         "x": 1415,
-        "y": 2520,
+        "y": 2580,
         "wires": []
     },
     {
@@ -6023,7 +6009,7 @@
         "repair": false,
         "outputs": 1,
         "x": 1310,
-        "y": 2620,
+        "y": 2680,
         "wires": [
             [
                 "89b111b974b09917"
@@ -6040,7 +6026,7 @@
             "90ea025e7b71d331"
         ],
         "x": 1415,
-        "y": 2620,
+        "y": 2680,
         "wires": []
     },
     {
@@ -6061,7 +6047,7 @@
         "repair": false,
         "outputs": 1,
         "x": 1310,
-        "y": 2720,
+        "y": 2780,
         "wires": [
             [
                 "aceb508d995389b6"
@@ -6078,7 +6064,7 @@
             "c09678c95e40e63c"
         ],
         "x": 1415,
-        "y": 2720,
+        "y": 2780,
         "wires": []
     },
     {
@@ -6099,7 +6085,7 @@
         "repair": false,
         "outputs": 1,
         "x": 1310,
-        "y": 2820,
+        "y": 2880,
         "wires": [
             [
                 "af641b602b64537e"
@@ -6116,7 +6102,7 @@
             "b7813722c2d05777"
         ],
         "x": 1415,
-        "y": 2820,
+        "y": 2880,
         "wires": []
     },
     {
@@ -6126,7 +6112,7 @@
         "name": "sincronimo quantidade de dados no banco",
         "info": "",
         "x": 220,
-        "y": 880,
+        "y": 940,
         "wires": []
     },
     {
@@ -6140,7 +6126,7 @@
         "rowsPerMsg": 1,
         "outputs": 1,
         "x": 290,
-        "y": 1000,
+        "y": 1060,
         "wires": [
             [
                 "fabf4d6a58671623"
@@ -6167,7 +6153,7 @@
         "to": "",
         "reg": false,
         "x": 560,
-        "y": 1000,
+        "y": 1060,
         "wires": [
             [
                 "b2a97924aec28dce"
@@ -6185,7 +6171,7 @@
         "rowsPerMsg": 1,
         "outputs": 1,
         "x": 820,
-        "y": 1000,
+        "y": 1060,
         "wires": [
             [
                 "0c25e454755317c4"
@@ -6212,7 +6198,7 @@
         "to": "",
         "reg": false,
         "x": 1070,
-        "y": 1000,
+        "y": 1060,
         "wires": [
             [
                 "2129d70274aeb1d7"
@@ -6237,7 +6223,7 @@
         "onceDelay": 0.1,
         "topic": "",
         "x": 170,
-        "y": 940,
+        "y": 1000,
         "wires": [
             [
                 "9cf0ec7ae215f0ef"
@@ -6256,7 +6242,7 @@
         "finalize": "",
         "libs": [],
         "x": 1260,
-        "y": 1000,
+        "y": 1060,
         "wires": [
             [
                 "f30d9f920ae842c3",
@@ -6281,7 +6267,7 @@
         "limit_drop_if_in_queue": false,
         "outputs": false,
         "x": 1410,
-        "y": 1000,
+        "y": 1060,
         "wires": []
     },
     {
@@ -6302,7 +6288,7 @@
         "repair": false,
         "outputs": 1,
         "x": 1410,
-        "y": 960,
+        "y": 1020,
         "wires": [
             [
                 "72400393fdeed65c"
@@ -6319,7 +6305,7 @@
             "5c91b7c304e1c3fe"
         ],
         "x": 1525,
-        "y": 960,
+        "y": 1020,
         "wires": []
     },
     {
@@ -6332,7 +6318,7 @@
             "9cf0ec7ae215f0ef"
         ],
         "x": 115,
-        "y": 1000,
+        "y": 1060,
         "wires": [
             [
                 "1417d3752880cf73"
@@ -6349,7 +6335,7 @@
             "5c91b7c304e1c3fe"
         ],
         "x": 275,
-        "y": 940,
+        "y": 1000,
         "wires": []
     },
     {
@@ -6363,7 +6349,7 @@
         "rowsPerMsg": 1,
         "outputs": 1,
         "x": 350,
-        "y": 3000,
+        "y": 3060,
         "wires": [
             [
                 "141f3b166449d2f0"
@@ -6381,7 +6367,7 @@
         "rowsPerMsg": 1,
         "outputs": 1,
         "x": 340,
-        "y": 3060,
+        "y": 3120,
         "wires": [
             [
                 "7a0112155e82ab7c"
@@ -6408,12 +6394,10 @@
         "to": "",
         "reg": false,
         "x": 730,
-        "y": 3060,
+        "y": 3120,
         "wires": [
             [
-                "65b1709158ba9c72",
-                "26413c8835c6a562",
-                "c87965835d504c35"
+                "65b1709158ba9c72"
             ]
         ]
     },
@@ -6429,12 +6413,11 @@
         "finalize": "",
         "libs": [],
         "x": 640,
-        "y": 3420,
+        "y": 3480,
         "wires": [
             [
                 "0234676e1d1b16b0",
-                "d102e9c9d8006693",
-                "b5424849b872f58c"
+                "d102e9c9d8006693"
             ]
         ]
     },
@@ -6455,7 +6438,7 @@
         "limit_drop_if_in_queue": false,
         "outputs": false,
         "x": 790,
-        "y": 3440,
+        "y": 3500,
         "wires": []
     },
     {
@@ -6470,7 +6453,7 @@
         "finalize": "",
         "libs": [],
         "x": 660,
-        "y": 3000,
+        "y": 3060,
         "wires": [
             [
                 "1b5ffdf97f338270"
@@ -6488,7 +6471,7 @@
         "rowsPerMsg": 1,
         "outputs": 1,
         "x": 260,
-        "y": 3120,
+        "y": 3180,
         "wires": [
             [
                 "83313327691aa2a4"
@@ -6506,7 +6489,7 @@
         "rowsPerMsg": 1,
         "outputs": 1,
         "x": 250,
-        "y": 3240,
+        "y": 3300,
         "wires": [
             [
                 "9d9bdf443df7d222"
@@ -6533,7 +6516,7 @@
         "to": "",
         "reg": false,
         "x": 440,
-        "y": 3240,
+        "y": 3300,
         "wires": [
             [
                 "d6e7f30c5e447479"
@@ -6551,7 +6534,7 @@
         "rowsPerMsg": 1,
         "outputs": 1,
         "x": 250,
-        "y": 3300,
+        "y": 3360,
         "wires": [
             [
                 "808d5eb44e7b7947"
@@ -6578,7 +6561,7 @@
         "to": "",
         "reg": false,
         "x": 440,
-        "y": 3300,
+        "y": 3360,
         "wires": [
             [
                 "2c48063b2c055485"
@@ -6596,7 +6579,7 @@
         "rowsPerMsg": 1,
         "outputs": 1,
         "x": 260,
-        "y": 3360,
+        "y": 3420,
         "wires": [
             [
                 "9e4c2a803e8b1837"
@@ -6623,7 +6606,7 @@
         "to": "",
         "reg": false,
         "x": 470,
-        "y": 3360,
+        "y": 3420,
         "wires": [
             [
                 "7c654145db716d62"
@@ -6641,7 +6624,7 @@
         "rowsPerMsg": 1,
         "outputs": 1,
         "x": 260,
-        "y": 3180,
+        "y": 3240,
         "wires": [
             [
                 "98aaa5b136ff5f97"
@@ -6668,7 +6651,7 @@
         "to": "",
         "reg": false,
         "x": 470,
-        "y": 3180,
+        "y": 3240,
         "wires": [
             [
                 "98310bcc6bd6d47f"
@@ -6686,7 +6669,7 @@
         "rowsPerMsg": 1,
         "outputs": 1,
         "x": 250,
-        "y": 3420,
+        "y": 3480,
         "wires": [
             [
                 "a5162c3c4ccc6cf2"
@@ -6713,7 +6696,7 @@
         "to": "",
         "reg": false,
         "x": 460,
-        "y": 3420,
+        "y": 3480,
         "wires": [
             [
                 "afc349b16a70d15c"
@@ -6730,7 +6713,7 @@
             "ab6fdac04d704410"
         ],
         "x": 1165,
-        "y": 3060,
+        "y": 3120,
         "wires": []
     },
     {
@@ -6745,7 +6728,7 @@
             "0353f300d75463d0"
         ],
         "x": 115,
-        "y": 3120,
+        "y": 3180,
         "wires": [
             [
                 "d10821c7a4a2fcaa"
@@ -6762,7 +6745,7 @@
             "ab6fdac04d704410"
         ],
         "x": 755,
-        "y": 3400,
+        "y": 3460,
         "wires": []
     },
     {
@@ -6774,7 +6757,7 @@
             "52915c65d06f0b9e"
         ],
         "x": 115,
-        "y": 3000,
+        "y": 3060,
         "wires": [
             [
                 "2cbc882501a23e02"
@@ -6799,7 +6782,7 @@
         "allowrate": false,
         "outputs": 1,
         "x": 230,
-        "y": 640,
+        "y": 700,
         "wires": [
             [
                 "8bb3ae644308d17a"
@@ -6817,7 +6800,7 @@
         ],
         "uncaught": false,
         "x": 150,
-        "y": 3520,
+        "y": 3560,
         "wires": [
             [
                 "4d13e27f6280901b"
@@ -6837,7 +6820,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 300,
-        "y": 3520,
+        "y": 3560,
         "wires": []
     },
     {
@@ -6851,7 +6834,7 @@
         "rowsPerMsg": 1,
         "outputs": 1,
         "x": 710,
-        "y": 3120,
+        "y": 3180,
         "wires": [
             [
                 "6f9203d9d5f20748"
@@ -6877,11 +6860,10 @@
         "repair": false,
         "outputs": 2,
         "x": 890,
-        "y": 3120,
+        "y": 3180,
         "wires": [
             [
-                "65b1709158ba9c72",
-                "47b620bf5dcc9741"
+                "65b1709158ba9c72"
             ],
             [
                 "8dca163139f1046b"
@@ -6900,28 +6882,12 @@
         "finalize": "",
         "libs": [],
         "x": 480,
-        "y": 3120,
+        "y": 3180,
         "wires": [
             [
                 "d8393fc912c57f1c"
             ]
         ]
-    },
-    {
-        "id": "6efe5ab7e3abe651",
-        "type": "debug",
-        "z": "e8287d7944e724f7",
-        "name": "debug 28",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 480,
-        "y": 600,
-        "wires": []
     },
     {
         "id": "1b5ffdf97f338270",
@@ -6934,7 +6900,7 @@
         "rowsPerMsg": 1,
         "outputs": 1,
         "x": 960,
-        "y": 3000,
+        "y": 3060,
         "wires": [
             [
                 "103fc3d6da5f8c16"
@@ -6946,70 +6912,19 @@
         "type": "function",
         "z": "e8287d7944e724f7",
         "name": "cria msg.last_upload",
-        "func": "msg.last_upload = JSON.parse(JSON.stringify(msg.payload[0]))\n\n\nif (msg.last_upload.date_time_stamp != msg.last_update.date_time_stamp)\n    return msg;",
+        "func": "try{\n    msg.last_upload = JSON.parse(JSON.stringify(msg.payload[0]))\n\n\n    if (msg.last_upload.date_time_stamp != msg.last_update.date_time_stamp)\n        return msg;\n} catch(e){}",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
         "x": 1260,
-        "y": 3000,
+        "y": 3060,
         "wires": [
             [
                 "9e2a020bfcc884b8"
             ]
         ]
-    },
-    {
-        "id": "26413c8835c6a562",
-        "type": "debug",
-        "z": "e8287d7944e724f7",
-        "name": "debug 30",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "last_upload.date_time_stamp",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1260,
-        "y": 3040,
-        "wires": []
-    },
-    {
-        "id": "c87965835d504c35",
-        "type": "debug",
-        "z": "e8287d7944e724f7",
-        "name": "debug 31",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "last_update.date_time_stamp",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1260,
-        "y": 3080,
-        "wires": []
-    },
-    {
-        "id": "b5424849b872f58c",
-        "type": "debug",
-        "z": "e8287d7944e724f7",
-        "name": "debug 32",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "last_update_id",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 800,
-        "y": 3500,
-        "wires": []
     },
     {
         "id": "65b1709158ba9c72",
@@ -7023,7 +6938,7 @@
         "finalize": "",
         "libs": [],
         "x": 1040,
-        "y": 3060,
+        "y": 3120,
         "wires": [
             [
                 "c11b755ce7f344e3"
@@ -7031,21 +6946,161 @@
         ]
     },
     {
-        "id": "47b620bf5dcc9741",
+        "id": "833eef5ce0e1149f",
+        "type": "catch",
+        "z": "e8287d7944e724f7",
+        "name": "Atualiza tabelas locais",
+        "scope": [
+            "bd1fb71a66885441"
+        ],
+        "uncaught": false,
+        "x": 160,
+        "y": 160,
+        "wires": [
+            [
+                "77c88365e6a9f556",
+                "60a1628ad2ff29f0"
+            ]
+        ]
+    },
+    {
+        "id": "77c88365e6a9f556",
         "type": "debug",
         "z": "e8287d7944e724f7",
-        "name": "debug 33",
-        "active": true,
+        "name": "debug 30",
+        "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
-        "complete": "last_update_id",
-        "targetType": "msg",
+        "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1000,
-        "y": 3220,
+        "x": 360,
+        "y": 200,
         "wires": []
+    },
+    {
+        "id": "60a1628ad2ff29f0",
+        "type": "delay",
+        "z": "e8287d7944e724f7",
+        "name": "Espera criação do banco",
+        "pauseType": "delay",
+        "timeout": "1",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 410,
+        "y": 160,
+        "wires": [
+            [
+                "bd1fb71a66885441"
+            ]
+        ]
+    },
+    {
+        "id": "02eeddee083c7123",
+        "type": "link out",
+        "z": "e8287d7944e724f7",
+        "name": "loop",
+        "mode": "link",
+        "links": [
+            "2a0859e4e38c1769",
+            "770753ac90d1606f",
+            "bfbce55ef09446a0",
+            "9df3803477262c78",
+            "7c76e2c3274d4a67",
+            "8487dd3df02ab2b2",
+            "90ea025e7b71d331",
+            "a4154898f69f8845",
+            "e0f0bd479ad4326c",
+            "c1a6d0f23adce4e2",
+            "561f9bdffa950abe",
+            "796afd436c81502a",
+            "aced49e2db1368f3",
+            "9ab72ea34fa63dda",
+            "dcb57c8628d72d76",
+            "0eeea4ed9881a06a",
+            "c09678c95e40e63c",
+            "b7813722c2d05777"
+        ],
+        "x": 1035,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "1288cd6118d35ec1",
+        "type": "catch",
+        "z": "e8287d7944e724f7",
+        "name": "Atualiza tabelas locais",
+        "scope": [
+            "efdb62e7893d4001",
+            "0913dc91f3dc051f",
+            "094f9c905935cb35",
+            "e1074e9d24e2f36b",
+            "9feefbc233b512e6",
+            "9a6e880ed2dc6cb4",
+            "58c0eca7df626098",
+            "d396e0c4d33b7fcd",
+            "a4784e30406840ac",
+            "7f3b9758e883218d",
+            "eac7a092e2d9fb58",
+            "4078d4b696f286f8",
+            "0b772325c0b39c23",
+            "e0e3a26fc57b31be",
+            "40fe20885fe85a87",
+            "eb3ec60fe9c329c8",
+            "f563a538baa4cfb1"
+        ],
+        "uncaught": false,
+        "x": 200,
+        "y": 1200,
+        "wires": [
+            [
+                "cbe32c43ab90a86a",
+                "f66d93b6ab114de9"
+            ]
+        ]
+    },
+    {
+        "id": "cbe32c43ab90a86a",
+        "type": "debug",
+        "z": "e8287d7944e724f7",
+        "name": "debug 22",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 400,
+        "y": 1200,
+        "wires": []
+    },
+    {
+        "id": "f66d93b6ab114de9",
+        "type": "stoptimer",
+        "z": "e8287d7944e724f7",
+        "duration": "1",
+        "units": "Second",
+        "payloadtype": "num",
+        "payloadval": "0",
+        "name": "espera atalização",
+        "x": 430,
+        "y": 1240,
+        "wires": [
+            [
+                "27d90fe1cf3fa5b2"
+            ],
+            []
+        ]
     },
     {
         "id": "b07115169e0aa838",
