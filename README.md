@@ -52,13 +52,78 @@ Subflows são fluxos menores que podem ser encapsulados e reutilizados em um flu
 
 Os subflows funcionam como nodes, mas contêm seu próprio conjunto de nodes e conexões. Eles podem ser facilmente criados arrastando e soltando nodes e conexões para um novo fluxo e salvando-o como um subfluxo. Os subfluxos são então adicionados ao fluxo principal arrastando e soltando como um único node.
 
-# Implementação
-Inicialmente, temos todos os nodes separados em dois fluxos: o Receive Data e o Postgres.
-
-No primeiro fluxo, o Receive Data, temos o processo de recebimento, tratamento e adição de informações. Já no segundo, o Postgres, temos os nodes responsáveis pela comunicação entre o Node-RED e o banco de dados PostgreSQL.
+## Implementação
+Inicialmente, temos todos os nodes separados em dois fluxos: o **Receive Data** e o **Postgres**. No primeiro fluxo, o **Receive Data**, temos o processo de recebimento, tratamento e adição de informações. Já no segundo, o **Postgres**, temos os nodes responsáveis pela comunicação entre o Node-RED e o banco de dados PostgreSQL. 
 
 É importante ressaltar que em ambos os fluxos são utilizados subflows para simplificar o processo. Abaixo, seram destacados as funcionalidades e configurações de cada fluxo.
 
+### Receive Data
+O fluxo de dados no receive se da na aquisição dos dados que veem via mqtt no subflow ***MQTT***, sendo que as mensagens eviadas pelos medidores da IE veem de forma separada, como por exemplo no medidor trifasico são enviados os dados separadamente, potencia ativa, potencia retiva, potencia aparente, corrent, tensão, fator de potencia, defasagem, etc, cada um em uma mensagem separada, logo no subflow ***Tratamento da mensagem*** as mensagem são tratadas e unidas para posteriormente serem formatadas no subflow ***Formatação***.
+
+Logo abaixo temos uma mensagem que chega do medidor referente à corrente de fase A:
+
+```json
+{
+  "packet": {
+    "cmd" : "publish",
+    "retain": false,
+    "qos": 0,
+    "dup" : false,
+    "length" : "58",
+    "topic" : "Trifasico",
+    "payload": buffer[42]
+  }
+  "client":{}
+}
+```
+
+Percebe-se que esta mensagem, além de conter o payload no formato buffer, contém também todos os dados do MQTT, como configuração de tópico, subtop, entre outros, sendo simplificada para se tornar:
+```json
+{
+  "id" : "publish",
+  "topic" : "Trifasico",
+  "current_A": 0.83
+}
+```
+
+Contudo, é unida a outras mensagens, tornando-se:
+
+```json
+{
+    "id": "5",
+    "topic": "Trifasico",
+    "active_power_A": 67.93,
+    "active_power_B": 121.27,
+    "active_power_C": 30.11,
+    "reactive_power_A": 59.5,
+    "reactive_power_B": 97.7,
+    "reactive_power_C": 4.59,
+    "apparent_power_A": 90.27,
+    "apparent_power_B": 155.72,
+    "apparent_power_C": 30.46,
+    "voltage_A": 128.04,
+    "voltage_B": 128.25,
+    "voltage_C": 128.75,
+    "current_A": 0.84,
+    "current_B": 1.22,
+    "current_C": 0.3,
+    "power_factor_A": 0.75,
+    "power_factor_B": 0.77,
+    "power_factor_C": 0.98,
+    "voltage_current_angle_A": -90.03,
+    "voltage_current_angle_B": 38.72,
+    "voltage_current_angle_C": -90.03,
+    "frequency": 59.97,
+    "angle_voltage_A_B": 119.54,
+    "angle_voltage_A_C": 240.18,
+    "angle_voltage_B_C": 120.27,
+    "temperature": 35.89
+} 
+```
+
+Essa mensagem contém apenas os valores que serão utilizados para criar a instância de inserção dos dados no banco de dados.
+
+### Postgres
 
 # Conclusão
 Node-RED é uma plataforma poderosa e flexível para a criação de fluxos de trabalho IoT e integração de sistemas. Com seus nodes personalizáveis, fluxos, subflows e outras ferramentas, é possível criar fluxos complexos de maneira visual e fácil de entender. Com a comunidade ativa de desenvolvedores, há sempre suporte para novos nodes e recursos, tornando o Node-RED uma solução escalável para projetos IoT e de integração de sistemas.
