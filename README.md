@@ -1,7 +1,7 @@
 # Node-red
 Repositorio contendo todos os arquivos de configuração, palette e desenvolvimento do node-red para recebimento tratamento e disposição dos dados de medição de consumo ao banco dde dados.
 
-<div align="center"><img src="https://cdn.xingosoftware.com/elektor/images/fetch/dpr_1/https%3A%2F%2Fwww.elektormagazine.com%2Fassets%2Fupload%2Fimages%2F42%2F20200612144414_Node-Red-official-logo.png" width=250> </div>
+<div><img src="https://cdn.xingosoftware.com/elektor/images/fetch/dpr_1/https%3A%2F%2Fwww.elektormagazine.com%2Fassets%2Fupload%2Fimages%2F42%2F20200612144414_Node-Red-official-logo.png" width=250> </div>
 
 ![Badge em Desenvolvimento](http://img.shields.io/static/v1?label=STATUS&message=EM%20DESENVOLVIMENTO&color=GREEN&style=for-the-badge)
 
@@ -93,6 +93,13 @@ Os subflows funcionam como nodes, mas contêm seu próprio conjunto de nodes e c
 ## Implementação
 Inicialmente, temos todos os nodes separados em dois fluxos: o **Receive Data** e o **Postgres**. No primeiro fluxo, o **Receive Data**, temos o processo de recebimento, tratamento e adição de informações. Já no segundo, o **Postgres**, temos os nodes responsáveis pela comunicação entre o Node-RED e o banco de dados PostgreSQL. 
 
+```mermaid
+    graph TD;    
+    A[Recebimento da mesagem contendo apenas uma medição via MQTT] --> B[Tratamento da mensagem] ;
+    B --> C[Junção de todas as medições];
+    C --> D[formatação com adição de medições calculadas];
+```
+
 É importante ressaltar que em ambos os fluxos são utilizados subflows para simplificar o processo. Abaixo, seram destacados as funcionalidades e configurações de cada fluxo.
 
 ### Receive Data
@@ -158,7 +165,6 @@ Contudo, é unida a outras mensagens, tornando-se:
     "temperature": 35.89
 } 
 ```
-
 Essa mensagem contém apenas os valores que serão utilizados para criar a instância de inserção dos dados no banco de dados.
 
 ### Postgres
