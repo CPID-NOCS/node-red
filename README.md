@@ -51,8 +51,13 @@ Subflows são fluxos menores que podem ser encapsulados e reutilizados em um flu
 </div>
 
 Os subflows funcionam como nodes, mas contêm seu próprio conjunto de nodes e conexões. Eles podem ser facilmente criados arrastando e soltando nodes e conexões para um novo fluxo e salvando-o como um subfluxo. Os subfluxos são então adicionados ao fluxo principal arrastando e soltando como um único node.
-# Implementação
 
+# Implementação
+Inicialmente, temos todos os nodes separados em dois fluxos: o Receive Data e o Postgres.
+
+No primeiro fluxo, o Receive Data, temos o processo de recebimento, tratamento e adição de informações. Já no segundo, o Postgres, temos os nodes responsáveis pela comunicação entre o Node-RED e o banco de dados PostgreSQL.
+
+É importante ressaltar que em ambos os fluxos são utilizados subflows para simplificar o processo. Abaixo, seram destacados as funcionalidades e configurações de cada fluxo.
 
 
 # Conclusão
