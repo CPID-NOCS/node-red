@@ -1,13 +1,5 @@
 [
     {
-        "id": "137ba64f0a9dfbf0",
-        "type": "tab",
-        "label": "Receive Data",
-        "disabled": false,
-        "info": "",
-        "env": []
-    },
-    {
         "id": "7119d5927b25a580",
         "type": "tab",
         "label": "Home Assistant",
@@ -40,6 +32,14 @@
         "env": []
     },
     {
+        "id": "291ed776b1a44ede",
+        "type": "tab",
+        "label": "Receive Data",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
         "id": "e8287d7944e724f7",
         "type": "tab",
         "label": "Postgress",
@@ -57,7 +57,7 @@
         "out": [
             {
                 "x": 1130,
-                "y": 820,
+                "y": 780,
                 "wires": [
                     {
                         "id": "119f2f93adb8552d",
@@ -74,7 +74,7 @@
         ],
         "status": {
             "x": 1080,
-            "y": 880,
+            "y": 840,
             "wires": [
                 {
                     "id": "2fe173a7cb0a2a40",
@@ -103,7 +103,7 @@
         "out": [
             {
                 "x": 1070,
-                "y": 860,
+                "y": 820,
                 "wires": [
                     {
                         "id": "0ea7eda264f5cec1",
@@ -126,7 +126,7 @@
         ],
         "status": {
             "x": 1020,
-            "y": 800,
+            "y": 760,
             "wires": [
                 {
                     "id": "facec851db25aa60",
@@ -155,7 +155,7 @@
         "out": [
             {
                 "x": 710,
-                "y": 740,
+                "y": 700,
                 "wires": [
                     {
                         "id": "fd8388a6b3562965",
@@ -188,7 +188,7 @@
         ],
         "status": {
             "x": 660,
-            "y": 800,
+            "y": 760,
             "wires": [
                 {
                     "id": "2c63b29beb296212",
@@ -223,7 +223,7 @@
         ],
         "status": {
             "x": 1140,
-            "y": 1600,
+            "y": 1560,
             "wires": [
                 {
                     "id": "8b608e41ee328872",
@@ -258,7 +258,7 @@
         ],
         "status": {
             "x": 1220,
-            "y": 4400,
+            "y": 4360,
             "wires": [
                 {
                     "id": "3ad75db1d1e689f2",
@@ -485,6 +485,326 @@
         }
     },
     {
+        "id": "e83a4a9578dffbb9",
+        "type": "group",
+        "z": "09685600d012d69f",
+        "style": {
+            "stroke": "#999999",
+            "stroke-opacity": "1",
+            "fill": "none",
+            "fill-opacity": "1",
+            "label": true,
+            "label-position": "nw",
+            "color": "#a4a4a4"
+        },
+        "nodes": [
+            "3d4416342cc7ba80",
+            "cbd92a9404646671",
+            "f2c4303acede0f49",
+            "3065cbbcf25013fd",
+            "e446abe020d042ad",
+            "49029129029e0331"
+        ],
+        "x": 14,
+        "y": 19
+    },
+    {
+        "id": "dca8bc654adbbf02",
+        "type": "group",
+        "z": "96676db9a2f887ed",
+        "style": {
+            "stroke": "#999999",
+            "stroke-opacity": "1",
+            "fill": "none",
+            "fill-opacity": "1",
+            "label": true,
+            "label-position": "nw",
+            "color": "#a4a4a4"
+        },
+        "nodes": [
+            "fd8388a6b3562965",
+            "2c63b29beb296212",
+            "62780e20954084d0",
+            "70d701831511dd80",
+            "58e8ea5634e5a59c",
+            "26d3a3ef0cd6942c",
+            "5e9a61f501a537ae"
+        ],
+        "x": 14,
+        "y": 19
+    },
+    {
+        "id": "8d913cb2ad803019",
+        "type": "group",
+        "z": "669b2c5a031c1ea8",
+        "style": {
+            "stroke": "#999999",
+            "stroke-opacity": "1",
+            "fill": "none",
+            "fill-opacity": "1",
+            "label": true,
+            "label-position": "nw",
+            "color": "#a4a4a4"
+        },
+        "nodes": [
+            "6027f5ee6457bff5",
+            "37cd65d5cb164006",
+            "548a7071933c632c",
+            "6a8629d966bc8d0e",
+            "596a5810aa7c9486",
+            "5d1828b78c891a98"
+        ],
+        "x": 24,
+        "y": 19
+    },
+    {
+        "id": "0592eb0f2887c3ea",
+        "type": "group",
+        "z": "34a182d43462f44e",
+        "style": {
+            "stroke": "#999999",
+            "stroke-opacity": "1",
+            "fill": "none",
+            "fill-opacity": "1",
+            "label": true,
+            "label-position": "nw",
+            "color": "#a4a4a4"
+        },
+        "nodes": [
+            "024d69ffae70bb43",
+            "e93d0d47e2e97002",
+            "bed7b3a0f177126a",
+            "725e348fb3d326eb",
+            "7d093e4c3e197c6a",
+            "b2e99b61aad2d359"
+        ],
+        "x": 14,
+        "y": 19,
+        "w": 742,
+        "h": 668
+    },
+    {
+        "id": "4f3abbcb43bb4e2e",
+        "type": "group",
+        "z": "3c1ed78bc6df6cbd",
+        "style": {
+            "stroke": "#999999",
+            "stroke-opacity": "1",
+            "fill": "none",
+            "fill-opacity": "1",
+            "label": true,
+            "label-position": "nw",
+            "color": "#a4a4a4"
+        },
+        "nodes": [
+            "2fe173a7cb0a2a40",
+            "119f2f93adb8552d",
+            "0372f041345ff56b",
+            "07617004c325cdb0",
+            "606bc7cf5600faf4",
+            "4e6d0bcfdddd096b"
+        ],
+        "x": 14,
+        "y": 19
+    },
+    {
+        "id": "cc9e6cb2286922e2",
+        "type": "group",
+        "z": "d85720db46554979",
+        "style": {
+            "stroke": "#999999",
+            "stroke-opacity": "1",
+            "fill": "none",
+            "fill-opacity": "1",
+            "label": true,
+            "label-position": "nw",
+            "color": "#a4a4a4"
+        },
+        "nodes": [
+            "facec851db25aa60",
+            "0ea7eda264f5cec1",
+            "67d25ef121d15f94",
+            "a0a062d88e115230",
+            "7a08cb8df76eb516",
+            "3d8914ac828c48e7",
+            "87a810e83bc732ce"
+        ],
+        "x": 14,
+        "y": 19
+    },
+    {
+        "id": "4bbb49ad40394687",
+        "type": "group",
+        "z": "f74e1af5aec31631",
+        "style": {
+            "stroke": "#999999",
+            "stroke-opacity": "1",
+            "fill": "none",
+            "fill-opacity": "1",
+            "label": true,
+            "label-position": "nw",
+            "color": "#a4a4a4"
+        },
+        "nodes": [
+            "d23c3bb417f0e578",
+            "9252ff4dd2bc68b5",
+            "c20466e9245989df",
+            "ba05562c85557e0e",
+            "2eccd0e346715923",
+            "a08702cd6d20b021",
+            "e130368244133b83"
+        ],
+        "x": 34,
+        "y": 19,
+        "w": 738,
+        "h": 828
+    },
+    {
+        "id": "96613fce14ad40a8",
+        "type": "group",
+        "z": "291ed776b1a44ede",
+        "style": {
+            "stroke": "#999999",
+            "stroke-opacity": "1",
+            "fill": "none",
+            "fill-opacity": "1",
+            "label": true,
+            "label-position": "nw",
+            "color": "#a4a4a4"
+        },
+        "nodes": [
+            "e952eb37e4e75b49",
+            "19b0b2dff6e05607",
+            "20cbcb56ccfe438a",
+            "31018fb90686d6e0"
+        ],
+        "x": 14,
+        "y": 19,
+        "w": 678,
+        "h": 408
+    },
+    {
+        "id": "3c18d8686a88df81",
+        "type": "group",
+        "z": "d48fb9af316b0fe2",
+        "style": {
+            "stroke": "#999999",
+            "stroke-opacity": "1",
+            "fill": "none",
+            "fill-opacity": "1",
+            "label": true,
+            "label-position": "nw",
+            "color": "#a4a4a4"
+        },
+        "nodes": [
+            "5d43614299a5b76d",
+            "d4b0135a0a32e5c5",
+            "e57930d954bad51a",
+            "af5ab425cf03c631",
+            "f65d3aa1e4cfc455"
+        ],
+        "x": 14,
+        "y": 19,
+        "w": 602,
+        "h": 768
+    },
+    {
+        "id": "8d259b92e5c57f37",
+        "type": "group",
+        "z": "e8287d7944e724f7",
+        "style": {
+            "stroke": "#999999",
+            "stroke-opacity": "1",
+            "fill": "none",
+            "fill-opacity": "1",
+            "label": true,
+            "label-position": "nw",
+            "color": "#a4a4a4"
+        },
+        "nodes": [
+            "7e8e57be847ffa64",
+            "a103f22c7ee8d82d",
+            "10821c84251bd152",
+            "1c1ece291a498e9c",
+            "98457142acc80c09",
+            "69ec59095e3f8d2e"
+        ],
+        "x": 14,
+        "y": 19,
+        "w": 818,
+        "h": 674
+    },
+    {
+        "id": "89a4ae0a1259ce03",
+        "type": "group",
+        "z": "38d792f0bb10ea75",
+        "style": {
+            "stroke": "#999999",
+            "stroke-opacity": "1",
+            "fill": "none",
+            "fill-opacity": "1",
+            "label": true,
+            "label-position": "nw",
+            "color": "#a4a4a4"
+        },
+        "nodes": [
+            "8b608e41ee328872",
+            "38653289be348284",
+            "d7f7f53f51e446ae",
+            "52c66abdf3919c1f",
+            "158a0e6425e5cae7",
+            "464dd04fd59b4416",
+            "d9a0266626dfcca2",
+            "e0919e2a7130b098"
+        ],
+        "x": 14,
+        "y": 19,
+        "w": 1062,
+        "h": 1588
+    },
+    {
+        "id": "eaafc316090ff166",
+        "type": "group",
+        "z": "ba2e913aeb86a3ea",
+        "style": {
+            "stroke": "#999999",
+            "stroke-opacity": "1",
+            "fill": "none",
+            "fill-opacity": "1",
+            "label": true,
+            "label-position": "nw",
+            "color": "#a4a4a4"
+        },
+        "nodes": [
+            "3ad75db1d1e689f2",
+            "2853a7f0ee76f7f1",
+            "498764931f4b71aa",
+            "a8c438ba71c0a43f",
+            "53383e8862e9b803",
+            "84114652054927ee",
+            "14955f02aa0317be",
+            "e7f10f45daeaf688",
+            "240bcd834eb33cf7",
+            "f41dbc6febc7f940",
+            "5a6ed92c41528bb0",
+            "cee982dc38904cdb",
+            "c3167a56125bb451",
+            "a1f79c2e32ad7c7a",
+            "af65b1cf913c581f",
+            "27233bf2b30dc86e",
+            "28709fc7768f4c7f",
+            "709f9014691197e8",
+            "4a661830d296a9f8",
+            "408c191f95cb3007",
+            "ce6090e7bcceefed",
+            "f56b1859406935eb"
+        ],
+        "x": 14,
+        "y": 19,
+        "w": 1142,
+        "h": 4388
+    },
+    {
         "id": "67d25ef121d15f94",
         "type": "group",
         "z": "d85720db46554979",
@@ -511,9 +831,7 @@
             "c1afce0e69e05272"
         ],
         "x": 54,
-        "y": 99,
-        "w": 742,
-        "h": 202
+        "y": 99
     },
     {
         "id": "0372f041345ff56b",
@@ -535,9 +853,7 @@
             "4c0c6dfcc390f93f"
         ],
         "x": 54,
-        "y": 99,
-        "w": 938,
-        "h": 428
+        "y": 99
     },
     {
         "id": "07617004c325cdb0",
@@ -562,9 +878,7 @@
             "0123b886a978d9a2"
         ],
         "x": 54,
-        "y": 539,
-        "w": 532,
-        "h": 162
+        "y": 539
     },
     {
         "id": "606bc7cf5600faf4",
@@ -582,15 +896,12 @@
         },
         "nodes": [
             "54329becedc46d4e",
-            "2c7addaa3b7823e5",
             "c3388ba8d5261934",
             "3f208d081046dd57",
             "57cf3c526ee8f1d9"
         ],
         "x": 54,
-        "y": 719,
-        "w": 412,
-        "h": 182
+        "y": 719
     },
     {
         "id": "a0a062d88e115230",
@@ -618,9 +929,7 @@
             "4204ca863fb0bc35"
         ],
         "x": 54,
-        "y": 319,
-        "w": 882,
-        "h": 202
+        "y": 319
     },
     {
         "id": "7a08cb8df76eb516",
@@ -643,9 +952,7 @@
             "87e724c87e97dc97"
         ],
         "x": 54,
-        "y": 539,
-        "w": 462,
-        "h": 142
+        "y": 539
     },
     {
         "id": "3d8914ac828c48e7",
@@ -663,15 +970,12 @@
         },
         "nodes": [
             "a0a25e1f9e7fab40",
-            "9db4054f3b683baa",
             "6ba7d76b06f3bb18",
             "10ce0b5af640d9b6",
             "a3e283b23edc1f7f"
         ],
         "x": 54,
-        "y": 699,
-        "w": 402,
-        "h": 182
+        "y": 699
     },
     {
         "id": "62780e20954084d0",
@@ -689,15 +993,12 @@
         },
         "nodes": [
             "d346f2eddf89fe35",
-            "30a536bc37686009",
             "9d96d3d9dc737cc2",
             "fd0f5e17797176b6",
             "09a3f46dd176e808"
         ],
         "x": 54,
-        "y": 639,
-        "w": 412,
-        "h": 182
+        "y": 639
     },
     {
         "id": "70d701831511dd80",
@@ -719,9 +1020,7 @@
             "f8e788f202e28034"
         ],
         "x": 54,
-        "y": 99,
-        "w": 372,
-        "h": 142
+        "y": 99
     },
     {
         "id": "58e8ea5634e5a59c",
@@ -744,9 +1043,7 @@
             "ced64b0b61ea785b"
         ],
         "x": 54,
-        "y": 259,
-        "w": 452,
-        "h": 142
+        "y": 259
     },
     {
         "id": "26d3a3ef0cd6942c",
@@ -771,9 +1068,7 @@
             "8e6b524a8fa26f7b"
         ],
         "x": 54,
-        "y": 419,
-        "w": 512,
-        "h": 202
+        "y": 419
     },
     {
         "id": "498764931f4b71aa",
@@ -1359,7 +1654,6 @@
         },
         "nodes": [
             "024e41e4f2951211",
-            "fabdc5527bc6c823",
             "8fc69f1a4a55cbad",
             "27236b7cd8520630",
             "4b54f36dc2249de7"
@@ -1367,7 +1661,7 @@
         "x": 54,
         "y": 4239,
         "w": 402,
-        "h": 182
+        "h": 142
     },
     {
         "id": "f56b1859406935eb",
@@ -1412,7 +1706,6 @@
         },
         "nodes": [
             "5ca774a4d33c0fba",
-            "0b1a7c733bfc05f3",
             "9471e4779f43eb3c",
             "8bd6b463771616ba",
             "d15eb528c28e6139"
@@ -1420,7 +1713,7 @@
         "x": 54,
         "y": 1439,
         "w": 412,
-        "h": 182
+        "h": 142
     },
     {
         "id": "d7f7f53f51e446ae",
@@ -1597,7 +1890,6 @@
         },
         "nodes": [
             "f59098eaab85aa86",
-            "b41d75895b1e5b6e",
             "63be16eb2652b1e9",
             "8584e919515c1a46",
             "95fc96bd3ac5a932",
@@ -1605,9 +1897,7 @@
             "2de6760cdaf7f833"
         ],
         "x": 74,
-        "y": 519,
-        "w": 532,
-        "h": 182
+        "y": 519
     },
     {
         "id": "6a8629d966bc8d0e",
@@ -1632,9 +1922,7 @@
             "1249f497fea1a35d"
         ],
         "x": 74,
-        "y": 299,
-        "w": 472,
-        "h": 202
+        "y": 299
     },
     {
         "id": "596a5810aa7c9486",
@@ -1660,9 +1948,7 @@
             "18a9e0b0fa31c882"
         ],
         "x": 74,
-        "y": 99,
-        "w": 952,
-        "h": 182
+        "y": 99
     },
     {
         "id": "a103f22c7ee8d82d",
@@ -1686,7 +1972,7 @@
         ],
         "x": 54,
         "y": 99,
-        "w": 372,
+        "w": 412,
         "h": 142
     },
     {
@@ -1732,7 +2018,6 @@
         },
         "nodes": [
             "03cfbf557929fd45",
-            "4829fa7a4e7f4599",
             "c6f3631ee7fefa52",
             "109e2447e3fa82be",
             "f91a7fb0598247fb",
@@ -1814,9 +2099,7 @@
             "f28f5b07b82ad25f"
         ],
         "x": 54,
-        "y": 519,
-        "w": 502,
-        "h": 142
+        "y": 519
     },
     {
         "id": "f2c4303acede0f49",
@@ -1834,16 +2117,13 @@
         },
         "nodes": [
             "9db4360617f953d5",
-            "a2c0c852fe55a7d5",
             "31c44d9fc3345bf2",
             "6765db85280605b0",
             "bfbc8fe938c7db9b",
             "1b7087b411242447"
         ],
         "x": 54,
-        "y": 679,
-        "w": 412,
-        "h": 182
+        "y": 679
     },
     {
         "id": "3065cbbcf25013fd",
@@ -1869,9 +2149,7 @@
             "1b881169df1b0798"
         ],
         "x": 54,
-        "y": 99,
-        "w": 992,
-        "h": 202
+        "y": 99
     },
     {
         "id": "e446abe020d042ad",
@@ -1896,218 +2174,7 @@
             "692ad4797710b201"
         ],
         "x": 54,
-        "y": 319,
-        "w": 612,
-        "h": 182
-    },
-    {
-        "id": "e83a4a9578dffbb9",
-        "type": "group",
-        "z": "09685600d012d69f",
-        "style": {
-            "stroke": "#999999",
-            "stroke-opacity": "1",
-            "fill": "none",
-            "fill-opacity": "1",
-            "label": true,
-            "label-position": "nw",
-            "color": "#a4a4a4"
-        },
-        "nodes": [
-            "3d4416342cc7ba80",
-            "cbd92a9404646671",
-            "f2c4303acede0f49",
-            "3065cbbcf25013fd",
-            "e446abe020d042ad",
-            "49029129029e0331"
-        ],
-        "x": 14,
-        "y": 19,
-        "w": 1062,
-        "h": 868
-    },
-    {
-        "id": "dca8bc654adbbf02",
-        "type": "group",
-        "z": "96676db9a2f887ed",
-        "style": {
-            "stroke": "#999999",
-            "stroke-opacity": "1",
-            "fill": "none",
-            "fill-opacity": "1",
-            "label": true,
-            "label-position": "nw",
-            "color": "#a4a4a4"
-        },
-        "nodes": [
-            "fd8388a6b3562965",
-            "2c63b29beb296212",
-            "62780e20954084d0",
-            "70d701831511dd80",
-            "58e8ea5634e5a59c",
-            "26d3a3ef0cd6942c",
-            "5e9a61f501a537ae"
-        ],
-        "x": 14,
-        "y": 19,
-        "w": 578,
-        "h": 828
-    },
-    {
-        "id": "8d913cb2ad803019",
-        "type": "group",
-        "z": "669b2c5a031c1ea8",
-        "style": {
-            "stroke": "#999999",
-            "stroke-opacity": "1",
-            "fill": "none",
-            "fill-opacity": "1",
-            "label": true,
-            "label-position": "nw",
-            "color": "#a4a4a4"
-        },
-        "nodes": [
-            "6027f5ee6457bff5",
-            "37cd65d5cb164006",
-            "548a7071933c632c",
-            "6a8629d966bc8d0e",
-            "596a5810aa7c9486",
-            "5d1828b78c891a98"
-        ],
-        "x": 24,
-        "y": 19,
-        "w": 1032,
-        "h": 708
-    },
-    {
-        "id": "0592eb0f2887c3ea",
-        "type": "group",
-        "z": "34a182d43462f44e",
-        "style": {
-            "stroke": "#999999",
-            "stroke-opacity": "1",
-            "fill": "none",
-            "fill-opacity": "1",
-            "label": true,
-            "label-position": "nw",
-            "color": "#a4a4a4"
-        },
-        "nodes": [
-            "024d69ffae70bb43",
-            "e93d0d47e2e97002",
-            "bed7b3a0f177126a",
-            "725e348fb3d326eb",
-            "7d093e4c3e197c6a",
-            "b2e99b61aad2d359"
-        ],
-        "x": 14,
-        "y": 19,
-        "w": 742,
-        "h": 668
-    },
-    {
-        "id": "4f3abbcb43bb4e2e",
-        "type": "group",
-        "z": "3c1ed78bc6df6cbd",
-        "style": {
-            "stroke": "#999999",
-            "stroke-opacity": "1",
-            "fill": "none",
-            "fill-opacity": "1",
-            "label": true,
-            "label-position": "nw",
-            "color": "#a4a4a4"
-        },
-        "nodes": [
-            "2fe173a7cb0a2a40",
-            "119f2f93adb8552d",
-            "0372f041345ff56b",
-            "07617004c325cdb0",
-            "606bc7cf5600faf4",
-            "4e6d0bcfdddd096b"
-        ],
-        "x": 14,
-        "y": 19,
-        "w": 1004,
-        "h": 908
-    },
-    {
-        "id": "cc9e6cb2286922e2",
-        "type": "group",
-        "z": "d85720db46554979",
-        "style": {
-            "stroke": "#999999",
-            "stroke-opacity": "1",
-            "fill": "none",
-            "fill-opacity": "1",
-            "label": true,
-            "label-position": "nw",
-            "color": "#a4a4a4"
-        },
-        "nodes": [
-            "facec851db25aa60",
-            "0ea7eda264f5cec1",
-            "67d25ef121d15f94",
-            "a0a062d88e115230",
-            "7a08cb8df76eb516",
-            "3d8914ac828c48e7",
-            "87a810e83bc732ce"
-        ],
-        "x": 14,
-        "y": 19,
-        "w": 952,
-        "h": 888
-    },
-    {
-        "id": "f947e220e412adfe",
-        "type": "group",
-        "z": "3c1ed78bc6df6cbd",
-        "g": "0372f041345ff56b",
-        "style": {
-            "stroke": "#999999",
-            "stroke-opacity": "1",
-            "fill": "none",
-            "fill-opacity": "1",
-            "label": true,
-            "label-position": "nw",
-            "color": "#a4a4a4"
-        },
-        "nodes": [
-            "d2ab753d8990c917",
-            "3780a621e1676780",
-            "384a23cf46f3ecba",
-            "3829aec4c323c5ce",
-            "234edab9ccee349a",
-            "47cf208a6e77ebea",
-            "104af077a29300d7"
-        ],
-        "x": 94,
-        "y": 179,
-        "w": 872,
-        "h": 162
-    },
-    {
-        "id": "4c0c6dfcc390f93f",
-        "type": "group",
-        "z": "3c1ed78bc6df6cbd",
-        "g": "0372f041345ff56b",
-        "style": {
-            "stroke": "#999999",
-            "stroke-opacity": "1",
-            "fill": "none",
-            "fill-opacity": "1",
-            "label": true,
-            "label-position": "nw",
-            "color": "#a4a4a4"
-        },
-        "nodes": [
-            "bef4051a82cbf4bc",
-            "9efba4e0ab0cc2a5"
-        ],
-        "x": 94,
-        "y": 359,
-        "w": 192,
-        "h": 142
+        "y": 319
     },
     {
         "id": "c20466e9245989df",
@@ -2125,7 +2192,6 @@
         },
         "nodes": [
             "ca0e1bef333232dd",
-            "bbd41990aebf8a32",
             "d58b119412aca71c",
             "c84ed8b822984453",
             "b6e02291ae67bdb6"
@@ -2161,30 +2227,6 @@
         "y": 299,
         "w": 472,
         "h": 202
-    },
-    {
-        "id": "7545bc9af9735841",
-        "type": "group",
-        "z": "e8287d7944e724f7",
-        "g": "98457142acc80c09",
-        "style": {
-            "stroke": "#999999",
-            "stroke-opacity": "1",
-            "fill": "none",
-            "fill-opacity": "1",
-            "label": true,
-            "label-position": "nw",
-            "color": "#a4a4a4"
-        },
-        "nodes": [
-            "37b3107ac0c0715b",
-            "be4493f2c2f75c3e",
-            "20bafe5cc7c9ba94"
-        ],
-        "x": 94,
-        "y": 499,
-        "w": 492,
-        "h": 142
     },
     {
         "id": "2eccd0e346715923",
@@ -2238,33 +2280,6 @@
         "h": 182
     },
     {
-        "id": "4bbb49ad40394687",
-        "type": "group",
-        "z": "f74e1af5aec31631",
-        "style": {
-            "stroke": "#999999",
-            "stroke-opacity": "1",
-            "fill": "none",
-            "fill-opacity": "1",
-            "label": true,
-            "label-position": "nw",
-            "color": "#a4a4a4"
-        },
-        "nodes": [
-            "d23c3bb417f0e578",
-            "9252ff4dd2bc68b5",
-            "c20466e9245989df",
-            "ba05562c85557e0e",
-            "2eccd0e346715923",
-            "a08702cd6d20b021",
-            "e130368244133b83"
-        ],
-        "x": 34,
-        "y": 19,
-        "w": 738,
-        "h": 828
-    },
-    {
         "id": "1c1ece291a498e9c",
         "type": "group",
         "z": "e8287d7944e724f7",
@@ -2284,14 +2299,14 @@
         ],
         "x": 314,
         "y": 259,
-        "w": 212,
+        "w": 232,
         "h": 142
     },
     {
-        "id": "3871cbf3479809fc",
+        "id": "e952eb37e4e75b49",
         "type": "group",
-        "z": "137ba64f0a9dfbf0",
-        "g": "16734f94c7edc362",
+        "z": "291ed776b1a44ede",
+        "g": "96613fce14ad40a8",
         "style": {
             "stroke": "#999999",
             "stroke-opacity": "1",
@@ -2302,8 +2317,8 @@
             "color": "#a4a4a4"
         },
         "nodes": [
-            "35e6e72a2d4236a3",
-            "509382adb4a2c1a5"
+            "facbed0f0a5fe6b9",
+            "66bddab12845b26a"
         ],
         "x": 54,
         "y": 99,
@@ -2311,10 +2326,10 @@
         "h": 142
     },
     {
-        "id": "318c4f77f17a1460",
+        "id": "19b0b2dff6e05607",
         "type": "group",
-        "z": "137ba64f0a9dfbf0",
-        "g": "16734f94c7edc362",
+        "z": "291ed776b1a44ede",
+        "g": "96613fce14ad40a8",
         "style": {
             "stroke": "#999999",
             "stroke-opacity": "1",
@@ -2325,20 +2340,20 @@
             "color": "#a4a4a4"
         },
         "nodes": [
-            "6369b82295a313f8",
-            "a6364b1119fe8f63",
-            "1a89300440cc6db2"
+            "e20599524b513292",
+            "e27ab5b3074da3e9",
+            "af3c1905ae0804ed"
         ],
         "x": 274,
         "y": 99,
-        "w": 352,
+        "w": 392,
         "h": 142
     },
     {
-        "id": "71eb0976b53256a6",
+        "id": "20cbcb56ccfe438a",
         "type": "group",
-        "z": "137ba64f0a9dfbf0",
-        "g": "16734f94c7edc362",
+        "z": "291ed776b1a44ede",
+        "g": "96613fce14ad40a8",
         "style": {
             "stroke": "#999999",
             "stroke-opacity": "1",
@@ -2349,39 +2364,15 @@
             "color": "#a4a4a4"
         },
         "nodes": [
-            "29bd8b267923fdaf",
-            "bf772b309bacd1b6",
-            "e4a25e6637ea6cea",
-            "dfef160b0ea1bdf6"
+            "f3269ecc3813a185",
+            "47b9d30aaa63a251",
+            "636b8d437d27c1ae",
+            "088f26f8580eb077"
         ],
         "x": 54,
         "y": 259,
-        "w": 352,
+        "w": 372,
         "h": 142
-    },
-    {
-        "id": "16734f94c7edc362",
-        "type": "group",
-        "z": "137ba64f0a9dfbf0",
-        "style": {
-            "stroke": "#999999",
-            "stroke-opacity": "1",
-            "fill": "none",
-            "fill-opacity": "1",
-            "label": true,
-            "label-position": "nw",
-            "color": "#a4a4a4"
-        },
-        "nodes": [
-            "3871cbf3479809fc",
-            "318c4f77f17a1460",
-            "71eb0976b53256a6",
-            "d2a43aeb16bfd1d2"
-        ],
-        "x": 14,
-        "y": 19,
-        "w": 638,
-        "h": 408
     },
     {
         "id": "98457142acc80c09",
@@ -2403,7 +2394,7 @@
         ],
         "x": 54,
         "y": 419,
-        "w": 558,
+        "w": 568,
         "h": 248
     },
     {
@@ -2489,31 +2480,6 @@
         "h": 202
     },
     {
-        "id": "3c18d8686a88df81",
-        "type": "group",
-        "z": "d48fb9af316b0fe2",
-        "style": {
-            "stroke": "#999999",
-            "stroke-opacity": "1",
-            "fill": "none",
-            "fill-opacity": "1",
-            "label": true,
-            "label-position": "nw",
-            "color": "#a4a4a4"
-        },
-        "nodes": [
-            "5d43614299a5b76d",
-            "d4b0135a0a32e5c5",
-            "e57930d954bad51a",
-            "af5ab425cf03c631",
-            "f65d3aa1e4cfc455"
-        ],
-        "x": 14,
-        "y": 19,
-        "w": 602,
-        "h": 768
-    },
-    {
         "id": "69ec59095e3f8d2e",
         "type": "group",
         "z": "e8287d7944e724f7",
@@ -2531,15 +2497,63 @@
             "be7050e23063ac3f",
             "efcc528c06ac65c3"
         ],
-        "x": 534,
+        "x": 554,
         "y": 259,
         "w": 252,
         "h": 142
     },
     {
-        "id": "8d259b92e5c57f37",
+        "id": "f947e220e412adfe",
+        "type": "group",
+        "z": "3c1ed78bc6df6cbd",
+        "g": "0372f041345ff56b",
+        "style": {
+            "stroke": "#999999",
+            "stroke-opacity": "1",
+            "fill": "none",
+            "fill-opacity": "1",
+            "label": true,
+            "label-position": "nw",
+            "color": "#a4a4a4"
+        },
+        "nodes": [
+            "d2ab753d8990c917",
+            "3780a621e1676780",
+            "384a23cf46f3ecba",
+            "3829aec4c323c5ce",
+            "234edab9ccee349a",
+            "47cf208a6e77ebea",
+            "104af077a29300d7"
+        ],
+        "x": 94,
+        "y": 179
+    },
+    {
+        "id": "4c0c6dfcc390f93f",
+        "type": "group",
+        "z": "3c1ed78bc6df6cbd",
+        "g": "0372f041345ff56b",
+        "style": {
+            "stroke": "#999999",
+            "stroke-opacity": "1",
+            "fill": "none",
+            "fill-opacity": "1",
+            "label": true,
+            "label-position": "nw",
+            "color": "#a4a4a4"
+        },
+        "nodes": [
+            "bef4051a82cbf4bc",
+            "9efba4e0ab0cc2a5"
+        ],
+        "x": 94,
+        "y": 359
+    },
+    {
+        "id": "7545bc9af9735841",
         "type": "group",
         "z": "e8287d7944e724f7",
+        "g": "98457142acc80c09",
         "style": {
             "stroke": "#999999",
             "stroke-opacity": "1",
@@ -2550,87 +2564,14 @@
             "color": "#a4a4a4"
         },
         "nodes": [
-            "7e8e57be847ffa64",
-            "a103f22c7ee8d82d",
-            "10821c84251bd152",
-            "1c1ece291a498e9c",
-            "98457142acc80c09",
-            "69ec59095e3f8d2e"
+            "37b3107ac0c0715b",
+            "be4493f2c2f75c3e",
+            "20bafe5cc7c9ba94"
         ],
-        "x": 14,
-        "y": 19,
-        "w": 798,
-        "h": 674
-    },
-    {
-        "id": "89a4ae0a1259ce03",
-        "type": "group",
-        "z": "38d792f0bb10ea75",
-        "style": {
-            "stroke": "#999999",
-            "stroke-opacity": "1",
-            "fill": "none",
-            "fill-opacity": "1",
-            "label": true,
-            "label-position": "nw",
-            "color": "#a4a4a4"
-        },
-        "nodes": [
-            "8b608e41ee328872",
-            "38653289be348284",
-            "d7f7f53f51e446ae",
-            "52c66abdf3919c1f",
-            "158a0e6425e5cae7",
-            "464dd04fd59b4416",
-            "d9a0266626dfcca2",
-            "e0919e2a7130b098"
-        ],
-        "x": 14,
-        "y": 19,
-        "w": 1062,
-        "h": 1628
-    },
-    {
-        "id": "eaafc316090ff166",
-        "type": "group",
-        "z": "ba2e913aeb86a3ea",
-        "style": {
-            "stroke": "#999999",
-            "stroke-opacity": "1",
-            "fill": "none",
-            "fill-opacity": "1",
-            "label": true,
-            "label-position": "nw",
-            "color": "#a4a4a4"
-        },
-        "nodes": [
-            "3ad75db1d1e689f2",
-            "2853a7f0ee76f7f1",
-            "498764931f4b71aa",
-            "a8c438ba71c0a43f",
-            "53383e8862e9b803",
-            "84114652054927ee",
-            "14955f02aa0317be",
-            "e7f10f45daeaf688",
-            "240bcd834eb33cf7",
-            "f41dbc6febc7f940",
-            "5a6ed92c41528bb0",
-            "cee982dc38904cdb",
-            "c3167a56125bb451",
-            "a1f79c2e32ad7c7a",
-            "af65b1cf913c581f",
-            "27233bf2b30dc86e",
-            "28709fc7768f4c7f",
-            "709f9014691197e8",
-            "4a661830d296a9f8",
-            "408c191f95cb3007",
-            "ce6090e7bcceefed",
-            "f56b1859406935eb"
-        ],
-        "x": 14,
-        "y": 19,
-        "w": 1142,
-        "h": 4428
+        "x": 94,
+        "y": 499,
+        "w": 502,
+        "h": 142
     },
     {
         "id": "8b30735b63615ae7",
@@ -2859,56 +2800,6 @@
         "className": ""
     },
     {
-        "id": "d7b0d98cc8afaccc",
-        "type": "ui_spacer",
-        "z": "137ba64f0a9dfbf0",
-        "name": "spacer",
-        "group": "a4a51d2a6b08e863",
-        "order": 3,
-        "width": "20",
-        "height": "1"
-    },
-    {
-        "id": "bb46ddd1beb4b9ef",
-        "type": "ui_spacer",
-        "z": "137ba64f0a9dfbf0",
-        "name": "spacer",
-        "group": "a4a51d2a6b08e863",
-        "order": 1,
-        "width": "1",
-        "height": "21"
-    },
-    {
-        "id": "7917fdf6d690c63e",
-        "type": "ui_spacer",
-        "z": "137ba64f0a9dfbf0",
-        "name": "spacer",
-        "group": "8d5821d35c2d330f",
-        "order": 1,
-        "width": "1",
-        "height": "21"
-    },
-    {
-        "id": "78ba378cfd8e6bb4",
-        "type": "ui_spacer",
-        "z": "137ba64f0a9dfbf0",
-        "name": "spacer",
-        "group": "a4a51d2a6b08e863",
-        "order": 5,
-        "width": "22",
-        "height": "1"
-    },
-    {
-        "id": "b365cf9a8147b90c",
-        "type": "ui_spacer",
-        "z": "137ba64f0a9dfbf0",
-        "name": "spacer",
-        "group": "8d5821d35c2d330f",
-        "order": 5,
-        "width": "22",
-        "height": "1"
-    },
-    {
         "id": "8f9b3699bea7278c",
         "type": "ui_tab",
         "name": "Dispositivo 03",
@@ -2938,56 +2829,6 @@
         "width": "7",
         "collapse": false,
         "className": ""
-    },
-    {
-        "id": "8e8d9899670ca511",
-        "type": "ui_spacer",
-        "z": "137ba64f0a9dfbf0",
-        "name": "spacer",
-        "group": "6a2620f23525088d",
-        "order": 1,
-        "width": "1",
-        "height": "18"
-    },
-    {
-        "id": "5801e45d4b2b3cda",
-        "type": "ui_spacer",
-        "z": "137ba64f0a9dfbf0",
-        "name": "spacer",
-        "group": "6a2620f23525088d",
-        "order": 3,
-        "width": "10",
-        "height": "1"
-    },
-    {
-        "id": "6cb479ba73811241",
-        "type": "ui_spacer",
-        "z": "137ba64f0a9dfbf0",
-        "name": "spacer",
-        "group": "6a2620f23525088d",
-        "order": 7,
-        "width": "10",
-        "height": "1"
-    },
-    {
-        "id": "06a045e925ebd992",
-        "type": "ui_spacer",
-        "z": "137ba64f0a9dfbf0",
-        "name": "spacer",
-        "group": "6a2620f23525088d",
-        "order": 5,
-        "width": "10",
-        "height": "1"
-    },
-    {
-        "id": "5e7a8c3d6fe4dcc6",
-        "type": "ui_spacer",
-        "z": "137ba64f0a9dfbf0",
-        "name": "spacer",
-        "group": "6a2620f23525088d",
-        "order": 1,
-        "width": "10",
-        "height": "1"
     },
     {
         "id": "991a2840523a4942",
@@ -3092,6 +2933,106 @@
         "userFieldType": "str",
         "password": "postgres",
         "passwordFieldType": "str"
+    },
+    {
+        "id": "b7aa1ca21fe563d0",
+        "type": "ui_spacer",
+        "z": "291ed776b1a44ede",
+        "name": "spacer",
+        "group": "a4a51d2a6b08e863",
+        "order": 3,
+        "width": "20",
+        "height": "1"
+    },
+    {
+        "id": "f4dc8b0774f2d4da",
+        "type": "ui_spacer",
+        "z": "291ed776b1a44ede",
+        "name": "spacer",
+        "group": "a4a51d2a6b08e863",
+        "order": 1,
+        "width": "1",
+        "height": "21"
+    },
+    {
+        "id": "17099d43fd449143",
+        "type": "ui_spacer",
+        "z": "291ed776b1a44ede",
+        "name": "spacer",
+        "group": "8d5821d35c2d330f",
+        "order": 1,
+        "width": "1",
+        "height": "21"
+    },
+    {
+        "id": "b3e7e575bbb8e622",
+        "type": "ui_spacer",
+        "z": "291ed776b1a44ede",
+        "name": "spacer",
+        "group": "a4a51d2a6b08e863",
+        "order": 5,
+        "width": "22",
+        "height": "1"
+    },
+    {
+        "id": "5394ea551b45cc53",
+        "type": "ui_spacer",
+        "z": "291ed776b1a44ede",
+        "name": "spacer",
+        "group": "8d5821d35c2d330f",
+        "order": 5,
+        "width": "22",
+        "height": "1"
+    },
+    {
+        "id": "2f1df168a1a0caea",
+        "type": "ui_spacer",
+        "z": "291ed776b1a44ede",
+        "name": "spacer",
+        "group": "6a2620f23525088d",
+        "order": 1,
+        "width": "1",
+        "height": "18"
+    },
+    {
+        "id": "cce3e745bc58dc07",
+        "type": "ui_spacer",
+        "z": "291ed776b1a44ede",
+        "name": "spacer",
+        "group": "6a2620f23525088d",
+        "order": 3,
+        "width": "10",
+        "height": "1"
+    },
+    {
+        "id": "d837c2438177e590",
+        "type": "ui_spacer",
+        "z": "291ed776b1a44ede",
+        "name": "spacer",
+        "group": "6a2620f23525088d",
+        "order": 7,
+        "width": "10",
+        "height": "1"
+    },
+    {
+        "id": "0b27814a0f82a39d",
+        "type": "ui_spacer",
+        "z": "291ed776b1a44ede",
+        "name": "spacer",
+        "group": "6a2620f23525088d",
+        "order": 5,
+        "width": "10",
+        "height": "1"
+    },
+    {
+        "id": "525eb634281e895b",
+        "type": "ui_spacer",
+        "z": "291ed776b1a44ede",
+        "name": "spacer",
+        "group": "6a2620f23525088d",
+        "order": 1,
+        "width": "10",
+        "height": "1"
     },
     {
         "id": "9efba4e0ab0cc2a5",
@@ -3223,27 +3164,9 @@
         "y": 820,
         "wires": [
             [
-                "2c7addaa3b7823e5",
                 "3f208d081046dd57"
             ]
         ]
-    },
-    {
-        "id": "2c7addaa3b7823e5",
-        "type": "debug",
-        "z": "3c1ed78bc6df6cbd",
-        "g": "606bc7cf5600faf4",
-        "name": "debug 31",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 320,
-        "y": 820,
-        "wires": []
     },
     {
         "id": "104af077a29300d7",
@@ -3412,7 +3335,7 @@
             "57cf3c526ee8f1d9"
         ],
         "x": 975,
-        "y": 880,
+        "y": 840,
         "wires": [
             []
         ]
@@ -3441,7 +3364,7 @@
             "3780a621e1676780"
         ],
         "x": 975,
-        "y": 820,
+        "y": 780,
         "wires": [
             []
         ]
@@ -3473,7 +3396,7 @@
         "template": "erro",
         "output": "str",
         "x": 310,
-        "y": 860,
+        "y": 820,
         "wires": [
             [
                 "57cf3c526ee8f1d9"
@@ -3491,7 +3414,7 @@
             "2fe173a7cb0a2a40"
         ],
         "x": 425,
-        "y": 860,
+        "y": 820,
         "wires": []
     },
     {
@@ -4138,27 +4061,9 @@
         "y": 800,
         "wires": [
             [
-                "9db4054f3b683baa",
                 "10ce0b5af640d9b6"
             ]
         ]
-    },
-    {
-        "id": "9db4054f3b683baa",
-        "type": "debug",
-        "z": "d85720db46554979",
-        "g": "3d8914ac828c48e7",
-        "name": "debug 19",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 320,
-        "y": 800,
-        "wires": []
     },
     {
         "id": "6ba7d76b06f3bb18",
@@ -4435,8 +4340,8 @@
             "9d063926b6edf5b8",
             "a3e283b23edc1f7f"
         ],
-        "x": 925,
-        "y": 800,
+        "x": 905,
+        "y": 760,
         "wires": [
             []
         ]
@@ -4479,7 +4384,7 @@
         "template": "erro",
         "output": "str",
         "x": 310,
-        "y": 840,
+        "y": 800,
         "wires": [
             [
                 "a3e283b23edc1f7f"
@@ -4497,7 +4402,7 @@
             "facec851db25aa60"
         ],
         "x": 415,
-        "y": 840,
+        "y": 800,
         "wires": []
     },
     {
@@ -4509,8 +4414,8 @@
         "links": [
             "4204ca863fb0bc35"
         ],
-        "x": 925,
-        "y": 860,
+        "x": 905,
+        "y": 820,
         "wires": [
             []
         ]
@@ -4613,27 +4518,9 @@
         "y": 740,
         "wires": [
             [
-                "30a536bc37686009",
                 "fd0f5e17797176b6"
             ]
         ]
-    },
-    {
-        "id": "30a536bc37686009",
-        "type": "debug",
-        "z": "96676db9a2f887ed",
-        "g": "62780e20954084d0",
-        "name": "debug 32",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 320,
-        "y": 740,
-        "wires": []
     },
     {
         "id": "9d96d3d9dc737cc2",
@@ -4659,7 +4546,7 @@
         "template": "erro",
         "output": "str",
         "x": 310,
-        "y": 780,
+        "y": 740,
         "wires": [
             [
                 "09a3f46dd176e808"
@@ -4677,8 +4564,8 @@
             "4718bae37a92a650",
             "2c63b29beb296212"
         ],
-        "x": 425,
-        "y": 780,
+        "x": 415,
+        "y": 740,
         "wires": []
     },
     {
@@ -4731,8 +4618,8 @@
         "links": [
             "bf124cdbf4ec0574"
         ],
-        "x": 545,
-        "y": 740,
+        "x": 555,
+        "y": 700,
         "wires": [
             []
         ]
@@ -4793,8 +4680,8 @@
             "b438ff76cfc8718b",
             "c8372e7ad4bb8539"
         ],
-        "x": 545,
-        "y": 800,
+        "x": 555,
+        "y": 760,
         "wires": [
             []
         ]
@@ -4878,27 +4765,9 @@
         "y": 1540,
         "wires": [
             [
-                "0b1a7c733bfc05f3",
                 "8bd6b463771616ba"
             ]
         ]
-    },
-    {
-        "id": "0b1a7c733bfc05f3",
-        "type": "debug",
-        "z": "38d792f0bb10ea75",
-        "g": "38653289be348284",
-        "name": "debug 34",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 320,
-        "y": 1540,
-        "wires": []
     },
     {
         "id": "9471e4779f43eb3c",
@@ -4924,7 +4793,7 @@
         "template": "erro",
         "output": "str",
         "x": 310,
-        "y": 1580,
+        "y": 1540,
         "wires": [
             [
                 "d15eb528c28e6139"
@@ -4942,7 +4811,7 @@
             "8b608e41ee328872"
         ],
         "x": 425,
-        "y": 1580,
+        "y": 1540,
         "wires": []
     },
     {
@@ -5017,7 +4886,7 @@
         "z": "38d792f0bb10ea75",
         "g": "d7f7f53f51e446ae",
         "name": "function 10",
-        "func": "msg.last_update_id.id = msg.last_update_id.id + 1\nmsg.payload = \"\"\n\nif (typeof msg.measurement != \"undefined\"){\n    msg.measurement = JSON.parse(JSON.stringify(msg.measurement))\n    \n    msg.payload = msg.payload + \"INSERT INTO public.organic_nodes_control_measurement (date_time_stamp, message_counter, setup_id, source) VALUES('\" + msg.measurement.date_time_stamp + \"', \" + msg.measurement.message_counter + \", \" + msg.measurement.setup_id + \", \" + msg.measurement.source + \");\"\n    msg.payload = msg.payload + \"INSERT INTO public.organic_nodes_control_frequencymeasure(frequency, frequency_sf, measurement_id) VALUES(\" + msg.frequency.frequency + \", \" + msg.frequency.frequency_sf + \", (SELECT id FROM public.organic_nodes_control_measurement WHERE(message_counter = \" + msg.measurement.message_counter + \" AND date_time_stamp = '\" + msg.measurement.date_time_stamp +\"') LIMIT 1));\"\n    msg.payload = msg.payload + \"INSERT INTO public.organic_nodes_control_sensormeasure(temperature, temperature_sf, measurement_id) VALUES(\" + msg.sensor.temperature + \", \" + msg.sensor.temperature_sf + \", (SELECT id FROM public.organic_nodes_control_measurement WHERE(message_counter = \" + msg.measurement.message_counter + \" AND date_time_stamp = '\" + msg.measurement.date_time_stamp +\"') LIMIT 1));\"\n    msg.payload = msg.payload + \"INSERT INTO public.organic_nodes_control_energymeasure(phase, current, current_sf, voltage, voltage_sf, measurement_id)VALUES('\" + msg.energy.phase + \"', \" + msg.energy.current + \", \" + msg.energy.current_sf + \", \" + msg.energy.voltage + \", \" + msg.energy.voltage_sf + \", (SELECT id FROM public.organic_nodes_control_measurement WHERE(message_counter = \" + msg.measurement.message_counter + \" AND date_time_stamp = '\" + msg.measurement.date_time_stamp +\"') LIMIT 1));\"\n    msg.payload = msg.payload + \"INSERT INTO public.organic_nodes_control_powermeasure(phase, voltage_current_angle, voltage_current_angle_sf, power_factor, active_power, active_power_sf, reactive_power, reactive_power_sf, apparent_power, apparent_power_sf, measurement_id)VALUES('\" + msg.power.phase + \"', \" + msg.power.voltage_current_angle + \", \" + msg.power.voltage_current_angle_sf + \", \" + msg.power.power_factor + \", \" + msg.power.active_power + \", \" + msg.power.active_power_sf + \", \" + msg.power.reactive_power + \", \" + msg.power.reactive_power_sf + \", \" + msg.power.apparent_power + \", \" + msg.power.apparent_power_sf + \", (SELECT id FROM public.organic_nodes_control_measurement WHERE(message_counter = \" + msg.measurement.message_counter + \" AND date_time_stamp = '\" + msg.measurement.date_time_stamp +\"') LIMIT 1));\"\n    if (typeof msg.voltagelag != \"undefined\")\n        msg.payload = msg.payload + \"INSERT INTO public.organic_nodes_control_voltagelagmeasure(angle, angle_sf, phase_combination, measurement_id)VALUES(\" + msg.voltagelag.angle + \", \" + msg.voltagelag.angle_sf + \", '\" + msg.voltagelag.phase_combination + \"', (SELECT id FROM public.organic_nodes_control_measurement WHERE(message_counter = \" + msg.measurement.message_counter + \" AND date_time_stamp = '\" + msg.measurement.date_time_stamp +\"') LIMIT 1));\"\n    \n    msg.queryParameters = msg.payload\n    return msg\n}",
+        "func": "msg.last_update_id.id = msg.last_update_id.id + 1\nmsg.payload = \"\"\n\nif (typeof msg.measurement != \"undefined\"){\n    msg.measurement = JSON.parse(JSON.stringify(msg.measurement))\n    \n    msg.payload = msg.payload + \"INSERT INTO public.organic_nodes_control_measurement (date_time_stamp, message_counter, setup_id, source) VALUES('\" + msg.measurement.date_time_stamp + \"', \" + msg.measurement.message_counter + \", \" + msg.measurement.setup_id + \", \" + msg.measurement.source + \");\"\n    msg.payload = msg.payload + \"INSERT INTO public.organic_nodes_control_frequencymeasure(frequency, frequency_sf, measurement_id) VALUES(\" + msg.frequency.frequency + \", \" + msg.frequency.frequency_sf + \", (SELECT id FROM public.organic_nodes_control_measurement WHERE(message_counter = \" + msg.measurement.message_counter + \" AND date_time_stamp = '\" + msg.measurement.date_time_stamp +\"') LIMIT 1));\"\n    msg.payload = msg.payload + \"INSERT INTO public.organic_nodes_control_sensormeasure(temperature, temperature_sf, measurement_id) VALUES(\" + msg.sensor.temperature + \", \" + msg.sensor.temperature_sf + \", (SELECT id FROM public.organic_nodes_control_measurement WHERE(message_counter = \" + msg.measurement.message_counter + \" AND date_time_stamp = '\" + msg.measurement.date_time_stamp +\"') LIMIT 1));\"\n    msg.payload = msg.payload + \"INSERT INTO public.organic_nodes_control_energymeasure(phase, current, current_sf, voltage, voltage_sf, measurement_id)VALUES('\" + msg.energy.phase + \"', \" + msg.energy.current + \", \" + msg.energy.current_sf + \", \" + msg.energy.voltage + \", \" + msg.energy.voltage_sf + \", (SELECT id FROM public.organic_nodes_control_measurement WHERE(message_counter = \" + msg.measurement.message_counter + \" AND date_time_stamp = '\" + msg.measurement.date_time_stamp +\"') LIMIT 1));\"\n    msg.payload = msg.payload + \"INSERT INTO public.organic_nodes_control_powermeasure(phase, voltage_current_angle, voltage_current_angle_sf, power_factor, active_power, active_power_sf, reactive_power, reactive_power_sf, apparent_power, apparent_power_sf, measurement_id)VALUES('\" + msg.power.phase + \"', \" + msg.power.voltage_current_angle + \", \" + msg.power.voltage_current_angle_sf + \", \" + msg.power.power_factor + \", \" + msg.power.active_power + \", \" + msg.power.active_power_sf + \", \" + msg.power.reactive_power + \", \" + msg.power.reactive_power_sf + \", \" + msg.power.apparent_power + \", \" + msg.power.apparent_power_sf + \", (SELECT id FROM public.organic_nodes_control_measurement WHERE(message_counter = \" + msg.measurement.message_counter + \" AND date_time_stamp = '\" + msg.measurement.date_time_stamp +\"') LIMIT 1));\"\n    if (typeof msg.voltagelag != \"undefined\")\n        msg.payload = msg.payload + \"INSERT INTO public.organic_nodes_control_voltagelagmeasure(angle, angle_sf, phase_combination, measurement_id)VALUES(\" + msg.voltagelag.angle + \", \" + msg.voltagelag.angle_sf + \", '\" + msg.voltagelag.phase_combination + \"', (SELECT id FROM public.organic_nodes_control_measurement WHERE(message_counter = \" + msg.measurement.message_counter + \" AND date_time_stamp = '\" + msg.measurement.date_time_stamp +\"') LIMIT 1));\"\n    \n    msg.queryParameters = msg.payload\n    return msg\n}else {\n    global.set(\"sincronizando_remoto\", false)\n}",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -5028,7 +4897,8 @@
         "wires": [
             [
                 "a1b1a252b0cc604a",
-                "23c4238d8da6f334"
+                "23c4238d8da6f334",
+                "5f6ddbe116ff4757"
             ]
         ]
     },
@@ -5116,13 +4986,27 @@
         "type": "change",
         "z": "38d792f0bb10ea75",
         "g": "52c66abdf3919c1f",
-        "name": "cria msg.power",
+        "name": "cria msg.power_(ABC)",
         "rules": [
             {
                 "t": "set",
-                "p": "power",
+                "p": "power_A",
                 "pt": "msg",
                 "to": "payload[0]",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "power_B",
+                "pt": "msg",
+                "to": "payload[1]",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "power_C",
+                "pt": "msg",
+                "to": "payload[2]",
                 "tot": "msg"
             }
         ],
@@ -5131,7 +5015,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 440,
+        "x": 480,
         "y": 740,
         "wires": [
             [
@@ -5178,7 +5062,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 440,
+        "x": 460,
         "y": 800,
         "wires": [
             [
@@ -5210,13 +5094,27 @@
         "type": "change",
         "z": "38d792f0bb10ea75",
         "g": "52c66abdf3919c1f",
-        "name": "cria msg.voltagelag",
+        "name": "cria msg.voltagelag_(ABC)",
         "rules": [
             {
                 "t": "set",
-                "p": "voltagelag",
+                "p": "voltagelag_AB",
                 "pt": "msg",
                 "to": "payload[0]",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "voltagelag_AC",
+                "pt": "msg",
+                "to": "payload[1]",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "voltagelag_BC",
+                "pt": "msg",
+                "to": "payload[2]",
                 "tot": "msg"
             }
         ],
@@ -5225,7 +5123,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 470,
+        "x": 500,
         "y": 860,
         "wires": [
             [
@@ -5272,7 +5170,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 450,
+        "x": 470,
         "y": 680,
         "wires": [
             [
@@ -5304,14 +5202,28 @@
         "type": "change",
         "z": "38d792f0bb10ea75",
         "g": "52c66abdf3919c1f",
-        "name": "cria msg.energy",
+        "name": "cria msg.energy_(ABC)",
         "rules": [
             {
                 "t": "set",
-                "p": "energy",
+                "p": "energy_A",
                 "pt": "msg",
                 "to": "payload[0]",
                 "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "energy_B",
+                "pt": "msg",
+                "to": "payload[1]",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "energy_C",
+                "pt": "msg",
+                "to": "payload[2]",
+                "tot": "str"
             }
         ],
         "action": "",
@@ -5319,7 +5231,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 460,
+        "x": 490,
         "y": 920,
         "wires": [
             [
@@ -5334,7 +5246,9 @@
         "g": "158a0e6425e5cae7",
         "name": "Medições",
         "mode": "link",
-        "links": [],
+        "links": [
+            "ba1f97dd5f403313"
+        ],
         "x": 1005,
         "y": 420,
         "wires": []
@@ -5345,7 +5259,10 @@
         "z": "38d792f0bb10ea75",
         "g": "52c66abdf3919c1f",
         "name": "Medições",
-        "links": [],
+        "links": [
+            "9bfc3d9edad16b68",
+            "23c4238d8da6f334"
+        ],
         "x": 125,
         "y": 620,
         "wires": [
@@ -5361,7 +5278,9 @@
         "g": "d7f7f53f51e446ae",
         "name": "Medições",
         "mode": "link",
-        "links": [],
+        "links": [
+            "ba1f97dd5f403313"
+        ],
         "x": 395,
         "y": 1060,
         "wires": []
@@ -5460,7 +5379,7 @@
         "z": "38d792f0bb10ea75",
         "g": "464dd04fd59b4416",
         "name": "cria msg.last_upload",
-        "func": "try{\n    msg.last_upload = JSON.parse(JSON.stringify(msg.payload[0]))\n\n\n    if (msg.last_upload.date_time_stamp != msg.last_update.date_time_stamp)\n        return msg;\n} catch(e){}",
+        "func": "try{\n    msg.last_upload = JSON.parse(JSON.stringify(msg.payload[0]))\n\n\n    if (msg.last_upload.date_time_stamp != msg.last_update.date_time_stamp){\n        global.set(\"sincronizando_remoto\", false)\n        return msg;\n    }else {\n        global.set(\"sincronizando_remoto\", false)\n    }\n} catch(e){}",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -5664,7 +5583,7 @@
         "links": [
             "ecfe55630da4601a"
         ],
-        "x": 605,
+        "x": 685,
         "y": 680,
         "wires": []
     },
@@ -5679,7 +5598,7 @@
             "49df46e372d3ac33",
             "0551cf9e18d8a383"
         ],
-        "x": 605,
+        "x": 685,
         "y": 740,
         "wires": []
     },
@@ -5691,7 +5610,7 @@
         "name": "link out 3",
         "mode": "link",
         "links": [],
-        "x": 605,
+        "x": 685,
         "y": 800,
         "wires": []
     },
@@ -5705,7 +5624,7 @@
         "links": [
             "9d02f39318aa5afe"
         ],
-        "x": 605,
+        "x": 685,
         "y": 860,
         "wires": []
     },
@@ -5719,7 +5638,7 @@
         "links": [
             "d5483a424d414257"
         ],
-        "x": 605,
+        "x": 685,
         "y": 920,
         "wires": []
     },
@@ -5735,9 +5654,7 @@
         "x": 135,
         "y": 1080,
         "wires": [
-            [
-                "dcc7c6f584808cce"
-            ]
+            []
         ]
     },
     {
@@ -5797,7 +5714,7 @@
             "e279f7dad76b662c"
         ],
         "x": 1035,
-        "y": 1600,
+        "y": 1560,
         "wires": [
             []
         ]
@@ -5950,6 +5867,23 @@
         "info": "",
         "x": 250,
         "y": 60,
+        "wires": []
+    },
+    {
+        "id": "5f6ddbe116ff4757",
+        "type": "debug",
+        "z": "38d792f0bb10ea75",
+        "name": "debug 18",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "measurement",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1220,
+        "y": 1240,
         "wires": []
     },
     {
@@ -9849,27 +9783,9 @@
         "y": 4340,
         "wires": [
             [
-                "fabdc5527bc6c823",
                 "27236b7cd8520630"
             ]
         ]
-    },
-    {
-        "id": "fabdc5527bc6c823",
-        "type": "debug",
-        "z": "ba2e913aeb86a3ea",
-        "g": "ce6090e7bcceefed",
-        "name": "debug 33",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 320,
-        "y": 4340,
-        "wires": []
     },
     {
         "id": "8fc69f1a4a55cbad",
@@ -9895,7 +9811,7 @@
         "template": "erro",
         "output": "str",
         "x": 310,
-        "y": 4380,
+        "y": 4340,
         "wires": [
             [
                 "4b54f36dc2249de7"
@@ -9913,7 +9829,7 @@
             "3ad75db1d1e689f2"
         ],
         "x": 415,
-        "y": 4380,
+        "y": 4340,
         "wires": []
     },
     {
@@ -10079,7 +9995,7 @@
             "dc3b128908422624"
         ],
         "x": 1115,
-        "y": 4400,
+        "y": 4360,
         "wires": [
             []
         ]
@@ -10187,28 +10103,10 @@
         "y": 620,
         "wires": [
             [
-                "b41d75895b1e5b6e",
                 "8584e919515c1a46",
                 "2de6760cdaf7f833"
             ]
         ]
-    },
-    {
-        "id": "b41d75895b1e5b6e",
-        "type": "debug",
-        "z": "669b2c5a031c1ea8",
-        "g": "548a7071933c632c",
-        "name": "debug 36",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 340,
-        "y": 580,
-        "wires": []
     },
     {
         "id": "63be16eb2652b1e9",
@@ -10674,28 +10572,10 @@
         "y": 580,
         "wires": [
             [
-                "4829fa7a4e7f4599",
                 "109e2447e3fa82be",
                 "c25702fb47b0c93f"
             ]
         ]
-    },
-    {
-        "id": "4829fa7a4e7f4599",
-        "type": "debug",
-        "z": "34a182d43462f44e",
-        "g": "725e348fb3d326eb",
-        "name": "debug 38",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 320,
-        "y": 540,
-        "wires": []
     },
     {
         "id": "c6f3631ee7fefa52",
@@ -10896,28 +10776,10 @@
         "y": 780,
         "wires": [
             [
-                "a2c0c852fe55a7d5",
                 "6765db85280605b0",
                 "1b7087b411242447"
             ]
         ]
-    },
-    {
-        "id": "a2c0c852fe55a7d5",
-        "type": "debug",
-        "z": "09685600d012d69f",
-        "g": "f2c4303acede0f49",
-        "name": "debug 39",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 320,
-        "y": 740,
-        "wires": []
     },
     {
         "id": "31c44d9fc3345bf2",
@@ -11360,27 +11222,9 @@
         "y": 620,
         "wires": [
             [
-                "bbd41990aebf8a32",
                 "c84ed8b822984453"
             ]
         ]
-    },
-    {
-        "id": "bbd41990aebf8a32",
-        "type": "debug",
-        "z": "f74e1af5aec31631",
-        "g": "c20466e9245989df",
-        "name": "debug 40",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 340,
-        "y": 580,
-        "wires": []
     },
     {
         "id": "d58b119412aca71c",
@@ -11625,8 +11469,8 @@
         "z": "d48fb9af316b0fe2",
         "g": "af5ab425cf03c631",
         "name": "Parametros",
-        "func": "msg.queryParameters = msg.payload\nreturn msg;",
-        "outputs": 1,
+        "func": "msg.queryParameters = msg.payload\n\nlet sinc = global.get(\"sincronizando_remoto\") || false\n\nif (sinc == false)\n    return [msg, msg];\nelse \n    return [null, msg];",
+        "outputs": 2,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
@@ -11635,8 +11479,10 @@
         "y": 200,
         "wires": [
             [
-                "3be5c77014fb982e",
                 "a0a5d9ac3de89d35"
+            ],
+            [
+                "3be5c77014fb982e"
             ]
         ]
     },
@@ -11897,7 +11743,6 @@
         "g": "d4b0135a0a32e5c5",
         "name": "",
         "scope": [
-            "3be5c77014fb982e",
             "a0a5d9ac3de89d35"
         ],
         "uncaught": false,
@@ -11976,138 +11821,6 @@
         "name": "Salvamento das medições no banco local e remoto",
         "info": "",
         "x": 230,
-        "y": 60,
-        "wires": []
-    },
-    {
-        "id": "35e6e72a2d4236a3",
-        "type": "comment",
-        "z": "137ba64f0a9dfbf0",
-        "g": "3871cbf3479809fc",
-        "name": "Pega Mensagem",
-        "info": "",
-        "x": 160,
-        "y": 140,
-        "wires": []
-    },
-    {
-        "id": "509382adb4a2c1a5",
-        "type": "subflow:3c1ed78bc6df6cbd",
-        "z": "137ba64f0a9dfbf0",
-        "g": "3871cbf3479809fc",
-        "name": "",
-        "x": 150,
-        "y": 200,
-        "wires": [
-            [
-                "6369b82295a313f8"
-            ]
-        ]
-    },
-    {
-        "id": "6369b82295a313f8",
-        "type": "subflow:d85720db46554979",
-        "z": "137ba64f0a9dfbf0",
-        "g": "318c4f77f17a1460",
-        "name": "",
-        "x": 430,
-        "y": 200,
-        "wires": [
-            [
-                "1a89300440cc6db2"
-            ]
-        ]
-    },
-    {
-        "id": "29bd8b267923fdaf",
-        "type": "subflow:96676db9a2f887ed",
-        "z": "137ba64f0a9dfbf0",
-        "g": "71eb0976b53256a6",
-        "name": "",
-        "x": 250,
-        "y": 360,
-        "wires": [
-            [
-                "e4a25e6637ea6cea"
-            ]
-        ]
-    },
-    {
-        "id": "bf772b309bacd1b6",
-        "type": "link in",
-        "z": "137ba64f0a9dfbf0",
-        "g": "71eb0976b53256a6",
-        "name": "Tratamento dos dados",
-        "links": [
-            "deff96f79e54b357"
-        ],
-        "x": 115,
-        "y": 360,
-        "wires": [
-            [
-                "29bd8b267923fdaf"
-            ]
-        ]
-    },
-    {
-        "id": "1a89300440cc6db2",
-        "type": "link out",
-        "z": "137ba64f0a9dfbf0",
-        "g": "318c4f77f17a1460",
-        "name": "Verificação de cadastro em banco",
-        "mode": "link",
-        "links": [
-            "cd20082090c4089f"
-        ],
-        "x": 585,
-        "y": 200,
-        "wires": []
-    },
-    {
-        "id": "e4a25e6637ea6cea",
-        "type": "link out",
-        "z": "137ba64f0a9dfbf0",
-        "g": "71eb0976b53256a6",
-        "name": "inserção",
-        "mode": "link",
-        "links": [
-            "05fc6a7213ccabdd",
-            "c36938b99c6ef84d"
-        ],
-        "x": 365,
-        "y": 360,
-        "wires": []
-    },
-    {
-        "id": "a6364b1119fe8f63",
-        "type": "comment",
-        "z": "137ba64f0a9dfbf0",
-        "g": "318c4f77f17a1460",
-        "name": "Trata mensagem",
-        "info": "",
-        "x": 380,
-        "y": 140,
-        "wires": []
-    },
-    {
-        "id": "dfef160b0ea1bdf6",
-        "type": "comment",
-        "z": "137ba64f0a9dfbf0",
-        "g": "71eb0976b53256a6",
-        "name": "Formata mensagem",
-        "info": "",
-        "x": 170,
-        "y": 300,
-        "wires": []
-    },
-    {
-        "id": "d2a43aeb16bfd1d2",
-        "type": "comment",
-        "z": "137ba64f0a9dfbf0",
-        "g": "16734f94c7edc362",
-        "name": "Recebimento da Mensagem",
-        "info": "",
-        "x": 160,
         "y": 60,
         "wires": []
     },
@@ -17366,6 +17079,138 @@
         ]
     },
     {
+        "id": "facbed0f0a5fe6b9",
+        "type": "comment",
+        "z": "291ed776b1a44ede",
+        "g": "e952eb37e4e75b49",
+        "name": "Pega Mensagem",
+        "info": "",
+        "x": 160,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "66bddab12845b26a",
+        "type": "subflow:3c1ed78bc6df6cbd",
+        "z": "291ed776b1a44ede",
+        "g": "e952eb37e4e75b49",
+        "name": "",
+        "x": 150,
+        "y": 200,
+        "wires": [
+            [
+                "e20599524b513292"
+            ]
+        ]
+    },
+    {
+        "id": "e20599524b513292",
+        "type": "subflow:d85720db46554979",
+        "z": "291ed776b1a44ede",
+        "g": "19b0b2dff6e05607",
+        "name": "",
+        "x": 440,
+        "y": 200,
+        "wires": [
+            [
+                "af3c1905ae0804ed"
+            ]
+        ]
+    },
+    {
+        "id": "f3269ecc3813a185",
+        "type": "subflow:96676db9a2f887ed",
+        "z": "291ed776b1a44ede",
+        "g": "20cbcb56ccfe438a",
+        "name": "",
+        "x": 250,
+        "y": 360,
+        "wires": [
+            [
+                "636b8d437d27c1ae"
+            ]
+        ]
+    },
+    {
+        "id": "47b9d30aaa63a251",
+        "type": "link in",
+        "z": "291ed776b1a44ede",
+        "g": "20cbcb56ccfe438a",
+        "name": "Tratamento dos dados",
+        "links": [
+            "deff96f79e54b357"
+        ],
+        "x": 115,
+        "y": 360,
+        "wires": [
+            [
+                "f3269ecc3813a185"
+            ]
+        ]
+    },
+    {
+        "id": "af3c1905ae0804ed",
+        "type": "link out",
+        "z": "291ed776b1a44ede",
+        "g": "19b0b2dff6e05607",
+        "name": "Verificação de cadastro em banco",
+        "mode": "link",
+        "links": [
+            "cd20082090c4089f"
+        ],
+        "x": 625,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "636b8d437d27c1ae",
+        "type": "link out",
+        "z": "291ed776b1a44ede",
+        "g": "20cbcb56ccfe438a",
+        "name": "inserção",
+        "mode": "link",
+        "links": [
+            "05fc6a7213ccabdd",
+            "c36938b99c6ef84d"
+        ],
+        "x": 385,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "e27ab5b3074da3e9",
+        "type": "comment",
+        "z": "291ed776b1a44ede",
+        "g": "19b0b2dff6e05607",
+        "name": "Trata mensagem",
+        "info": "",
+        "x": 380,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "088f26f8580eb077",
+        "type": "comment",
+        "z": "291ed776b1a44ede",
+        "g": "20cbcb56ccfe438a",
+        "name": "Formata mensagem",
+        "info": "",
+        "x": 170,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "31018fb90686d6e0",
+        "type": "comment",
+        "z": "291ed776b1a44ede",
+        "g": "96613fce14ad40a8",
+        "name": "Recebimento da Mensagem",
+        "info": "",
+        "x": 160,
+        "y": 60,
+        "wires": []
+    },
+    {
         "id": "fd6966f62c5f4377",
         "type": "comment",
         "z": "e8287d7944e724f7",
@@ -17396,9 +17241,9 @@
         "mode": "link",
         "links": [
             "4a4d5b6117095a6d",
-            "bf772b309bacd1b6"
+            "47b9d30aaa63a251"
         ],
-        "x": 385,
+        "x": 425,
         "y": 200,
         "wires": []
     },
@@ -17410,7 +17255,7 @@
         "name": "Verificação de cadastro em banco",
         "links": [
             "72070532429bb061",
-            "1a89300440cc6db2"
+            "af3c1905ae0804ed"
         ],
         "x": 115,
         "y": 200,
@@ -17427,7 +17272,7 @@
         "g": "69ec59095e3f8d2e",
         "name": "Parametros do postgres",
         "info": "",
-        "x": 660,
+        "x": 680,
         "y": 300,
         "wires": []
     },
@@ -17448,7 +17293,7 @@
         "z": "e8287d7944e724f7",
         "g": "a103f22c7ee8d82d",
         "name": "",
-        "x": 260,
+        "x": 270,
         "y": 200,
         "wires": [
             [
@@ -17478,7 +17323,7 @@
         "name": "inserção",
         "links": [
             "15cd7bec8dbe3c11",
-            "e4a25e6637ea6cea"
+            "636b8d437d27c1ae"
         ],
         "x": 115,
         "y": 360,
@@ -17552,7 +17397,7 @@
         "z": "e8287d7944e724f7",
         "g": "1c1ece291a498e9c",
         "name": "",
-        "x": 430,
+        "x": 440,
         "y": 360,
         "wires": [
             [
@@ -17566,7 +17411,7 @@
         "z": "e8287d7944e724f7",
         "g": "69ec59095e3f8d2e",
         "name": "",
-        "x": 660,
+        "x": 680,
         "y": 360,
         "wires": []
     },
