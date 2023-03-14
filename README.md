@@ -6,7 +6,45 @@ Repositorio contendo todos os arquivos de configuração, palette e desenvolvime
 ![Badge em Desenvolvimento](http://img.shields.io/static/v1?label=STATUS&message=EM%20DESENVOLVIMENTO&color=GREEN&style=for-the-badge)
 
 ## Modo de execução
+Para executar essas configurações no Node-RED, é preciso ter instalado o Node-RED e o Postgres via Docker, como mostrado neste outro repositório ([instalação Docker](https://hub.docker.com/r/arthurcoelho442/monitor)).
 
+**Atualização do sistema**
+
+```
+sudo apt-get update && apt-get upgrade -y
+```
+
+
+**Entre no modo de navegação root**
+```
+sudo su
+```
+
+**Navegue até a pasta do node-red**
+```
+cd /home/pi/node-red
+```
+
+**Inicialize o repositorio**
+```
+git init
+```
+
+**Adicione o repositorio remoto**
+```
+git remote add origin https://github.com/CPID-NOCS/node-red.git
+```
+
+**Limpe o repositorio local**
+```
+git clean -f
+```
+
+**Pegue as alterações do repositorio remoto**
+```
+git pull -f origin Arthur
+```
+pronto basta entrar com suas credenciais e logo logo as configurações serãao baixadas.
 
 ## Funcionamento Node-Red
 
