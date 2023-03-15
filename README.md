@@ -236,10 +236,10 @@ Agora vamos entrar em detalhes do funcionamento de cada subflow conttido nas dep
 O subflow ***MQTT*** tem a função de capturar as mensagens recebidas pelo Node-RED local por meio do MQTT na porta 1883. Para garantir a qualidade das mensagens, o subflow transmite apenas aquelas que não possuem falhas, como mensagens nulas ou com payload vazio.
 
 <div align="center">
-    <img src="https://github.com/CPID-NOCS/node-red/blob/master/Imagens/subflow-MQTT.png" width=600><br>
+    <img src="https://github.com/CPID-NOCS/node-red/blob/master/Imagens/subflow-MQTT.png" width=850><br>
 </div>
 
-O fluxo do subflow começa com um node chamado **Aedes MQTT**(configuração no [Anexo-I](#anexo-1)), que funciona como um mosquito broker e coleta todas as mensagens que chegam na porta 1883 da Raspberry Pi. Em seguida, a mensagem passa pelo node **Não nulos**(configuração no [Anexo-II](#anexo-2)), que verifica se a mensagem não está vazia e se está conectada. Essas informações são cruciais para garantir a consistência das mensagens recebidas. Por fim, a mensagem passa pelo node **Verifica payload**(configuração no [Anexo-III](#anexo-3)), que verifica se o payload da mensagem contém dados ou está vazio.
+O fluxo do subflow começa com um node chamado **Aedes MQTT**(configuração no [Anexo-I](#anexo-1)), que funciona como um mosquito broker e coleta todas as mensagens que chegam na porta 1883 da Raspberry Pi. Em seguida, a mensagem passa pelo node **Não nulos**(configuração no [Anexo-II](#anexo-2)), que verifica se a mensagem não está vazia e se está conectada. Essas informações são cruciais para garantir a consistência das mensagens recebidas. Por fim, a mensagem passa pelo node **Existe dados**(configuração no [Anexo-III](#anexo-3)), que verifica se o payload da mensagem contém dados ou está vazio.
 
 Além desses nodes, o subflow ***MQTT*** também possui nodes de status que informam a situação atual do node (conectado ou desconectado) e um node de aviso que informa caso ocorra algum problema em qualquer node do subflow.
 
@@ -250,6 +250,10 @@ O subfluxo ***Tratamento da mensagem*** é separado em dois fluxos:
 
 - E um *Identificação de Tópico e Junção*, que junta as mensagens de acordo com o tópico;
 
+<div align="center">
+    <img src="https://user-images.githubusercontent.com/56831082/225388516-8f52fca6-135b-4a26-a2fe-4a34ac3d677c.png" width=900><br>
+</div>
+	
 O objeto inicial chega no formato:
 ```json
 {
@@ -275,13 +279,13 @@ e passa a ter o seguinte formato após a reconfiguração no primeiro fluxo:
 	"unit":"A"
 }
 ```
-Esse processo é realizado através dos nodos **convert payload**, que converte o formato do buffer para um objeto JSON, e posteriormente as informações irrelevantes são removidas e o payload é reorganizado pelo nodo **Reconfiguração**. Por fim, a mensagem é transformada em uma string JSON para facilitar a união com as mensagens seguintes no fluxo de *Identificação de Tópico e Junção*. A união ocorre de forma diferente de acordo com o tipo de módulo (monofásico, bifásico e trifásico), pois temos uma quantidade diferente de mensagens a serem unidas. Cada mensagem é identificada pelo nodo **Identificação de fase**, através do tópico em que a mensagem foi publicada. A união é realizada pelos nodos **Junção Monofásico**, **Junção Bifásico** e **Junção Trifásico**.
+Esse processo é realizado através dos nodos **convert payload**(configuração no [Anexo-IV](#anexo-4)), que converte o formato payload de buffer para um objeto JSON, e posteriormente as informações irrelevantes são removidas e o payload é reorganizado pelo nodulo **Reconfiguração**(configuração no [Anexo-V](#anexo-5)). Por fim, a mensagem é transformada em uma string JSON no nodulo **Trasformação String**(configuração no [Anexo-VI](#anexo-6)) para facilitar a união com as mensagens seguintes no fluxo de *Identificação de Tópico e Junção*. A união ocorre de forma diferente para cada tipo de módulo (monofásico, bifásico e trifásico), pois temos uma quantidade diferente de mensagens a serem unidas. Cada mensagem é identificada pelo nodulo **Identificação de fase**(configuração no [Anexo-VII](#anexo-7)), através do tópico em que a mensagem foi publicada. A união é realizada pelos nodulos **Junção Monofásico**, **Junção Bifásico** e **Junção Trifásico**(configuração de ambos no [Anexo-VIII](#anexo-8)).
 
 Após a união, é necessário modificar a mensagem resultante, que chega no seguinte formato:
 ```
 {"id":"5","topic":"Trifasico","variable":"PA","value":94.87,"unit":"W"},{"id":"5","topic":"Trifasico","variable":"PB","value":117.4,"unit":"W"},{"id":"5","topic":"Trifasico","variable":"PC","value":64.71,"unit":"W"},...}
 ```
-Para isso removemos as junções `"},{"` e alteramos o formato basico de cada menagem, no caso da corrente de Fase A, a mensagem ´"{"id":"5","topic":"Trifasico","variable":"IA","value":1.08,"unit":"W"}"´ passa a ser `{"id":"5", topic":"Trifasico", "variable":"IA", value":1.08, unit":"A"}` e é unida as outras. Isso é feito pelo nodulo **Junção e Alteração**.
+Para isso removemos as junções `"},{"` e alteramos o formato basico de cada menagem, no caso da corrente de Fase A, a mensagem ´{"id":"5","topic":"Trifasico","variable":"IA","value":1.08,"unit":"W"}´ passa a ser `{"id":"5", topic":"Trifasico", "variable":"IA", value":1.08, unit":"A"}` e é unida as outras. Isso é feito pelo nodulo **Junção e Alteração**(configuração no [Anexo-IX](#anexo-9)).
 
 Recuperação da Mensagem resultante de Json String para Json Object:
 ```json
@@ -315,7 +319,7 @@ Recuperação da Mensagem resultante de Json String para Json Object:
 }
 ```
 	
-Muitos desses valores não são utilizados pelo projeto. Após a recuperação da string JSON para objeto JSON no nodulo **Recuperação**, os dados não utilizados, como 'unit', 'PT', 'QT', 'ST', e 'IT', são removidos pelo nodulo "Remoção", deixando o payload no seguinte formato:
+Muitos desses valores não são utilizados pelo projeto. Após a recuperação da string JSON para objeto JSON no nodulo **Recuperação**(configuração no [Anexo-X](#anexo-10)), os dados não utilizados, como 'unit', 'PT', 'QT', 'ST', e 'IT', são removidos pelo nodulo "Remoção"(configuração no [Anexo-XI](#anexo-11)), deixando o payload no seguinte formato:
 	
 ```json
 {
@@ -376,29 +380,67 @@ Logo abaixo temos todos os anexos de configuração dos nodes
 </div>
 	
 ---
-### <a name="anexo-3"><a/><div align="center"> Anexo III - Esta conectado</div>
-	
-<div align="center"> 
-	<img src="https://user-images.githubusercontent.com/56831082/225341469-e31ae3ce-4293-40d0-a81f-820acf425482.png"><br>
-</div>
-	
----
-### <a name="anexo-4"><a/><div align="center"> Anexo IV - Existe dados</div>
+### <a name="anexo-4"><a/><div align="center"> Anexo III - Existe dados</div>
 	
 <div align="center"> 
 	<img src="https://user-images.githubusercontent.com/56831082/225341533-9c9cc8cb-c337-4f1c-840f-75edd16527f3.png"><br>
 </div>
 
 ---
-### <a name="anexo-5"><a/><div align="center"> Anexo V </div>
+### <a name="anexo-4"><a/><div align="center"> Anexo IV - convert payload</div>
+	
+<div align="center"> 
+	<img src="https://user-images.githubusercontent.com/56831082/225396555-ce37938a-c7e1-477f-bab4-51a6f7cc325f.png"><br>
+</div>
+
 ---
-### <a name="anexo-6"><a/><div align="center"> Anexo VI </div>
+### <a name="anexo-5"><a/><div align="center"> Anexo V - Reconfigurção</div>
+	
+<div align="center"> 
+	<img src="https://user-images.githubusercontent.com/56831082/225396636-08726984-6480-42ce-9b1a-951ddd516efd.png"><br>
+</div>
+
 ---
-### <a name="anexo-7"><a/><div align="center"> Anexo VII </div>
+
+### <a name="anexo-6"><a/><div align="center"> Anexo VI - Transformação String </div>
+	
+<div align="center"> 
+	<img src="https://user-images.githubusercontent.com/56831082/225396746-7df89b03-02bc-4353-997d-728c861875de.png"><br>
+</div>
+
 ---
-### <a name="anexo-8"><a/><div align="center"> Anexo VIII </div>
+### <a name="anexo-7"><a/><div align="center"> Anexo VII - Indentificação fase</div>
+	
+<div align="center"> 
+	<img src="https://user-images.githubusercontent.com/56831082/225400562-aff53b2c-6221-430b-b1fd-e53975087fac.png"><br>
+</div>
+
+---
+### <a name="anexo-8"><a/><div align="center"> Anexo VIII - Junção (Monofasico/Bifasico/Trifasico)</div>
+	
+| <img src="https://user-images.githubusercontent.com/56831082/225396933-33cd8ec0-3122-4e3d-8be9-26bca8154986.png"><br><sub>Monofasico</sub> | <img src="https://user-images.githubusercontent.com/56831082/225396953-3b499743-6857-4631-86cf-26a9a929e883.png"><br><sub>Bifasico</sub>| <img src="https://user-images.githubusercontent.com/56831082/225396981-dcd6282b-eda2-40ec-863a-9b62e37565d3.png"><br><sub>Trifasico</sub> |
+| :---: | :---: | :---: |
+
 ---	
-### <a name="anexo-9"><a/><div align="center"> Anexo IX </div>
+### <a name="anexo-9"><a/><div align="center"> Anexo IX - Junção e Alteração</div>
+	
+| <img src="https://user-images.githubusercontent.com/56831082/225401425-fe39068c-d40c-49d1-b2d5-661e8ab01f0c.png"><br> | <img src="https://user-images.githubusercontent.com/56831082/225401443-b0b72c79-f5f0-4639-9981-89b10588d804.png"><br>| <img src="https://user-images.githubusercontent.com/56831082/225401458-95f8b920-7f37-4626-a913-0f88e865025c.png"><br> |
+| :---: | :---: | :---: |
+| <img src="https://user-images.githubusercontent.com/56831082/225401671-8dde46a5-5b66-4aea-b165-0516b2eadf37.png"><br> | <img src="https://user-images.githubusercontent.com/56831082/225401699-ba5ad67b-a5a3-4192-9e9a-5fdb64307aed.png"><br>| <img src="https://user-images.githubusercontent.com/56831082/225401724-fbfbd647-5203-4a6d-af4a-4458a6ef2b2b.png"><br> |
+
+	
 ---
-### <a name="anexo-10"><a/><div align="center"> Anexo X </div>
+
+### <a name="anexo-10"><a/><div align="center"> Anexo X - Recuperação</div>
+	
+<div align="center"> 
+	<img src="https://user-images.githubusercontent.com/56831082/225400696-8343b1d6-4857-48a1-aa14-c3dc322f57a4.png"><br>
+</div>
+
+---
+### <a name="anexo-11"><a/><div align="center"> Anexo XI - Remoção</div>
+	
+| <img src="https://user-images.githubusercontent.com/56831082/225400843-4cc488ad-d54b-4bd2-a309-66886b2e6aa2.png"><br> | <img src="https://user-images.githubusercontent.com/56831082/225400862-1a386b9b-ad6f-4b6d-89c7-3b51ce3e8ae9.png"><br>|
+| :---: | :---: |
+
 ---
