@@ -15,6 +15,7 @@
 			- [MQTT](#mqtt)
 			- [Tratamento da Mensagem](#tratamento-da-mensagem)
 			- [Formatação](#formatacao)
+			- [Verifica cadastro](#verifica-cadastro)
 			- [phase](#phase)
 			- [Cria Instancia](#cria-instancia)
 			- [Envio ao Banco](#envio-ao-banco)
@@ -37,6 +38,9 @@
 	- [Anexo XI - Remoção](#anexo-11)
 	- [Anexo XII - Formatação](#anexo-12)
 	- [Anexo XIII - Contador de mensagens](#anexo-13)
+	- [Anexo XIV - Duplica](#anexo-14)
+	- [Anexo XV - postgresql](#anexo-15)
+	- [Anexo XVI - Verifica Cadastro no banco](#anexo-16)
 
 # <a name=“node-red”><a/>Node-red
 
@@ -230,6 +234,21 @@ Dentro desse fluxo, temos vários subfluxos que facilitam o trabalho com o banco
 
 Temos também o subfluxo ***envia ao banco***, que envia a medição já instanciada para o banco local e remoto, e o subfluxo oculto ***sincronismo local***, que mantém as tabelas locais de cadastro atualizadas com o banco remoto. Por fim, o subfluxo ***sincronismo tamanho banco local*** mantém o tamanho do banco de dados local em um tamanho fixo.
 
+Para termos um funcionamento adequado dos nodulos responsaveis pela comunicação com o postgresql, temos 4 configurações a serem efetuadas, logo abaixo temos o nó e qual configuração deve ser feita nele:
+	
+<img src="https://user-images.githubusercontent.com/56831082/225421968-c96b500e-1e16-48e9-bfa2-9093759b8164.png" width=135><br>
+	
+|<img src="https://user-images.githubusercontent.com/56831082/225422893-139e72af-4a6e-45d2-aff4-38fa75513808.png"><br><sub>Local</sub> | <img src="https://user-images.githubusercontent.com/56831082/225422904-bba64b54-7486-463e-8d6b-ad9557a4470c.png"><br><sub>Remoto</sub>|
+| :---: | :---: |
+
+<img src="https://user-images.githubusercontent.com/56831082/225421982-4e365e48-6f93-4bb0-913a-2e15bd18cd66.png" width=135><br>
+
+|<img src="https://user-images.githubusercontent.com/56831082/225423581-d22b451d-b92d-4c74-b121-832b6113a40c.png"><br><sub>Local-Connection</sub> | <img src="https://user-images.githubusercontent.com/56831082/225423590-d27d0139-3865-4bc1-b2dc-de5640f114f0.png"><br><sub>Local-Security</sub>|
+| :---: | :---: |
+|<img src="https://user-images.githubusercontent.com/56831082/225423596-ed72cf45-7990-483f-9403-f38ca76e4ca9.png"><br><sub>**Remoto-Connection**</sub> | <img src="https://user-images.githubusercontent.com/56831082/225423608-41da729e-3c66-4187-8b7a-2b06570547a6.png"><br><sub>**Remoto-Security**</sub>|
+
+Perceba que no banco local o host é dado como postgres, pois o node-red esta no docker e esta na mesma rede do conteiner postgres.
+	
 >### <a name=“subflows”><a/>Subflows
 
 Agora vamos entrar em detalhes do funcionamento de cada subflow conttido nas dependencias do node-red.
@@ -391,6 +410,13 @@ Outras funcionalidades deste nó é realizar o cálculo de medições que alguns
 	<img src="https://user-images.githubusercontent.com/56831082/225413648-047bb42d-350a-47ac-94e7-d199fbbdc9bf.png" width=400><br>
 </div>
 
+#### <a name=“verifica-cadastro”><a/>Verifica cadastro
+Este subflow é responsável por verificar se o ID da mensagem que chegou no payload está cadastrado no banco de dados. Caso contrário, a mensagem não pode ser armazenada no banco. Para isso, no início do fluxo, a mensagem é duplicada pelo nó **Duplica** pois o segundo nó utilizado, responsável pela verificação, sobrescreve o payload da mensagem. Logo, para não haver perdas, a mensagem é duplicada. No segundo nó **postgreSQL**, temos uma query que busca o ID do mqtt_access referente ao ID do cliente da mensagem. Caso esse ID não seja definido, significa que o ID da mensagem não possui cadastro. Nesse caso, a mensagem é enviada ao subflow ***Sincronismo Local*** para verificar se as tabelas locais estão devidamente atualizadas, essa descisão e tomada pelo nó **Verifica Cadastro no banco**(configuração no [Anexo-XVI](#anexo-16)).
+
+<div align=center>
+	<img src="https://user-images.githubusercontent.com/56831082/225420298-4f21f277-3633-4af1-9756-56bd4bec12eb.png" width=950><br>
+</div>
+	
 #### <a name=“phase”><a/>phase
 #### <a name="cria-instancia"><a/>Cria Instancia
 #### <a name="envio-ao-banco"><a/>Envio ao banco
@@ -798,6 +824,29 @@ return msg;
 	
 |<img src="https://user-images.githubusercontent.com/56831082/225415813-955765d0-9607-411c-835a-959d5c736322.png"><br><sub>Verifica</sub>|<img src="https://user-images.githubusercontent.com/56831082/225415841-1f6f79ff-6c02-4082-939f-142eadfd89de.png"><br><sub>Zara contador</sub>|
 | :---: | :---: |
+
+---
+### <a name="anexo-14"><a/><div align="center"> Anexo XIV -Duplica</div>
+	
+<div align="center"> 
+	<img src="https://user-images.githubusercontent.com/56831082/225429013-b1c3c64a-56e2-4551-8ef7-3443d3cc5bbd.png"><br>
+</div>
+
+---
+
+### <a name="anexo-15"><a/><div align="center"> Anexo XV - postgresql</div>
+
+**Query**
+```sql
+	SELECT id FROM public.organic_nodes_control_mqttaccess where mqtt_id = '{{msg.temp.id}}';
+```
+
+---
+### <a name="anexo-16"><a/><div align="center"> Anexo XVI - Verifica Cadastro no banco</div>
+	
+<div align="center"> 
+	<img src="https://user-images.githubusercontent.com/56831082/225429027-ecfd82dd-b59c-43c5-ac7e-0ad7f93c418a.png"><br>
+</div>
 
 ---
 </div>
