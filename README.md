@@ -21,6 +21,19 @@
 			- [Sincronismo tamanho banco local](#sincronismo-tamanho-banco-local)
 - [Conclusão](#conclusao)
 - [Autor](#autor)
+- [Anexos](#anexos)
+	- [Anexo I - Aedes MQTT](#anexo-1")
+	- [Anexo II - Não nulos](#anexo-2")
+	- [Anexo III - Esta conectado](#anexo-3")
+	- [Anexo IV - Existe dados](#anexo-4")
+	- [Anexo V](#anexo-5")
+	- [Anexo VI](#anexo-6")
+	- [Anexo VII](#anexo-7")
+	- [Anexo VIII](#anexo-8")
+	- [Anexo IX](#anexo-9")
+	- [Anexo X](#anexo-10")
+
+
 
 # <a name=“node-red”><a/>Node-red
 
@@ -283,4 +296,10 @@ Logo abaixo temos todos os anexos de configuração dos nodes
 ### <a name="anexo-6"><a/><div align="center"> Anexo VI </div>
 ---
 ### <a name="anexo-7"><a/><div align="center"> Anexo VII </div>
+---
+### <a name="anexo-8"><a/><div align="center"> Anexo VIII </div>
+---	
+### <a name="anexo-9"><a/><div align="center"> Anexo IX </div>
+---
+### <a name="anexo-10"><a/><div align="center"> Anexo X </div>
 ---
