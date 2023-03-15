@@ -226,7 +226,7 @@ O subflow ***MQTT*** tem a função de capturar as mensagens recebidas pelo Node
     <img src="https://github.com/CPID-NOCS/node-red/blob/master/Imagens/subflow-MQTT.png" width=600><br>
 </div>
 
-O fluxo do subflow começa com um node chamado **Aedes MQTT**, que funciona como um mosquito broker e coleta todas as mensagens que chegam na porta 1883 da Raspberry Pi. Em seguida, a mensagem passa pelo node **Não nulos**, que verifica se a mensagem não está vazia e se está conectada. Essas informações são cruciais para garantir a consistência das mensagens recebidas. Por fim, a mensagem passa pelo node **Verifica payload**, que verifica se o payload da mensagem contém dados ou está vazio.
+O fluxo do subflow começa com um node chamado **Aedes MQTT**(configuração no [Anexo-I](#anexo-1)), que funciona como um mosquito broker e coleta todas as mensagens que chegam na porta 1883 da Raspberry Pi. Em seguida, a mensagem passa pelo node **Não nulos**(configuração no [Anexo-II](#anexo-2)), que verifica se a mensagem não está vazia e se está conectada. Essas informações são cruciais para garantir a consistência das mensagens recebidas. Por fim, a mensagem passa pelo node **Verifica payload**(configuração no [Anexo-III](#anexo-3)), que verifica se o payload da mensagem contém dados ou está vazio.
 
 Além desses nodes, o subflow ***MQTT*** também possui nodes de status que informam a situação atual do node (conectado ou desconectado) e um node de aviso que informa caso ocorra algum problema em qualquer node do subflow.
 
@@ -246,3 +246,22 @@ Node-RED é uma plataforma poderosa e flexível para a criação de fluxos de tr
 # <a name=“autor”><a/>Autor
 | [<img src="https://avatars.githubusercontent.com/u/56831082?v=4" width=115><br><sub>Arthur Coelho Estevão</sub>](https://github.com/arthurcoelho442) |
 | :---: |
+
+# <a name="anexos"><a/>Anexos
+Logo abaixo temos todos os anexos de configuração dos nodes
+###
+---
+### <a name="anexo-1"><a/><div align="center"> Anexo I - Aedes MQTT </div>
+---
+### <a name="anexo-2"><a/><div align="center"> Anexo II - Não nulos</div>
+---
+### <a name="anexo-3"><a/><div align="center"> Anexo III - Esta conectado</div>
+---
+### <a name="anexo-4"><a/><div align="center"> Anexo IV - Existe dados</div>
+---
+### <a name="anexo-5"><a/><div align="center"> Anexo V </div>
+---
+### <a name="anexo-6"><a/><div align="center"> Anexo VI </div>
+---
+### <a name="anexo-7"><a/><div align="center"> Anexo VII </div>
+---
