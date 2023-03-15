@@ -252,12 +252,31 @@ Logo abaixo temos todos os anexos de configuração dos nodes
 ###
 ---
 ### <a name="anexo-1"><a/><div align="center"> Anexo I - Aedes MQTT </div>
+<div align="center">
+    <img src="https://user-images.githubusercontent.com/56831082/225341250-23ef31f5-1455-49b5-9dcf-1de866b6bcf2.png"><br>
+</div>
+
 ---
 ### <a name="anexo-2"><a/><div align="center"> Anexo II - Não nulos</div>
+	
+<div align="center"> 
+	<img src="https://user-images.githubusercontent.com/56831082/225341368-05790018-1f95-4c39-a57d-f6fca4bfbff7.png"><br>
+</div>
+	
 ---
 ### <a name="anexo-3"><a/><div align="center"> Anexo III - Esta conectado</div>
+	
+<div align="center"> 
+	<img src="https://user-images.githubusercontent.com/56831082/225341469-e31ae3ce-4293-40d0-a81f-820acf425482.png"><br>
+</div>
+	
 ---
 ### <a name="anexo-4"><a/><div align="center"> Anexo IV - Existe dados</div>
+	
+<div align="center"> 
+	<img src="https://user-images.githubusercontent.com/56831082/225341533-9c9cc8cb-c337-4f1c-840f-75edd16527f3.png"><br>
+</div>
+
 ---
 ### <a name="anexo-5"><a/><div align="center"> Anexo V </div>
 ---
