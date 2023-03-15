@@ -41,6 +41,8 @@
 	- [Anexo XIV - Duplica](#anexo-14)
 	- [Anexo XV - postgresql](#anexo-15)
 	- [Anexo XVI - Verifica Cadastro no banco](#anexo-16)
+	- [Anexo XVII - postgresql](#anexo-17)
+	- [Anexo XVII - Segregação](#anexo-18)
 
 # <a name=“node-red”><a/>Node-red
 
@@ -88,7 +90,7 @@ git clean -f
 
 **Pegue as alterações do repositorio remoto**
 ```
-git pull -f origin Arthur
+git pull -f origin main
 ```
 pronto basta entrar com suas credenciais e logo logo as configurações serãao baixadas.
 
@@ -418,6 +420,46 @@ Este subflow é responsável por verificar se o ID da mensagem que chegou no pay
 </div>
 	
 #### <a name=“phase”><a/>phase
+
+Este subflow funciona de forma similar ao subflow ***Verifica cadastro***, fazendo uma consulta ao banco de dados. Para isso, no início do fluxo, a mensagem é duplicada pelo nó **Duplica** (configuração no [Anexo-XIV](#anexo-14)). No segundo nó **postgreSQL** (configuração no [Anexo-XVII](#anexo-17)), temos uma consulta que busca as fases do circuito de acordo com o mqtt_id da mensagem. Caso nenhuma fase seja encontrada, a mensagem é descartada.
+	
+<div align=center>
+	<img src="https://user-images.githubusercontent.com/56831082/225436012-4d9ac3e6-d664-40fb-a7a1-b56c2bd107f5.png" width=850><br>
+</div>
+
+Dessa forma, a mensagem que chega nesse formato:
+```json
+{
+	"id": "5",
+	"topic": "Trifasico",
+	"active_power_A": 9069,
+	"active_power_B": 2873,
+	"active_power_C": 6069,
+	"active_power_A_sf": -2,
+	"active_power_B_sf": -2,
+	"active_power_C_sf": -2,
+	...
+}
+```
+se torna:
+```json
+{
+	"id": "5",
+	"topic": "Trifasico",
+	"active_power_A": 9069,
+	"active_power_B": 2873,
+	"active_power_C": 6069,
+	"active_power_A_sf": -2,
+	"active_power_B_sf": -2,
+	"active_power_C_sf": -2,
+	"phase_A": "C",
+	"phase_B": "A",
+	"phase_C": "B",
+	...
+}
+```
+Lembrando que phase_A representa a primeira fase. Portanto, se na instalação a primeira fase for a fase C, no código será representada por A, essa indexação é efetuada pelo nó **Segregação**(configuração no [Anexo-XVIII](#anexo-18)), além disso caso haja algum erro e mandada uma mensagem para o subflow ***Sincronismo Local*** para atualizar as tabelas locais de cadastro do banco local.
+	
 #### <a name="cria-instancia"><a/>Cria Instancia
 #### <a name="envio-ao-banco"><a/>Envio ao banco
 #### <a name="sincronismo-medicoes"><a/>Sincronismo Medições
@@ -847,6 +889,31 @@ return msg;
 <div align="center"> 
 	<img src="https://user-images.githubusercontent.com/56831082/225429027-ecfd82dd-b59c-43c5-ac7e-0ad7f93c418a.png"><br>
 </div>
+
+---
+### <a name="anexo-17"><a/><div align="center"> Anexo XVII - postgresql</div>
+	
+**Query**
+```sql
+	(SELECT phase FROM public.organic_nodes_control_circuit WHERE id = (SELECT circuit_id FROM public.organic_nodes_control_setup WHERE device_id = (SELECT device_id FROM public.organic_nodes_control_mqttdevice WHERE (mqtt_access_id = (SELECT id FROM public.organic_nodes_control_mqttaccess WHERE mqtt_id = '{{msg.temp.id}}')))))
+```
+	
+---
+### <a name="anexo-18"><a/><div align="center"> Anexo XVIII - Segregação</div>
+	
+```javascript
+var msg2 = {}
+msg2.payload = msg.temp
+
+if (typeof msg2.payload.phase_A != "undefined"){
+    try{
+        msg2.payload.phase_A = msg.payload[0].phase[0]
+        msg2.payload.phase_B = msg.payload[0].phase[1]
+        msg2.payload.phase_C = msg.payload[0].phase[2]
+    } catch(e){}
+    return msg2;
+}
+```
 
 ---
 </div>
