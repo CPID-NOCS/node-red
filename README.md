@@ -1,11 +1,37 @@
-# Node-red
+# Sumario
+- [Node-red](#node-red)
+	- [Mode de Execução](modo-de-execucao)
+	- [Funcionalidade Node-red](funcionamento-node-red)
+		- [Ferramentas](ferramentas)
+			- [Nodes](nodes)
+			- [Flows](flows)
+			- [Subflows](subflows)
+	- [Implementação](implementação)
+		- [Receive Data](receive-data)
+		- [Postgres](postgres)
+		- [Subflows](subflows)
+			- [MQTT](mqtt)
+			- [Tratamento da Mensagem](tratamento-da-mensagem)
+			- [Formatação](formatacao)
+			- [phase](phase)
+			- [Cria Instancia](cria-instancia)
+			- [Envio ao Banco](envio-ao-banco)
+			- [Sincronismo Medições](sincronismo-medicoes)
+			- [Sincronismo Local](sincronismo-local)
+			- [Sincronismo tamanho banco local](sincronismo-tamanho-banco-local)
+- [Conclusão](conclusao)
+- [Autor](autor)
+
+# <a name=“node-red”><a/>Node-red
+
 Repositorio contendo todos os arquivos de configuração, palette e desenvolvimento do node-red para recebimento tratamento e disposição dos dados de medição de consumo ao banco dde dados.
 
 <div><img src="https://cdn.xingosoftware.com/elektor/images/fetch/dpr_1/https%3A%2F%2Fwww.elektormagazine.com%2Fassets%2Fupload%2Fimages%2F42%2F20200612144414_Node-Red-official-logo.png" width=250> </div>
 
 ![Badge em Desenvolvimento](http://img.shields.io/static/v1?label=STATUS&message=EM%20DESENVOLVIMENTO&color=GREEN&style=for-the-badge)
 
-## Modo de execução
+## <a name=“modo-de-execucao”><a/>Modo de execução
+
 Para executar essas configurações no Node-RED, é preciso ter instalado o Node-RED e o Postgres via Docker, como mostrado neste outro repositório ([instalação Docker](https://hub.docker.com/r/arthurcoelho442/monitor)).
 
 **Atualização do sistema**
@@ -46,9 +72,9 @@ git pull -f origin Arthur
 ```
 pronto basta entrar com suas credenciais e logo logo as configurações serãao baixadas.
 
-## Funcionamento Node-Red
+## <a name=“funcionamento-node-red”><a/>Funcionamento Node-Red
 
-ode-RED é uma plataforma open-source baseada em Node.js para desenvolver aplicativos IoT (Internet of Things) e integração de sistemas. Ele permite que os usuários criem fluxos de trabalho visualmente, conectando nós pré-construídos de uma vasta biblioteca, chamados de nodes.
+Node-RED é uma plataforma open-source baseada em Node.js para desenvolver aplicativos IoT (Internet of Things) e integração de sistemas. Ele permite que os usuários criem fluxos de trabalho visualmente, conectando nós pré-construídos de uma vasta biblioteca, chamados de nodes.
 
 Os usuários podem criar um fluxo de trabalho usando uma interface gráfica de arrastar e soltar para conectar os nodes e criar uma lógica de programação. Os nodes podem ser usados para realizar ações como processamento de dados, controle de dispositivos, leitura e gravação em bancos de dados, envio e recebimento de dados via MQTT, HTTP, entre outros protocolos.
 
@@ -62,9 +88,10 @@ Após a instalação, ao acessar a ferramenta você terá os seguintes component
 
 <img src="https://github.com/CPID-NOCS/node-red/blob/master/Imagens/introducao.png" width=850><br>
 
-> ### Ferramentas 
+> ### <a name=“ferramentas”><a/>Ferramentas
 
-#### Nodes
+#### <a name=“nodes”><a/>Nodes
+
 Nodes são os blocos de construção básicos do Node-RED, cada um representando uma função ou serviço específico. Os nodes são organizados em categorias, como entrada (input), saída (output), processamento (processing) e controle (function), e podem ser facilmente adicionados ao fluxo de trabalho arrastando e soltando da biblioteca de nodes.
 
 <div align="center">
@@ -73,7 +100,8 @@ Nodes são os blocos de construção básicos do Node-RED, cada um representando
 
 Os nodes incluem recursos como entrada de dados, conversão de dados, processamento de dados, saída de dados e controle de fluxo. Eles também podem ser personalizados e estendidos pelos usuários para atender às suas necessidades específicas.
 
-#### Flows
+#### <a name=“flows”><a/>Flows
+
 Flows são o conjunto de nodes que formam o fluxo de trabalho em Node-RED. Os fluxos são criados arrastando e soltando os nodes na interface gráfica e conectando-os para criar uma lógica de programação visual. Os fluxos podem ser facilmente modificados, adicionando ou removendo nodes ou reorganizando sua conexão.
 
 |<img src="https://nodered.org/images/nr-image-1.png" width=450><br> | <img  src="https://forum.homeassistantbrasil.com.br/uploads/default/original/2X/1/1483c06a67a6dd6f57d9358058b23fe5806839ca.png" width=500><br> |
@@ -81,7 +109,8 @@ Flows são o conjunto de nodes que formam o fluxo de trabalho em Node-RED. Os fl
 
 O Node-RED suporta a importação e exportação de fluxos, o que permite compartilhar e reutilizar fluxos entre usuários. Além disso, o Node-RED inclui um recurso de versionamento de fluxo que permite salvar e recuperar versões anteriores do fluxo.
 
-#### Subflows
+#### <a name=“subflows”><a/>Subflows
+
 Subflows são fluxos menores que podem ser encapsulados e reutilizados em um fluxo maior. Eles são úteis quando um conjunto de nodes é usado várias vezes em diferentes fluxos, permitindo que o usuário crie um subfluxo separado que pode ser adicionado a outros fluxos.
 
 <div align="center">
@@ -90,7 +119,8 @@ Subflows são fluxos menores que podem ser encapsulados e reutilizados em um flu
 
 Os subflows funcionam como nodes, mas contêm seu próprio conjunto de nodes e conexões. Eles podem ser facilmente criados arrastando e soltando nodes e conexões para um novo fluxo e salvando-o como um subfluxo. Os subfluxos são então adicionados ao fluxo principal arrastando e soltando como um único node.
 
-## Implementação
+## <a name=“implementação”><a/>Implementação
+
 Inicialmente, temos todos os nodes separados em dois fluxos: o **Receive Data** e o **Postgres**. No primeiro fluxo, o **Receive Data**, temos o processo de recebimento, tratamento e adição de informações. Já no segundo, o **Postgres**, temos os nodes responsáveis pela comunicação entre o Node-RED e o banco de dados PostgreSQL. 
 
 ```mermaid
@@ -102,7 +132,7 @@ Inicialmente, temos todos os nodes separados em dois fluxos: o **Receive Data** 
 
 É importante ressaltar que em ambos os fluxos são utilizados subflows para simplificar o processo. Abaixo, seram destacados as funcionalidades e configurações de cada fluxo.
 
->### Receive Data
+>### <a name=“receive-data”><a/>Receive Data
 
 <div align="center">
     <img src="https://github.com/CPID-NOCS/node-red/blob/master/Imagens/flow-receive-data.png" width=600><br>
@@ -172,7 +202,7 @@ Contudo, é unida a outras mensagens, tornando-se:
 ```
 Essa mensagem contém apenas os valores que serão utilizados para criar a instância de inserção dos dados no banco de dados.
 
->### Postgres
+>### <a name=“postgres”><a/>Postgres
 
 <div align="center">
     <img src="https://github.com/CPID-NOCS/node-red/blob/master/Imagens/flows-postgres.png" width=600><br>
@@ -184,15 +214,35 @@ Dentro desse fluxo, temos vários subfluxos que facilitam o trabalho com o banco
 
 Temos também o subfluxo ***envia ao banco***, que envia a medição já instanciada para o banco local e remoto, e o subfluxo oculto ***sincronismo local***, que mantém as tabelas locais de cadastro atualizadas com o banco remoto. Por fim, o subfluxo ***sincronismo tamanho banco local*** mantém o tamanho do banco de dados local em um tamanho fixo.
 
->### Subflows
+>### <a name=“subflows”><a/>Subflows
 
 Agora vamos entrar em detalhes do funcionamento de cada subflow conttido nas dependencias do node-red.
 
-####MQTT
+#### <a name=“mqtt”><a/>MQTT
 
-# Conclusão
+O subflow ***MQTT*** tem a função de capturar as mensagens recebidas pelo Node-RED local por meio do MQTT na porta 1883. Para garantir a qualidade das mensagens, o subflow transmite apenas aquelas que não possuem falhas, como mensagens nulas ou com payload vazio.
+
+<div align="center">
+    <img src="https://github.com/CPID-NOCS/node-red/blob/master/Imagens/subflow-MQTT.png" width=600><br>
+</div>
+
+O fluxo do subflow começa com um node chamado **Aedes MQTT**, que funciona como um mosquito broker e coleta todas as mensagens que chegam na porta 1883 da Raspberry Pi. Em seguida, a mensagem passa pelo node **Não nulos**, que verifica se a mensagem não está vazia e se está conectada. Essas informações são cruciais para garantir a consistência das mensagens recebidas. Por fim, a mensagem passa pelo node **Verifica payload**, que verifica se o payload da mensagem contém dados ou está vazio.
+
+Além desses nodes, o subflow ***MQTT*** também possui nodes de status que informam a situação atual do node (conectado ou desconectado) e um node de aviso que informa caso ocorra algum problema em qualquer node do subflow.
+
+#### <a name=“tratamento-da-mensagem”><a/>Tratamento da mensagem
+#### <a name=“formatacao”><a/>Formatação
+#### <a name=“phase”><a/>phase
+#### <a name=“cria-instancia”><a/>Cria Instancia
+#### <a name=“envio-ao-banco”><a/>Envio ao banco
+#### <a name=“sincronismo-medicoes”><a/>Sincronismo Medições
+#### <a name=“sincronismo-local”><a/>Sincronismo Local
+#### <a name=“sincronismo-tamanho-banco-local”><a/>Sincronismo tamanho banco local
+
+# <a name=“conclusao”><a/>Conclusão
+
 Node-RED é uma plataforma poderosa e flexível para a criação de fluxos de trabalho IoT e integração de sistemas. Com seus nodes personalizáveis, fluxos, subflows e outras ferramentas, é possível criar fluxos complexos de maneira visual e fácil de entender. Com a comunidade ativa de desenvolvedores, há sempre suporte para novos nodes e recursos, tornando o Node-RED uma solução escalável para projetos IoT e de integração de sistemas.
 
-# Autor
+# <a name=“autor”><a/>Autor
 | [<img src="https://avatars.githubusercontent.com/u/56831082?v=4" width=115><br><sub>Arthur Coelho Estevão</sub>](https://github.com/arthurcoelho442) |
 | :---: |
