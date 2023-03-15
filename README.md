@@ -1,26 +1,26 @@
 # Sumario
 - [Node-red](#node-red)
-	- [Mode de Execução](modo-de-execucao)
-	- [Funcionalidade Node-red](funcionamento-node-red)
-		- [Ferramentas](ferramentas)
-			- [Nodes](nodes)
-			- [Flows](flows)
-			- [Subflows](subflows)
-	- [Implementação](implementação)
-		- [Receive Data](receive-data)
-		- [Postgres](postgres)
-		- [Subflows](subflows)
-			- [MQTT](mqtt)
-			- [Tratamento da Mensagem](tratamento-da-mensagem)
-			- [Formatação](formatacao)
-			- [phase](phase)
-			- [Cria Instancia](cria-instancia)
-			- [Envio ao Banco](envio-ao-banco)
-			- [Sincronismo Medições](sincronismo-medicoes)
-			- [Sincronismo Local](sincronismo-local)
-			- [Sincronismo tamanho banco local](sincronismo-tamanho-banco-local)
-- [Conclusão](conclusao)
-- [Autor](autor)
+	- [Mode de Execução](#mode-de-execucao)
+	- [Funcionalidade Node-red](#funcionamento-node-red)
+		- [Ferramentas](#ferramentas)
+			- [Nodes](#nodes)
+			- [Flows](#flows)
+			- [Subflows](#subflows)
+	- [Implementação](#implementação)
+		- [Receive Data](#receive-data)
+		- [Postgres](#postgres)
+		- [Subflows](#subflows)
+			- [MQTT](#mqtt)
+			- [Tratamento da Mensagem](#tratamento-da-mensagem)
+			- [Formatação](#formatacao)
+			- [phase](#phase)
+			- [Cria Instancia](#cria-instancia)
+			- [Envio ao Banco](#envio-ao-banco)
+			- [Sincronismo Medições](#sincronismo-medicoes)
+			- [Sincronismo Local](#sincronismo-local)
+			- [Sincronismo tamanho banco local](#sincronismo-tamanho-banco-local)
+- [Conclusão](#conclusao)
+- [Autor](#autor)
 
 # <a name=“node-red”><a/>Node-red
 
@@ -30,7 +30,7 @@ Repositorio contendo todos os arquivos de configuração, palette e desenvolvime
 
 ![Badge em Desenvolvimento](http://img.shields.io/static/v1?label=STATUS&message=EM%20DESENVOLVIMENTO&color=GREEN&style=for-the-badge)
 
-## <a name=“modo-de-execucao”><a/>Modo de execução
+## <a name="mode-de-execucao"><a/>Modo de execução
 
 Para executar essas configurações no Node-RED, é preciso ter instalado o Node-RED e o Postgres via Docker, como mostrado neste outro repositório ([instalação Docker](https://hub.docker.com/r/arthurcoelho442/monitor)).
 
@@ -231,15 +231,15 @@ O fluxo do subflow começa com um node chamado **Aedes MQTT**, que funciona como
 Além desses nodes, o subflow ***MQTT*** também possui nodes de status que informam a situação atual do node (conectado ou desconectado) e um node de aviso que informa caso ocorra algum problema em qualquer node do subflow.
 
 #### <a name=“tratamento-da-mensagem”><a/>Tratamento da mensagem
-#### <a name=“formatacao”><a/>Formatação
+#### <a name="formatacao"><a/>Formatação
 #### <a name=“phase”><a/>phase
-#### <a name=“cria-instancia”><a/>Cria Instancia
-#### <a name=“envio-ao-banco”><a/>Envio ao banco
-#### <a name=“sincronismo-medicoes”><a/>Sincronismo Medições
-#### <a name=“sincronismo-local”><a/>Sincronismo Local
-#### <a name=“sincronismo-tamanho-banco-local”><a/>Sincronismo tamanho banco local
+#### <a name="cria-instancia"><a/>Cria Instancia
+#### <a name="envio-ao-banco"><a/>Envio ao banco
+#### <a name="sincronismo-medicoes"><a/>Sincronismo Medições
+#### <a name="sincronismo-local"><a/>Sincronismo Local
+#### <a name="sincronismo-tamanho-banco-local"><a/>Sincronismo tamanho banco local
 
-# <a name=“conclusao”><a/>Conclusão
+# <a name="conclusao"><a/>Conclusão
 
 Node-RED é uma plataforma poderosa e flexível para a criação de fluxos de trabalho IoT e integração de sistemas. Com seus nodes personalizáveis, fluxos, subflows e outras ferramentas, é possível criar fluxos complexos de maneira visual e fácil de entender. Com a comunidade ativa de desenvolvedores, há sempre suporte para novos nodes e recursos, tornando o Node-RED uma solução escalável para projetos IoT e de integração de sistemas.
 
