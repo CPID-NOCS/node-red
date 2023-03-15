@@ -24,14 +24,15 @@
 - [Anexos](#anexos)
 	- [Anexo I - Aedes MQTT](#anexo-1)
 	- [Anexo II - Não nulos](#anexo-2)
-	- [Anexo III - Esta conectado](#anexo-3)
-	- [Anexo IV - Existe dados](#anexo-4)
-	- [Anexo V](#anexo-5)
-	- [Anexo VI](#anexo-6)
-	- [Anexo VII](#anexo-7)
-	- [Anexo VIII](#anexo-8)
-	- [Anexo IX](#anexo-9)
-	- [Anexo X](#anexo-10)
+	- [Anexo III - Existe dados](#anexo-3)
+	- [Anexo IV - convert payload](#anexo-4)
+	- [Anexo V - Reconfigurção](#anexo-5)
+	- [Anexo VI - Transformação String](#anexo-6)
+	- [Anexo VII - Indentificação fase](#anexo-7)
+	- [Anexo VIII - Junção (Monofasico/Bifasico/Trifasico)](#anexo-8)
+	- [Anexo IX - Junção e Alteração](#anexo-9)
+	- [Anexo X - Recuperação](#anexo-10)
+	- [Anexo XI - Remoção](#anexo-11)
 
 
 
@@ -380,7 +381,7 @@ Logo abaixo temos todos os anexos de configuração dos nodes
 </div>
 	
 ---
-### <a name="anexo-4"><a/><div align="center"> Anexo III - Existe dados</div>
+### <a name="anexo-3"><a/><div align="center"> Anexo III - Existe dados</div>
 	
 <div align="center"> 
 	<img src="https://user-images.githubusercontent.com/56831082/225341533-9c9cc8cb-c337-4f1c-840f-75edd16527f3.png"><br>
