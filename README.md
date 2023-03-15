@@ -1,3 +1,5 @@
+<div  Align="justify">
+	
 # Sumario
 - [Node-red](#node-red)
 	- [Mode de Execução](#mode-de-execucao)
@@ -33,8 +35,8 @@
 	- [Anexo IX - Junção e Alteração](#anexo-9)
 	- [Anexo X - Recuperação](#anexo-10)
 	- [Anexo XI - Remoção](#anexo-11)
-
-
+	- [Anexo XII - Formatação](#anexo-12)
+	- [Anexo XIII - Contador de mensagens](#anexo-13)
 
 # <a name=“node-red”><a/>Node-red
 
@@ -349,6 +351,46 @@ Muitos desses valores não são utilizados pelo projeto. Após a recuperação d
 ```
 	
 #### <a name="formatacao"><a/>Formatação
+Este subfluxo é responsável por fazer as formatações necessárias para o banco de dados. Nele, temos um nó chamado **Formatação**(configuração no [Anexo-XII](#anexo-12)), que possui diversas funcionalidades, incluindo a separação das medidas com casas decimais e a representação dos valores em notação científica, onde o número de ponto flutuante se torna um inteiro e o valor que o tornou inteiro é representado em outra propriedade chamada ***sf*** (abreviação para "scientific format").
+
+<div align=center>
+	<img src="https://user-images.githubusercontent.com/56831082/225416305-f0331554-fa17-4f5b-8259-cd8eb22f9320.png" width=600><br>
+</div>
+	
+Portanto, uma entrada equivalente a:
+	
+```json
+{
+	"id": "5",
+	"topic": "Trifasico",
+	"active_power_A": 90.69,
+	"active_power_B": 28.73,
+	"active_power_C": 60.69,
+	...
+}
+```
+	
+Torna-se:
+
+```json
+{
+	"id": "5",
+	"topic": "Trifasico",
+	"active_power_A": 9069,
+	"active_power_B": 2873,
+	"active_power_C": 6069,
+	"active_power_A_sf": -2,
+	"active_power_B_sf": -2,
+	"active_power_C_sf": -2,
+	...
+}
+```
+Outras funcionalidades deste nó é realizar o cálculo de medições que alguns módulos não executam, como a potência reativa, a potência aparente, o defasamento, entre outros, além disso temos um fluxo *Contador de mensagens*(configuração dos dois nodulos do fluxo no [Anexo-XIII](#anexo-13)) responsavel por zerar o contador de mensagens caso a varizavel do subflow **zerar** esteja selecionada nas opções de configuração do subflow, como a imagem abaixo mostra.
+
+<div align=center>
+	<img src="https://user-images.githubusercontent.com/56831082/225413648-047bb42d-350a-47ac-94e7-d199fbbdc9bf.png" width=400><br>
+</div>
+
 #### <a name=“phase”><a/>phase
 #### <a name="cria-instancia"><a/>Cria Instancia
 #### <a name="envio-ao-banco"><a/>Envio ao banco
@@ -445,3 +487,317 @@ Logo abaixo temos todos os anexos de configuração dos nodes
 | :---: | :---: |
 
 ---
+### <a name="anexo-12"><a/><div align="center"> Anexo XII - Formatação</div>
+	
+```javascript
+/*current*/
+/*A*/
+if (typeof msg.payload.current_A != "undefined") {
+    if (!Number.isInteger(msg.payload.current_A)) {
+        let sf = ("" + ("" + msg.payload.current_A).split('.')[1]).length
+        msg.payload.current_A = Math.trunc(msg.payload.current_A * Math.pow(10, sf))
+        msg.payload.current_A_sf = -1 * sf
+    } else
+        msg.payload.current_A_sf = 0
+}
+/*B*/
+if (typeof msg.payload.current_B != "undefined") {
+    if (!Number.isInteger(msg.payload.current_B)) {
+        let sf = ("" + ("" + msg.payload.current_B).split('.')[1]).length
+        msg.payload.current_B = Math.trunc(msg.payload.current_B * Math.pow(10, sf))
+        msg.payload.current_B_sf = -1 * sf
+    } else
+        msg.payload.current_B_sf = 0
+}
+/*C*/
+if (typeof msg.payload.current_C != "undefined") {
+    if (!Number.isInteger(msg.payload.current_C)) {
+        let sf = ("" + ("" + msg.payload.current_C).split('.')[1]).length
+        msg.payload.current_C = Math.trunc(msg.payload.current_C * Math.pow(10, sf))
+        msg.payload.current_C_sf = -1 * sf
+    } else
+        msg.payload.current_C_sf = 0
+}
+
+/*voltage*/
+/*A*/
+if (typeof msg.payload.voltage_A != "undefined") {
+    if (!Number.isInteger(msg.payload.voltage_A)){
+        let sf = ("" + ("" + msg.payload.voltage_A).split('.')[1]).length
+        msg.payload.voltage_A = Math.trunc(msg.payload.voltage_A * Math.pow(10, sf))
+        msg.payload.voltage_A_sf = -1 * sf
+    }else
+        msg.payload.voltage_A_sf = 0
+}
+/*B*/
+if (typeof msg.payload.voltage_B != "undefined") {
+    if (!Number.isInteger(msg.payload.voltage_B)) {
+        let sf = ("" + ("" + msg.payload.voltage_B).split('.')[1]).length
+        msg.payload.voltage_B = Math.trunc(msg.payload.voltage_B * Math.pow(10, sf))
+        msg.payload.voltage_B_sf = -1 * sf
+    } else
+        msg.payload.voltage_B_sf = 0
+}
+/*C*/
+if (typeof msg.payload.voltage_C != "undefined") {
+    if (!Number.isInteger(msg.payload.voltage_C)) {
+        let sf = ("" + ("" + msg.payload.voltage_C).split('.')[1]).length
+        msg.payload.voltage_C = Math.trunc(msg.payload.voltage_C * Math.pow(10, sf))
+        msg.payload.voltage_C_sf = -1 * sf
+    } else
+        msg.payload.voltage_C_sf = 0
+}
+
+/*voltage_current_angle*/
+/*A*/
+if (typeof msg.payload.voltage_current_angle_A != "undefined") {
+    if (!Number.isInteger(msg.payload.voltage_current_angle_A)) {
+        let sf = ("" + ("" + msg.payload.voltage_current_angle_A).split('.')[1]).length
+        msg.payload.voltage_current_angle_A = Math.trunc(msg.payload.voltage_current_angle_A * Math.pow(10, sf))
+        msg.payload.voltage_current_angle_A_sf = -1 * sf
+    } else
+        msg.payload.voltage_current_angle_A_sf = 0
+}else if (typeof msg.payload.current_A != "undefined"){
+    msg.payload.voltage_current_angle_A = ((Math.acos(msg.payload.power_factor_A) * 180) / Math.PI).toFixed(3)
+    
+    let sf = ("" + ("" + msg.payload.voltage_current_angle_A).split('.')[1]).length
+    msg.payload.voltage_current_angle_A = Math.trunc(msg.payload.voltage_current_angle_A * Math.pow(10, sf))
+    msg.payload.voltage_current_angle_A_sf = -1 * sf
+} 
+/*B*/
+if (typeof msg.payload.voltage_current_angle_B != "undefined") {
+    if (!Number.isInteger(msg.payload.voltage_current_angle_B)) {
+        let sf = ("" + ("" + msg.payload.voltage_current_angle_B).split('.')[1]).length
+        msg.payload.voltage_current_angle_B = Math.trunc(msg.payload.voltage_current_angle_B * Math.pow(10, sf))
+        msg.payload.voltage_current_angle_B_sf = -1 * sf
+    } else
+        msg.payload.voltage_current_angle_B_sf = 0
+} else if (typeof msg.payload.current_B != "undefined") {
+    msg.payload.voltage_current_angle_B = ((Math.acos(msg.payload.power_factor_B) * 180) / Math.PI).toFixed(3)
+
+    let sf = ("" + ("" + msg.payload.voltage_current_angle_B).split('.')[1]).length
+    msg.payload.voltage_current_angle_B = Math.trunc(msg.payload.voltage_current_angle_B * Math.pow(10, sf))
+    msg.payload.voltage_current_angle_B_sf = -1 * sf
+} 
+/*C*/
+if (typeof msg.payload.voltage_current_angle_C != "undefined") {
+    if (!Number.isInteger(msg.payload.voltage_current_angle_C)) {
+        let sf = ("" + ("" + msg.payload.voltage_current_angle_C).split('.')[1]).length
+        msg.payload.voltage_current_angle_C = Math.trunc(msg.payload.voltage_current_angle_C * Math.pow(10, sf))
+        msg.payload.voltage_current_angle_C_sf = -1 * sf
+    } else
+        msg.payload.voltage_current_angle_C_sf = 0
+} else if (typeof msg.payload.current_C != "undefined") {
+    msg.payload.voltage_current_angle_C = ((Math.acos(msg.payload.power_factor_C) * 180) / Math.PI).toFixed(3)
+
+    let sf = ("" + ("" + msg.payload.voltage_current_angle_C).split('.')[1]).length
+    msg.payload.voltage_current_angle_C = Math.trunc(msg.payload.voltage_current_angle_C * Math.pow(10, sf))
+    msg.payload.voltage_current_angle_C_sf = -1 * sf
+} 
+
+/*active_power*/
+/*A*/
+if (typeof msg.payload.active_power_A != "undefined") {
+    if (!Number.isInteger(msg.payload.active_power_A)) {
+        let sf = ("" + ("" + msg.payload.active_power_A).split('.')[1]).length
+        msg.payload.active_power_A = Math.trunc(msg.payload.active_power_A * Math.pow(10, sf))
+        msg.payload.active_power_A_sf = -1 * sf
+    } else
+        msg.payload.active_power_A_sf = 0
+} else if (typeof msg.payload.current_A != "undefined"){
+    msg.payload.active_power_A = msg.payload.current_A * msg.payload.voltage_A * Math.trunc(msg.payload.power_factor_A*100)
+    msg.payload.active_power_A_sf = msg.payload.current_A_sf + msg.payload.voltage_A_sf - 2
+}
+/*B*/
+if (typeof msg.payload.active_power_B != "undefined") {
+    if (!Number.isInteger(msg.payload.active_power_B)) {
+        let sf = ("" + ("" + msg.payload.active_power_B).split('.')[1]).length
+        msg.payload.active_power_B = Math.trunc(msg.payload.active_power_B * Math.pow(10, sf))
+        msg.payload.active_power_B_sf = -1 * sf
+    } else
+        msg.payload.active_power_B_sf = 0
+} else if (typeof msg.payload.current_B != "undefined") {
+    msg.payload.active_power_B = msg.payload.current_B * msg.payload.voltage_B * Math.trunc(msg.payload.power_factor_B * 100)
+    msg.payload.active_power_B_sf = msg.payload.current_B_sf + msg.payload.voltage_B_sf - 2
+}
+/*C*/
+if (typeof msg.payload.active_power_C != "undefined") {
+    if (!Number.isInteger(msg.payload.active_power_C)) {
+        let sf = ("" + ("" + msg.payload.active_power_C).split('.')[1]).length
+        msg.payload.active_power_C = Math.trunc(msg.payload.active_power_C * Math.pow(10, sf))
+        msg.payload.active_power_C_sf = -1 * sf
+    } else
+        msg.payload.active_power_C_sf = 0
+} else if (typeof msg.payload.current_C != "undefined") {
+    msg.payload.active_power_C = msg.payload.current_C * msg.payload.voltage_C * Math.trunc(msg.payload.power_factor_C * 100)
+    msg.payload.active_power_C_sf = msg.payload.current_C_sf + msg.payload.voltage_C_sf - 2
+}
+
+/*apparent_power*/
+/*A*/
+if (typeof msg.payload.apparent_power_A != "undefined") {
+    if (!Number.isInteger(msg.payload.apparent_power_A)) {
+        let sf = ("" + ("" + msg.payload.apparent_power_A).split('.')[1]).length
+        msg.payload.apparent_power_A = Math.trunc(msg.payload.apparent_power_A * Math.pow(10, sf))
+        msg.payload.apparent_power_A_sf = -1 * sf
+    } else
+        msg.payload.apparent_power_A_sf = 0
+}else if (typeof msg.payload.current_A != "undefined") {
+    msg.payload.apparent_power_A = ((msg.payload.active_power_A * Math.pow(10, msg.payload.active_power_A_sf)) / msg.payload.power_factor_A).toFixed(5)
+    
+    let sf = ("" + ("" + msg.payload.apparent_power_A).split('.')[1]).length
+    msg.payload.apparent_power_A = Math.trunc(msg.payload.apparent_power_A * Math.pow(10, sf))
+    msg.payload.apparent_power_A_sf = -1 * sf
+}
+/*B*/
+if (typeof msg.payload.apparent_power_B != "undefined") {
+    if (!Number.isInteger(msg.payload.apparent_power_B)) {
+        let sf = ("" + ("" + msg.payload.apparent_power_B).split('.')[1]).length
+        msg.payload.apparent_power_B = Math.trunc(msg.payload.apparent_power_B * Math.pow(10, sf))
+        msg.payload.apparent_power_B_sf = -1 * sf
+    } else
+        msg.payload.apparent_power_B_sf = 0
+} else if (typeof msg.payload.current_B != "undefined") {
+    msg.payload.apparent_power_B = ((msg.payload.active_power_B * Math.pow(10, msg.payload.active_power_B_sf)) / msg.payload.power_factor_B).toFixed(5)
+
+    let sf = ("" + ("" + msg.payload.apparent_power_B).split('.')[1]).length
+    msg.payload.apparent_power_B = Math.trunc(msg.payload.apparent_power_B * Math.pow(10, sf))
+    msg.payload.apparent_power_B_sf = -1 * sf
+}
+/*C*/
+if (typeof msg.payload.apparent_power_C != "undefined") {
+    if (!Number.isInteger(msg.payload.apparent_power_C)) {
+        let sf = ("" + ("" + msg.payload.apparent_power_C).split('.')[1]).length
+        msg.payload.apparent_power_C = Math.trunc(msg.payload.apparent_power_C * Math.pow(10, sf))
+        msg.payload.apparent_power_C_sf = -1 * sf
+    } else
+        msg.payload.apparent_power_C_sf = 0
+} else if (typeof msg.payload.current_C != "undefined") {
+    msg.payload.apparent_power_C = ((msg.payload.active_power_C * Math.pow(10, msg.payload.active_power_C_sf)) / msg.payload.power_factor_C).toFixed(5)
+
+    let sf = ("" + ("" + msg.payload.apparent_power_C).split('.')[1]).length
+    msg.payload.apparent_power_C = Math.trunc(msg.payload.apparent_power_C * Math.pow(10, sf))
+    msg.payload.apparent_power_C_sf = -1 * sf
+}
+
+/*reactive_power*/
+/*A*/
+if (typeof msg.payload.reactive_power_A != "undefined") {
+    if (!Number.isInteger(msg.payload.reactive_power_A)) {
+        let sf = ("" + ("" + msg.payload.reactive_power_A).split('.')[1]).length
+        msg.payload.reactive_power_A = Math.trunc(msg.payload.reactive_power_A * Math.pow(10, sf))
+        msg.payload.reactive_power_A_sf = -1 * sf
+    } else
+        msg.payload.reactive_power_A_sf = 0
+} else if (typeof msg.payload.current_A != "undefined") {
+    msg.payload.reactive_power_A = (Math.sqrt(Math.pow((msg.payload.apparent_power_A * Math.pow(10, msg.payload.apparent_power_A_sf)), 2) - Math.pow((msg.payload.active_power_A * Math.pow(10, msg.payload.active_power_A_sf)), 2))).toFixed(5)
+    
+    let sf = ("" + ("" + msg.payload.reactive_power_A).split('.')[1]).length
+    msg.payload.reactive_power_A = Math.trunc(msg.payload.reactive_power_A * Math.pow(10, sf))
+    msg.payload.reactive_power_A_sf = -1 * sf
+}
+/*B*/
+if (typeof msg.payload.reactive_power_B != "undefined") {
+    if (!Number.isInteger(msg.payload.reactive_power_B)) {
+        let sf = ("" + ("" + msg.payload.reactive_power_B).split('.')[1]).length
+        msg.payload.reactive_power_B = Math.trunc(msg.payload.reactive_power_B * Math.pow(10, sf))
+        msg.payload.reactive_power_B_sf = -1 * sf
+    } else
+        msg.payload.reactive_power_B_sf = 0
+} else if (typeof msg.payload.current_B != "undefined") {
+    msg.payload.reactive_power_B = (Math.sqrt(Math.pow((msg.payload.apparent_power_B * Math.pow(10, msg.payload.apparent_power_B_sf)), 2) - Math.pow((msg.payload.active_power_B * Math.pow(10, msg.payload.active_power_B_sf)), 2))).toFixed(5)
+
+    let sf = ("" + ("" + msg.payload.reactive_power_B).split('.')[1]).length
+    msg.payload.reactive_power_B = Math.trunc(msg.payload.reactive_power_B * Math.pow(10, sf))
+    msg.payload.reactive_power_B_sf = -1 * sf
+}
+/*C*/
+if (typeof msg.payload.reactive_power_C != "undefined") {
+    if (!Number.isInteger(msg.payload.reactive_power_C)) {
+        let sf = ("" + ("" + msg.payload.reactive_power_C).split('.')[1]).length
+        msg.payload.reactive_power_C = Math.trunc(msg.payload.reactive_power_C * Math.pow(10, sf))
+        msg.payload.reactive_power_C_sf = -1 * sf
+    } else
+        msg.payload.reactive_power_C_sf = 0
+} else if (typeof msg.payload.current_C != "undefined") {
+    msg.payload.reactive_power_C = (Math.sqrt(Math.pow((msg.payload.apparent_power_C * Math.pow(10, msg.payload.apparent_power_C_sf)), 2) - Math.pow((msg.payload.active_power_C * Math.pow(10, msg.payload.active_power_C_sf)), 2))).toFixed(5)
+
+    let sf = ("" + ("" + msg.payload.reactive_power_C).split('.')[1]).length
+    msg.payload.reactive_power_C = Math.trunc(msg.payload.reactive_power_C * Math.pow(10, sf))
+    msg.payload.reactive_power_C_sf = -1 * sf
+}
+
+/*voltage_lag*/
+/*AB*/
+if (typeof msg.payload.angle_voltage_A_B != "undefined") {
+    if (!Number.isInteger(msg.payload.angle_voltage_A_B)) {
+        let sf = ("" + ("" + msg.payload.angle_voltage_A_B).split('.')[1]).length
+        msg.payload.angle_voltage_A_B = Math.trunc(msg.payload.angle_voltage_A_B * Math.pow(10, sf))
+        msg.payload.angle_voltage_A_B_sf = -1 * sf
+    }
+    else
+        msg.payload.angle_voltage_A_B_sf = 0
+}
+/*AC*/
+if (typeof msg.payload.angle_voltage_A_C != "undefined") {
+    if (!Number.isInteger(msg.payload.angle_voltage_A_C)) {
+        let sf = ("" + ("" + msg.payload.angle_voltage_A_C).split('.')[1]).length
+        msg.payload.angle_voltage_A_C = Math.trunc(msg.payload.angle_voltage_A_C * Math.pow(10, sf))
+        msg.payload.angle_voltage_A_C_sf = -1 * sf
+    } else
+        msg.payload.angle_voltage_A_C_sf = 0
+}
+/*BC*/
+if (typeof msg.payload.angle_voltage_B_C != "undefined") {
+    if (!Number.isInteger(msg.payload.angle_voltage_B_C)) {
+        let sf = ("" + ("" + msg.payload.angle_voltage_B_C).split('.')[1]).length
+        msg.payload.angle_voltage_B_C = Math.trunc(msg.payload.angle_voltage_B_C * Math.pow(10, sf))
+        msg.payload.angle_voltage_B_C_sf = -1 * sf
+    } else
+        msg.payload.angle_voltage_B_C_sf = 0
+}
+
+/*temperature*/
+if (typeof msg.payload.temperature != "undefined") {
+    if (!Number.isInteger(msg.payload.temperature)) {
+        let sf = ("" + ("" + msg.payload.temperature).split('.')[1]).length
+        msg.payload.temperature = Math.trunc(msg.payload.temperature * Math.pow(10, sf))
+        msg.payload.temperature_sf = -1 * sf
+    } else
+        msg.payload.temperature_sf = 0
+}
+
+/*frequency*/
+if (typeof msg.payload.frequency != "undefined") {
+    if (!Number.isInteger(msg.payload.frequency)) {
+        let sf = ("" + ("" + msg.payload.frequency).split('.')[1]).length
+        msg.payload.frequency = Math.trunc(msg.payload.frequency * Math.pow(10, sf))
+        msg.payload.frequency_sf = -1 * sf
+    } else
+        msg.payload.frequency_sf = 0
+} else{
+    msg.payload.frequency = 60
+    msg.payload.frequency_sf = 0
+}
+
+/*date_time_stamp*/
+msg.payload.date_time_stamp = new Date()
+msg.payload = JSON.parse(JSON.stringify(msg.payload));
+
+/*message_counter*/
+var count = flow.get("count") || 0
+count += 1
+flow.set("count", count)
+
+msg.payload.message_counter     = count
+
+return msg;
+```
+---
+### <a name="anexo-13"><a/><div align="center"> Anexo XIII - Contador de mensagens</div>
+	
+|<img src="https://user-images.githubusercontent.com/56831082/225415813-955765d0-9607-411c-835a-959d5c736322.png"><br><sub>Verifica</sub>|<img src="https://user-images.githubusercontent.com/56831082/225415841-1f6f79ff-6c02-4082-939f-142eadfd89de.png"><br><sub>Zara contador</sub>|
+| :---: | :---: |
+
+---
+</div>
