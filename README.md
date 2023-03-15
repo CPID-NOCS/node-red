@@ -244,6 +244,105 @@ O fluxo do subflow começa com um node chamado **Aedes MQTT**(configuração no 
 Além desses nodes, o subflow ***MQTT*** também possui nodes de status que informam a situação atual do node (conectado ou desconectado) e um node de aviso que informa caso ocorra algum problema em qualquer node do subflow.
 
 #### <a name=“tratamento-da-mensagem”><a/>Tratamento da mensagem
+O subfluxo ***Tratamento da mensagem*** é separado em dois fluxos: 
+
+- Uma *Reconfiguração* que altera o formato da mensagem inicial, removendo informações que não são relevantes e remontando o objeto para uma melhor representação;
+
+- E um *Identificação de Tópico e Junção*, que junta as mensagens de acordo com o tópico;
+
+O objeto inicial chega no formato:
+```json
+{
+  "packet": {
+    "cmd" : "publish",
+    "retain": false,
+    "qos": 0,
+    "dup" : false,
+    "length" : "58",
+    "topic" : "Trifasico",
+    "payload": buffer[42]
+  }
+  "client":{}
+}
+```
+e passa a ter o seguinte formato após a reconfiguração no primeiro fluxo:
+```json
+{
+	"id":"5",
+	"topic":"Trifasico",
+	"variable":"IA",
+	"value":1.08,
+	"unit":"A"
+}
+```
+Esse processo é realizado através dos nodos **convert payload**, que converte o formato do buffer para um objeto JSON, e posteriormente as informações irrelevantes são removidas e o payload é reorganizado pelo nodo **Reconfiguração**. Por fim, a mensagem é transformada em uma string JSON para facilitar a união com as mensagens seguintes no fluxo de *Identificação de Tópico e Junção*. A união ocorre de forma diferente de acordo com o tipo de módulo (monofásico, bifásico e trifásico), pois temos uma quantidade diferente de mensagens a serem unidas. Cada mensagem é identificada pelo nodo **Identificação de fase**, através do tópico em que a mensagem foi publicada. A união é realizada pelos nodos **Junção Monofásico**, **Junção Bifásico** e **Junção Trifásico**.
+
+Após a união, é necessário modificar a mensagem resultante, que chega no seguinte formato:
+```
+{"id":"5","topic":"Trifasico","variable":"PA","value":94.87,"unit":"W"},{"id":"5","topic":"Trifasico","variable":"PB","value":117.4,"unit":"W"},{"id":"5","topic":"Trifasico","variable":"PC","value":64.71,"unit":"W"},...}
+```
+Para isso removemos as junções `"},{"` e alteramos o formato basico de cada menagem, no caso da corrente de Fase A, a mensagem ´"{"id":"5","topic":"Trifasico","variable":"IA","value":1.08,"unit":"W"}"´ passa a ser `{"id":"5", topic":"Trifasico", "variable":"IA", value":1.08, unit":"A"}` e é unida as outras. Isso é feito pelo nodulo **Junção e Alteração**.
+
+Recuperação da Mensagem resultante de Json String para Json Object:
+```json
+{
+	"id": "5",
+	"topic": "Trifasico",
+	"active_power_A": 90.69,
+	"unit": "oC",
+	"active_power_B": 28.73,
+	"active_power_C": 60.69,
+	"PT": 180.09,
+	"reactive_power_A": 78.39,
+	"reactive_power_B": 0.15,
+	"reactive_power_C": -4.32,
+	"QT": 74.25,
+	"apparent_power_A": 119.85,
+	"apparent_power_B": 28.73,
+	"apparent_power_C": 60.8,
+	"ST": 194.72,
+	"voltage_A": 127.26,
+	"voltage_B": 127.71,
+	"voltage_C": 127.94,
+	"current_A": 1.04,
+	"current_B": 0.3,
+	"current_C": 0.68,
+	"IT": 0.75,
+	"power_factor_A": 0.75,
+	"power_factor_B": 0.99,
+	"power_factor_C": 0.99,
+	...
+}
+```
+	
+Muitos desses valores não são utilizados pelo projeto. Após a recuperação da string JSON para objeto JSON no nodulo **Recuperação**, os dados não utilizados, como 'unit', 'PT', 'QT', 'ST', e 'IT', são removidos pelo nodulo "Remoção", deixando o payload no seguinte formato:
+	
+```json
+{
+	"id": "5",
+	"topic": "Trifasico",
+	"active_power_A": 90.69,
+	"active_power_B": 28.73,
+	"active_power_C": 60.69,
+	"reactive_power_A": 78.39,
+	"reactive_power_B": 0.15,
+	"reactive_power_C": -4.32,
+	"apparent_power_A": 119.85,
+	"apparent_power_B": 28.73,
+	"apparent_power_C": 60.8,
+	"voltage_A": 127.26,
+	"voltage_B": 127.71,
+	"voltage_C": 127.94,
+	"current_A": 1.04,
+	"current_B": 0.3,
+	"current_C": 0.68,
+	"power_factor_A": 0.75,
+	"power_factor_B": 0.99,
+	"power_factor_C": 0.99,
+	...
+}
+```
+	
 #### <a name="formatacao"><a/>Formatação
 #### <a name=“phase”><a/>phase
 #### <a name="cria-instancia"><a/>Cria Instancia
