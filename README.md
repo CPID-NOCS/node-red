@@ -31,7 +31,7 @@
 	- [Anexo IV - convert payload](#anexo-4)
 	- [Anexo V - Reconfigurção](#anexo-5)
 	- [Anexo VI - Transformação String](#anexo-6)
-	- [Anexo VII - Indentificação fase](#anexo-7)
+	- [Anexo VII - Identificação fase](#anexo-7)
 	- [Anexo VIII - Junção (Monofasico/Bifasico/Trifasico)](#anexo-8)
 	- [Anexo IX - Junção e Alteração](#anexo-9)
 	- [Anexo X - Recuperação](#anexo-10)
@@ -43,6 +43,10 @@
 	- [Anexo XVI - Verifica Cadastro no banco](#anexo-16)
 	- [Anexo XVII - postgresql](#anexo-17)
 	- [Anexo XVII - Segregação](#anexo-18)
+	- [Anexo XVII - Identificação instalação](#anexo-19)
+	- [Anexo XVII - Cria instancia Monofasico](#anexo-20)
+	- [Anexo XVII - Cria instancia Bifasico](#anexo-21)
+	- [Anexo XVII - Cria instancia Trifasico](#anexo-22)
 
 # <a name=“node-red”><a/>Node-red
 
@@ -424,7 +428,7 @@ Este subflow é responsável por verificar se o ID da mensagem que chegou no pay
 Este subflow funciona de forma similar ao subflow ***Verifica cadastro***, fazendo uma consulta ao banco de dados. Para isso, no início do fluxo, a mensagem é duplicada pelo nó **Duplica** (configuração no [Anexo-XIV](#anexo-14)). No segundo nó **postgreSQL** (configuração no [Anexo-XVII](#anexo-17)), temos uma consulta que busca as fases do circuito de acordo com o mqtt_id da mensagem. Caso nenhuma fase seja encontrada, a mensagem é descartada.
 	
 <div align=center>
-	<img src="https://user-images.githubusercontent.com/56831082/225436012-4d9ac3e6-d664-40fb-a7a1-b56c2bd107f5.png" width=850><br>
+	<img src="https://user-images.githubusercontent.com/56831082/225436012-4d9ac3e6-d664-40fb-a7a1-b56c2bd107f5.png" width=800><br>
 </div>
 
 Dessa forma, a mensagem que chega nesse formato:
@@ -461,6 +465,68 @@ se torna:
 Lembrando que phase_A, assim como todas medições com "_A" representa a primeira fase. Portanto, se na instalação a primeira fase for a fase C, no código será representada por A, essa indexação é efetuada pelo nó **Segregação** (configuração no [Anexo-XVIII](#anexo-18)), além disso caso haja algum erro e mandada uma mensagem para o subflow ***Sincronismo Local*** para atualizar as tabelas locais de cadastro do banco local.
 	
 #### <a name="cria-instancia"><a/>Cria Instancia
+O subflow ***cria-instancia*** é responsável por criar uma mensagem de inserção no formato SQL com os dados vindos do payload.
+
+<div align="center">
+	<img src="https://user-images.githubusercontent.com/56831082/225604769-7679bdfb-df7f-4be7-b033-89d71f7b74ac.png" width=800><br>	
+</div>
+	
+A mensagem que chega no subflow passa por um nó de switch para identificar o tipo de fase do circuito, semelhante ao **identificação fase** do subflow ***Tratamento da mensagem***. No entanto, a identificação é realizada com o objeto JSON, e não com a string JSON. O nó **Identificação instalação** é responsável por essa identificação e está configurado no  [Anexo-XIX](#anexo-19).
+	
+Após a identificação, a mensagem é encaminhada para a instanciação de acordo com o tipo de instalação. A grande diferença entre as instancias (Monofásica (configuração no [Anexo-XX](#anexo-20), Bifásica (configuração no [Anexo-XXI](#anexo-21) e Trifásica (configuração no [Anexo-XXII](#anexo-22)) está na instanciação das fases B e C.
+
+No caso do monofásico, temos apenas uma tabela de EnergyMeasure e uma de PowerMeasure, referentes à fase A. No bifásico, temos a presença da fase B, resultando em duas tabelas de EnergyMeasure e duas de PowerMeasure. Já no trifásico, temos três tabelas de cada uma, respectivamente. Também temos a tabela de VoltageLagMeasurement presente no bifásico e trifásico, representando a defasagem entre as tensões de cada fase.
+	
+Portanto, quando um payload chega neste formato em específico, como exemplificado abaixo:
+```json
+{
+	"id":"5",
+	"topic":"Trifasico",
+	"active_power_A":6773
+	,"active_power_B":12008,
+	"active_power_C":3042,
+	"reactive_power_A":5851,
+	"reactive_power_B":9782,
+	"reactive_power_C":471,
+	"apparent_power_A":895,
+	"apparent_power_B":15487,
+	"apparent_power_C":3076,
+	"voltage_A":12765,
+	"voltage_B":12805,
+	"voltage_C":12854,
+	"current_A":83,
+	"current_B":121,
+	"current_C":28,
+	"power_factor_A":0.75,
+	"power_factor_B":0.77,
+	"power_factor_C":0.98,
+	"voltage_current_angle_A":-9004,
+	"voltage_current_angle_B":385,
+	"voltage_current_angle_C":-9004,
+	"frequency":5997,
+	...
+}
+```
+Ele passa a ser tratado de acordo com o tipo de instalação identificado e é instanciado de acordo com as configurações específicas de cada instalação, similar ao formato abaixo:
+```SQL
+INSERT INTO public.organic_nodes_control_measurement(
+	date_time_stamp,	message_counter,	setup_id,	source)
+	VALUES ('2023-03-16T12:24:13.473Z', 1, (SELECT id FROM public.organic_nodes_control_setup WHERE (device_id = (SELECT device_id FROM public.organic_nodes_control_mqttdevice WHERE (mqtt_access_id = (SELECT id FROM public.organic_nodes_control_mqttaccess WHERE (mqtt_id = '5')))))), 0);
+
+INSERT INTO public.organic_nodes_control_frequencymeasure(
+	frequency,	frequency_sf,	measurement_id)
+	VALUES (5997, -2, (SELECT id FROM public.organic_nodes_control_measurement WHERE (message_counter = 1 AND date_time_stamp = '2023-03-16T12:24:13.473Z') LIMIT 1));
+
+INSERT INTO public.organic_nodes_control_sensormeasure(
+	temperature,	temperature_sf,	measurement_id)
+	VALUES (3153, -2, (SELECT id FROM public.organic_nodes_control_measurement WHERE (message_counter = 1 AND date_time_stamp = '2023-03-16T12:24:13.473Z') LIMIT 1));
+	
+INSERT INTO public.organic_nodes_control_energymeasure(
+	phase, current, ...
+```
+
+É importante destacar que a cada mensagem instanciada, é enviada uma mensagem para o subflow ***Sincronismo medições***, a fim de manter a sincronia entre as tabelas de medições locais e remotas. Isso é essencial para garantir a precisão dos dados e evitar erros na sincronização, para que, o subflow irá sincronize antes de enviar novas mensagens para o banco remoto.
+	
 #### <a name="envio-ao-banco"><a/>Envio ao banco
 #### <a name="sincronismo-medicoes"><a/>Sincronismo Medições
 #### <a name="sincronismo-local"><a/>Sincronismo Local
@@ -520,7 +586,7 @@ Logo abaixo temos todos os anexos de configuração dos nodes
 </div>
 
 ---
-### <a name="anexo-7"><a/><div align="center"> Anexo VII - Indentificação fase</div>
+### <a name="anexo-7"><a/><div align="center"> Anexo VII - Identificação fase</div>
 	
 <div align="center"> 
 	<img src="https://user-images.githubusercontent.com/56831082/225400562-aff53b2c-6221-430b-b1fd-e53975087fac.png"><br>
@@ -905,7 +971,7 @@ return msg;
 var msg2 = {}
 msg2.payload = msg.temp
 
-if (typeof msg2.payload.phase_A != "undefined"){
+if (typeof msg.payload[0].phase != "undefined"){
     try{
         msg2.payload.phase_A = msg.payload[0].phase[0]
         msg2.payload.phase_B = msg.payload[0].phase[1]
@@ -913,6 +979,130 @@ if (typeof msg2.payload.phase_A != "undefined"){
     } catch(e){}
     return msg2;
 }
+```
+
+---
+### <a name="anexo-19"><a/><div align="center"> Anexo XIX - Identificação instalação</div>
+	
+<div align="center">
+	<img src="https://user-images.githubusercontent.com/56831082/225612131-ab817d37-0f29-4c0f-8883-da8a06071543.png"><br>	
+</div>
+
+---
+
+### <a name="anexo-20"><a/><div align="center"> Anexo XX - Cria instacia Monofasico</div>
+	
+```SQL
+INSERT INTO public.organic_nodes_control_measurement(
+	date_time_stamp,	message_counter,	setup_id,	source)
+	VALUES ('{{payload.date_time_stamp}}', {{payload.message_counter}}, (SELECT id FROM public.organic_nodes_control_setup WHERE (device_id = (SELECT device_id FROM public.organic_nodes_control_mqttdevice WHERE (mqtt_access_id = (SELECT id FROM public.organic_nodes_control_mqttaccess WHERE (mqtt_id = '{{payload.id}}')))))), 0);
+
+INSERT INTO public.organic_nodes_control_frequencymeasure(
+	frequency,	frequency_sf,	measurement_id)
+	VALUES ({{payload.frequency}}, {{payload.frequency_sf}}, (SELECT id FROM public.organic_nodes_control_measurement WHERE (message_counter = {{payload.message_counter}} AND date_time_stamp = '{{payload.date_time_stamp}}') LIMIT 1));
+
+INSERT INTO public.organic_nodes_control_sensormeasure(
+	temperature,	temperature_sf,	measurement_id)
+	VALUES ({{payload.temperature}}, {{payload.temperature_sf}}, (SELECT id FROM public.organic_nodes_control_measurement WHERE (message_counter = {{payload.message_counter}} AND date_time_stamp = '{{payload.date_time_stamp}}') LIMIT 1));
+	
+INSERT INTO public.organic_nodes_control_energymeasure(
+	phase, current, current_sf, voltage, voltage_sf, measurement_id)
+	VALUES ('{{payload.phase_A}}', {{payload.current_A}},{{payload.current_A_sf}},{{payload.voltage_A}},{{payload.voltage_A_sf}}, (SELECT id FROM public.organic_nodes_control_measurement WHERE (message_counter = {{payload.message_counter}} AND date_time_stamp = '{{payload.date_time_stamp}}') LIMIT 1));
+
+INSERT INTO public.organic_nodes_control_powermeasure(
+	phase, voltage_current_angle, voltage_current_angle_sf,	power_factor,	active_power,	active_power_sf,	reactive_power,	reactive_power_sf,	apparent_power,	apparent_power_sf	, measurement_id)
+	VALUES ('{{payload.phase_A}}', {{payload.voltage_current_angle_A}},{{payload.voltage_current_angle_A_sf}},{{payload.power_factor_A}},{{payload.active_power_A}}, {{payload.active_power_A_sf}}, {{payload.reactive_power_A}}, {{payload.reactive_power_A_sf}}, {{payload.apparent_power_A}}, {{payload.apparent_power_A_sf}}, (SELECT id FROM public.organic_nodes_control_measurement WHERE (message_counter = {{payload.message_counter}} AND date_time_stamp = '{{payload.date_time_stamp}}') LIMIT 1));
+
+```
+
+---
+### <a name="anexo-21"><a/><div align="center"> Anexo XXI - Cria instacia Bifasico</div>
+	
+```SQL
+INSERT INTO public.organic_nodes_control_measurement(
+	date_time_stamp,	message_counter,	setup_id,	source)
+	VALUES ('{{payload.date_time_stamp}}', {{payload.message_counter}}, (SELECT id FROM public.organic_nodes_control_setup WHERE (device_id = (SELECT device_id FROM public.organic_nodes_control_mqttdevice WHERE (mqtt_access_id = (SELECT id FROM public.organic_nodes_control_mqttaccess WHERE (mqtt_id = '{{payload.id}}')))))), 0);
+
+INSERT INTO public.organic_nodes_control_frequencymeasure(
+	frequency,	frequency_sf,	measurement_id)
+	VALUES ({{payload.frequency}}, {{payload.frequency_sf}}, (SELECT id FROM public.organic_nodes_control_measurement WHERE (message_counter = {{payload.message_counter}} AND date_time_stamp = '{{payload.date_time_stamp}}') LIMIT 1));
+
+INSERT INTO public.organic_nodes_control_sensormeasure(
+	temperature,	temperature_sf,	measurement_id)
+	VALUES ({{payload.temperature}}, {{payload.temperature_sf}}, (SELECT id FROM public.organic_nodes_control_measurement WHERE (message_counter = {{payload.message_counter}} AND date_time_stamp = '{{payload.date_time_stamp}}') LIMIT 1));
+	
+INSERT INTO public.organic_nodes_control_energymeasure(
+	phase, current, current_sf, voltage, voltage_sf, measurement_id)
+	VALUES ('{{payload.phase_A}}', {{payload.current_A}},{{payload.current_A_sf}},{{payload.voltage_A}},{{payload.voltage_A_sf}}, (SELECT id FROM public.organic_nodes_control_measurement WHERE (message_counter = {{payload.message_counter}} AND date_time_stamp = '{{payload.date_time_stamp}}') LIMIT 1));
+
+INSERT INTO public.organic_nodes_control_powermeasure(
+	phase, voltage_current_angle, voltage_current_angle_sf,	power_factor,	active_power,	active_power_sf,	reactive_power,	reactive_power_sf,	apparent_power,	apparent_power_sf	, measurement_id)
+	VALUES ('{{payload.phase_A}}', {{payload.voltage_current_angle_A}},{{payload.voltage_current_angle_A_sf}},{{payload.power_factor_A}},{{payload.active_power_A}}, {{payload.active_power_A_sf}}, {{payload.reactive_power_A}}, {{payload.reactive_power_A_sf}}, {{payload.apparent_power_A}}, {{payload.apparent_power_A_sf}}, (SELECT id FROM public.organic_nodes_control_measurement WHERE (message_counter = {{payload.message_counter}} AND date_time_stamp = '{{payload.date_time_stamp}}') LIMIT 1));
+
+INSERT INTO public.organic_nodes_control_energymeasure(
+	phase, current, current_sf, voltage, voltage_sf, measurement_id)
+	VALUES ('{{payload.phase_B}}', {{payload.current_B}},{{payload.current_B_sf}},{{payload.voltage_B}},{{payload.voltage_B_sf}}, (SELECT id FROM public.organic_nodes_control_measurement WHERE (message_counter = {{payload.message_counter}} AND date_time_stamp = '{{payload.date_time_stamp}}') LIMIT 1));
+
+INSERT INTO public.organic_nodes_control_powermeasure(
+	phase, voltage_current_angle, voltage_current_angle_sf,	power_factor,	active_power,	active_power_sf,	reactive_power,	reactive_power_sf,	apparent_power,	apparent_power_sf	, measurement_id)
+	VALUES ('{{payload.phase_B}}', {{payload.voltage_current_angle_B}},{{payload.voltage_current_angle_B_sf}},{{payload.power_factor_B}},{{payload.active_power_B}}, {{payload.active_power_B_sf}}, {{payload.reactive_power_B}}, {{payload.reactive_power_B_sf}}, {{payload.apparent_power_B}}, {{payload.apparent_power_B_sf}}, (SELECT id FROM public.organic_nodes_control_measurement WHERE (message_counter = {{payload.message_counter}} AND date_time_stamp = '{{payload.date_time_stamp}}') LIMIT 1));
+
+INSERT INTO public.organic_nodes_control_voltagelagmeasure(
+	angle, angle_sf,	phase_combination, measurement_id)
+	VALUES ({{payload.angle_voltage_A_B}}, {{payload.angle_voltage_A_B_sf}}, '{{payload.phase_A}}{{payload.phase_B}}', (SELECT id FROM public.organic_nodes_control_measurement WHERE (message_counter = {{payload.message_counter}} AND date_time_stamp = '{{payload.date_time_stamp}}') LIMIT 1));
+```
+
+---
+### <a name="anexo-22"><a/><div align="center"> Anexo XXII - Cria instacia Trifasico</div>
+	
+```SQL
+INSERT INTO public.organic_nodes_control_measurement(
+	date_time_stamp,	message_counter,	setup_id,	source)
+	VALUES ('{{payload.date_time_stamp}}', {{payload.message_counter}}, (SELECT id FROM public.organic_nodes_control_setup WHERE (device_id = (SELECT device_id FROM public.organic_nodes_control_mqttdevice WHERE (mqtt_access_id = (SELECT id FROM public.organic_nodes_control_mqttaccess WHERE (mqtt_id = '{{payload.id}}')))))), 0);
+
+INSERT INTO public.organic_nodes_control_frequencymeasure(
+	frequency,	frequency_sf,	measurement_id)
+	VALUES ({{payload.frequency}}, {{payload.frequency_sf}}, (SELECT id FROM public.organic_nodes_control_measurement WHERE (message_counter = {{payload.message_counter}} AND date_time_stamp = '{{payload.date_time_stamp}}') LIMIT 1));
+
+INSERT INTO public.organic_nodes_control_sensormeasure(
+	temperature,	temperature_sf,	measurement_id)
+	VALUES ({{payload.temperature}}, {{payload.temperature_sf}}, (SELECT id FROM public.organic_nodes_control_measurement WHERE (message_counter = {{payload.message_counter}} AND date_time_stamp = '{{payload.date_time_stamp}}') LIMIT 1));
+	
+INSERT INTO public.organic_nodes_control_energymeasure(
+	phase, current, current_sf, voltage, voltage_sf, measurement_id)
+	VALUES ('{{payload.phase_A}}', {{payload.current_A}},{{payload.current_A_sf}},{{payload.voltage_A}},{{payload.voltage_A_sf}}, (SELECT id FROM public.organic_nodes_control_measurement WHERE (message_counter = {{payload.message_counter}} AND date_time_stamp = '{{payload.date_time_stamp}}') LIMIT 1));
+
+INSERT INTO public.organic_nodes_control_powermeasure(
+	phase, voltage_current_angle, voltage_current_angle_sf,	power_factor,	active_power,	active_power_sf,	reactive_power,	reactive_power_sf,	apparent_power,	apparent_power_sf	, measurement_id)
+	VALUES ('{{payload.phase_A}}', {{payload.voltage_current_angle_A}},{{payload.voltage_current_angle_A_sf}},{{payload.power_factor_A}},{{payload.active_power_A}}, {{payload.active_power_A_sf}}, {{payload.reactive_power_A}}, {{payload.reactive_power_A_sf}}, {{payload.apparent_power_A}}, {{payload.apparent_power_A_sf}}, (SELECT id FROM public.organic_nodes_control_measurement WHERE (message_counter = {{payload.message_counter}} AND date_time_stamp = '{{payload.date_time_stamp}}') LIMIT 1));
+
+INSERT INTO public.organic_nodes_control_energymeasure(
+	phase, current, current_sf, voltage, voltage_sf, measurement_id)
+	VALUES ('{{payload.phase_B}}', {{payload.current_B}},{{payload.current_B_sf}},{{payload.voltage_B}},{{payload.voltage_B_sf}}, (SELECT id FROM public.organic_nodes_control_measurement WHERE (message_counter = {{payload.message_counter}} AND date_time_stamp = '{{payload.date_time_stamp}}') LIMIT 1));
+
+INSERT INTO public.organic_nodes_control_powermeasure(
+	phase, voltage_current_angle, voltage_current_angle_sf,	power_factor,	active_power,	active_power_sf,	reactive_power,	reactive_power_sf,	apparent_power,	apparent_power_sf	, measurement_id)
+	VALUES ('{{payload.phase_B}}', {{payload.voltage_current_angle_B}},{{payload.voltage_current_angle_B_sf}},{{payload.power_factor_B}},{{payload.active_power_B}}, {{payload.active_power_B_sf}}, {{payload.reactive_power_B}}, {{payload.reactive_power_B_sf}}, {{payload.apparent_power_B}}, {{payload.apparent_power_B_sf}}, (SELECT id FROM public.organic_nodes_control_measurement WHERE (message_counter = {{payload.message_counter}} AND date_time_stamp = '{{payload.date_time_stamp}}') LIMIT 1));
+
+INSERT INTO public.organic_nodes_control_voltagelagmeasure(
+	angle, angle_sf,	phase_combination, measurement_id)
+	VALUES ({{payload.angle_voltage_A_B}}, {{payload.angle_voltage_A_B_sf}}, '{{payload.phase_A}}{{payload.phase_B}}', (SELECT id FROM public.organic_nodes_control_measurement WHERE (message_counter = {{payload.message_counter}} AND date_time_stamp = '{{payload.date_time_stamp}}') LIMIT 1));
+	
+INSERT INTO public.organic_nodes_control_energymeasure(
+	phase, current, current_sf, voltage, voltage_sf, measurement_id)
+	VALUES ('{{payload.phase_C}}', {{payload.current_C}},{{payload.current_C_sf}},{{payload.voltage_C}},{{payload.voltage_C_sf}}, (SELECT id FROM public.organic_nodes_control_measurement WHERE (message_counter = {{payload.message_counter}} AND date_time_stamp = '{{payload.date_time_stamp}}') LIMIT 1));
+
+INSERT INTO public.organic_nodes_control_powermeasure(
+	phase, voltage_current_angle, voltage_current_angle_sf,	power_factor,	active_power,	active_power_sf,	reactive_power,	reactive_power_sf,	apparent_power,	apparent_power_sf	, measurement_id)
+	VALUES ('{{payload.phase_C}}', {{payload.voltage_current_angle_C}},{{payload.voltage_current_angle_C_sf}},{{payload.power_factor_C}},{{payload.active_power_C}}, {{payload.active_power_C_sf}}, {{payload.reactive_power_C}}, {{payload.reactive_power_C_sf}}, {{payload.apparent_power_C}}, {{payload.apparent_power_C_sf}}, (SELECT id FROM public.organic_nodes_control_measurement WHERE (message_counter = {{payload.message_counter}} AND date_time_stamp = '{{payload.date_time_stamp}}') LIMIT 1));
+
+INSERT INTO public.organic_nodes_control_voltagelagmeasure(
+	angle, angle_sf,	phase_combination, measurement_id)
+	VALUES ({{payload.angle_voltage_A_C}}, {{payload.angle_voltage_A_C_sf}}, '{{payload.phase_A}}{{payload.phase_C}}', (SELECT id FROM public.organic_nodes_control_measurement WHERE (message_counter = {{payload.message_counter}} AND date_time_stamp = '{{payload.date_time_stamp}}') LIMIT 1));
+
+INSERT INTO public.organic_nodes_control_voltagelagmeasure(
+	angle, angle_sf,	phase_combination, measurement_id)
+	VALUES ({{payload.angle_voltage_B_C}}, {{payload.angle_voltage_B_C_sf}}, '{{payload.phase_B}}{{payload.phase_C}}', (SELECT id FROM public.organic_nodes_control_measurement WHERE (message_counter = {{payload.message_counter}} AND date_time_stamp = '{{payload.date_time_stamp}}') LIMIT 1));
 ```
 
 ---
