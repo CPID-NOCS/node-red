@@ -159,7 +159,11 @@ Inicialmente, temos todos os nodes separados em dois fluxos: o **Receive Data** 
     graph TD;    
     A[Recebimento da mesagem contendo apenas uma medição via MQTT] --> B[Tratamento da mensagem] ;
     B --> C[Junção de todas as medições];
-    C --> D[formatação com adição de medições calculadas];
+    C --> D[Verificação de cadastro de usuario];
+    D --> E[Formatação com adição de medições calculadas];
+    E --> F[Adição de fases];
+    F --> G[Criação da Instancia];
+    G --> H[Envio ao Banco de dados Local e Remoto];
 ```
 
 É importante ressaltar que em ambos os fluxos são utilizados subflows para simplificar o processo. Abaixo, seram destacados as funcionalidades e configurações de cada fluxo.
