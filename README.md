@@ -47,6 +47,7 @@
 	- [Anexo XVII - Cria instancia Monofasico](#anexo-20)
 	- [Anexo XVII - Cria instancia Bifasico](#anexo-21)
 	- [Anexo XVII - Cria instancia Trifasico](#anexo-22)
+	- [Anexo XVIII - Parametros](#anexo-23)
 
 # <a name=“node-red”><a/>Node-red
 
@@ -528,7 +529,21 @@ INSERT INTO public.organic_nodes_control_energymeasure(
 É importante destacar que a cada mensagem instanciada, é enviada uma mensagem para o subflow ***Sincronismo medições***, a fim de manter a sincronia entre as tabelas de medições locais e remotas. Isso é essencial para garantir a precisão dos dados e evitar erros na sincronização, para que, o subflow irá sincronize antes de enviar novas mensagens para o banco remoto.
 	
 #### <a name="envio-ao-banco"><a/>Envio ao banco
+O subflow ***Envia ao banco*** é um subflow simplificado que contém três nós principais. No primeiro nó do fluxo, adiciona-se os parâmetros de envio da mensagem do postgres, nó **Parametros** (configuração no [Anexo-XXIII](#anexo-23)). Nesse nó, há também uma pequena verificação de uma variável global *sincronismo_remoto* referente à sincronização do banco local com o remoto. Se essa variável for verdadeira, significa que uma sincronização está em andamento, portanto, devemos enviar mensagens somente para o banco local, localizado no segundo output do nó. Caso contrário, os bancos estão sincronizados e a mensagem é enviada para ambos o dois outros nós (NOCS e Local), nós configurados conforme especificado em seções anteriores(verificar seção [Postgres](#postgres)).
+	
+<div align="center">
+	<img src="https://user-images.githubusercontent.com/56831082/225621699-1ff29810-3bc8-4772-bc8e-4d645424d769.png" wigth=800><br>
+</div>
+
+Caso haja qualquer erro no banco local, é feita uma sincronização local através do nó de "Sincronização Local", para corrigir qualquer falta de informações de cadastro que o banco local possa estar tendo. Após 1 segundo, a mensagem que ocasionou o erro é reenviada para ser armazenada no banco local.	
+		
 #### <a name="sincronismo-medicoes"><a/>Sincronismo Medições
+	
+	
+	
+	
+	
+	
 #### <a name="sincronismo-local"><a/>Sincronismo Local
 #### <a name="sincronismo-tamanho-banco-local"><a/>Sincronismo tamanho banco local
 
@@ -1103,6 +1118,20 @@ INSERT INTO public.organic_nodes_control_voltagelagmeasure(
 INSERT INTO public.organic_nodes_control_voltagelagmeasure(
 	angle, angle_sf,	phase_combination, measurement_id)
 	VALUES ({{payload.angle_voltage_B_C}}, {{payload.angle_voltage_B_C_sf}}, '{{payload.phase_B}}{{payload.phase_C}}', (SELECT id FROM public.organic_nodes_control_measurement WHERE (message_counter = {{payload.message_counter}} AND date_time_stamp = '{{payload.date_time_stamp}}') LIMIT 1));
+```
+
+---
+### <a name="anexo-23"><a/><div align="center"> Anexo XXIII - Parametros</div>
+	
+```javascript
+msg.queryParameters = msg.payload
+
+let sinc = global.get("sincronizando_remoto") || false
+
+if (sinc == false)
+    return [msg, msg];
+else 
+    return [null, msg];
 ```
 
 ---
