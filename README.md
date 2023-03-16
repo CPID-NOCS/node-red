@@ -42,12 +42,17 @@
 	- [Anexo XV - postgresql](#anexo-15)
 	- [Anexo XVI - Verifica Cadastro no banco](#anexo-16)
 	- [Anexo XVII - postgresql](#anexo-17)
-	- [Anexo XVII - Segregação](#anexo-18)
-	- [Anexo XVII - Identificação instalação](#anexo-19)
-	- [Anexo XVII - Cria instancia Monofasico](#anexo-20)
-	- [Anexo XVII - Cria instancia Bifasico](#anexo-21)
-	- [Anexo XVII - Cria instancia Trifasico](#anexo-22)
-	- [Anexo XVIII - Parametros](#anexo-23)
+	- [Anexo XVIII - Segregação](#anexo-18)
+	- [Anexo XIX - Identificação instalação](#anexo-19)
+	- [Anexo XX - Cria instancia Monofasico](#anexo-20)
+	- [Anexo XXI - Cria instancia Bifasico](#anexo-21)
+	- [Anexo XXI - Cria instancia Trifasico](#anexo-22)
+	- [Anexo XXIII - Parametros](#anexo-23)
+	- [Anexo XXIV - Local - Data do primeiro dado](#anexo-24)
+	- [Anexo XXV - Local - Data do ultimo dado](#anexo-25)
+	- [Anexo XXVI - cria msg.date_inicial](#anexo-26)
+	- [Anexo XXVII - cria msg.date_atual](#anexo-27)
+	- [Anexo XXVIII - Verifica datas](#anexo-28)
 
 # <a name=“node-red”><a/>Node-red
 
@@ -546,7 +551,22 @@ Caso haja qualquer erro no banco local, é feita uma sincronização local atrav
 	
 #### <a name="sincronismo-local"><a/>Sincronismo Local
 #### <a name="sincronismo-tamanho-banco-local"><a/>Sincronismo tamanho banco local
-
+O fluxo deste subfluxo é dividido em dois subfluxos sequenciais. No primeiro, temos a requisição das datas da primeira e última mensagem registrada no banco local, referente a data inicial e atual. A data inicial é obtida pelo nó **Local - Data do primeiro dado** (configuração no [Anexo-XXIV](#anexo-24)), enquanto a data final é obtida pelo nó **Local - Data do último dado** (configuração no [Anexo-XXV](#anexo-25)). Como dito em outras seções, os nós do Postgres sobrescrevem o payload local. Logo, para cada um dos nós citados anteriormente a mensagem é colocada em outros payloads secundários: *msg.date_inicial*, instanciado pelo nó **cria msg.date_inicial** (configuração no [Anexo-XXVI](#anexo-26)), e *msg.date_atual*, instanciado pelo nó **cria msg.date_atual** (configuração no [Anexo-XXVII](#anexo-27)).
+	
+<div align="center">
+	<img src="https://user-images.githubusercontent.com/56831082/225642480-fb6cdbd2-fcd5-4c6c-b95c-a837988fc893.png" width=750><br>
+</div>
+	
+Já no outro subfluxo, temos a verificação do distanciamento entre as duas datas pelo nó **Verifica datas** (configuração no [Anexo-XXVIII](#anexo-28)). Caso a mensagem inicial tenha extrapolado a quantidade de dias pré-definida, uma instância de delete é enviada ao banco local para apagar a mensagem, e o loop passa para a próxima mensagem do banco. Caso contrário, a sincronização está completa, e o loop se encerra.
+	
+	
+	
+	
+	
+	
+	
+	
+	
 # <a name="conclusao"><a/>Conclusão
 
 Node-RED é uma plataforma poderosa e flexível para a criação de fluxos de trabalho IoT e integração de sistemas. Com seus nodes personalizáveis, fluxos, subflows e outras ferramentas, é possível criar fluxos complexos de maneira visual e fácil de entender. Com a comunidade ativa de desenvolvedores, há sempre suporte para novos nodes e recursos, tornando o Node-RED uma solução escalável para projetos IoT e de integração de sistemas.
@@ -1132,6 +1152,53 @@ if (sinc == false)
     return [msg, msg];
 else 
     return [null, msg];
+```
+
+---
+### <a name="anexo-24"><a/><div align="center"> Anexo XXIV - Local - Data do primeiro dado</div>
+
+*Query*
+```SQL
+SELECT date_time_stamp FROM public.organic_nodes_control_measurement ORDER BY id ASC LIMIT 1;
+```
+
+---
+### <a name="anexo-25"><a/><div align="center"> Anexo XXV - Local - Data do ultimo dado</div>
+	
+*Query*
+```SQL
+SELECT date_time_stamp FROM public.organic_nodes_control_measurement ORDER BY id DESC LIMIT 1;
+```
+
+---
+### <a name="anexo-26"><a/><div align="center"> Anexo XXVI - cria msg.date_inicial</div>
+
+<div align="center">
+	<img src="https://user-images.githubusercontent.com/56831082/225643844-29d192f3-a0cc-4bac-aed5-f2590f290c40.png"><br>
+</div>
+
+---
+### <a name="anexo-27"><a/><div align="center"> Anexo XXVII - cria msg.date_atual</div>
+
+<div align="center">
+	<img src="https://user-images.githubusercontent.com/56831082/225643865-1c453754-3f5e-47e6-9d85-50e5105c774f.png"><br>
+</div>
+	
+---
+### <a name="anexo-28"><a/><div align="center"> Anexo XXVIII - Verifica datas</div>
+	
+```javascript
+var periodo = msg.date_atual.date_time_stamp - msg.date_inicial.date_time_stamp
+var qtd_dias = ((periodo / 1000) / 3600) / 24
+
+msg.payload = ""
+var data  = JSON.parse(JSON.stringify(msg.date_inicial))
+
+if (qtd_dias > msg.permanence_date){
+    msg.payload = "DELETE FROM public.organic_nodes_control_measurement WHERE date_time_stamp = '" + data.date_time_stamp +"';"
+    msg.queryParameters = msg.payload
+    return msg;
+}
 ```
 
 ---
