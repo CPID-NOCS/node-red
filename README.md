@@ -263,7 +263,7 @@ O subflow ***MQTT*** tem a função de capturar as mensagens recebidas pelo Node
     <img src="https://github.com/CPID-NOCS/node-red/blob/master/Imagens/subflow-MQTT.png" width=850><br>
 </div>
 
-O fluxo do subflow começa com um node chamado **Aedes MQTT**(configuração no [Anexo-I](#anexo-1)), que funciona como um mosquito broker e coleta todas as mensagens que chegam na porta 1883 da Raspberry Pi. Em seguida, a mensagem passa pelo node **Não nulos**(configuração no [Anexo-II](#anexo-2)), que verifica se a mensagem não está vazia e se está conectada. Essas informações são cruciais para garantir a consistência das mensagens recebidas. Por fim, a mensagem passa pelo node **Existe dados**(configuração no [Anexo-III](#anexo-3)), que verifica se o payload da mensagem contém dados ou está vazio.
+O fluxo do subflow começa com um node chamado **Aedes MQTT** (configuração no [Anexo-I](#anexo-1)), que funciona como um mosquito broker e coleta todas as mensagens que chegam na porta 1883 da Raspberry Pi. Em seguida, a mensagem passa pelo node **Não nulos** (configuração no [Anexo-II](#anexo-2)), que verifica se a mensagem não está vazia e se está conectada. Essas informações são cruciais para garantir a consistência das mensagens recebidas. Por fim, a mensagem passa pelo node **Existe dados** (configuração no [Anexo-III](#anexo-3)), que verifica se o payload da mensagem contém dados ou está vazio.
 
 Além desses nodes, o subflow ***MQTT*** também possui nodes de status que informam a situação atual do node (conectado ou desconectado) e um node de aviso que informa caso ocorra algum problema em qualquer node do subflow.
 
@@ -303,13 +303,13 @@ e passa a ter o seguinte formato após a reconfiguração no primeiro fluxo:
 	"unit":"A"
 }
 ```
-Esse processo é realizado através dos nodos **convert payload**(configuração no [Anexo-IV](#anexo-4)), que converte o formato payload de buffer para um objeto JSON, e posteriormente as informações irrelevantes são removidas e o payload é reorganizado pelo nodulo **Reconfiguração**(configuração no [Anexo-V](#anexo-5)). Por fim, a mensagem é transformada em uma string JSON no nodulo **Trasformação String**(configuração no [Anexo-VI](#anexo-6)) para facilitar a união com as mensagens seguintes no fluxo de *Identificação de Tópico e Junção*. A união ocorre de forma diferente para cada tipo de módulo (monofásico, bifásico e trifásico), pois temos uma quantidade diferente de mensagens a serem unidas. Cada mensagem é identificada pelo nodulo **Identificação de fase**(configuração no [Anexo-VII](#anexo-7)), através do tópico em que a mensagem foi publicada. A união é realizada pelos nodulos **Junção Monofásico**, **Junção Bifásico** e **Junção Trifásico**(configuração de ambos no [Anexo-VIII](#anexo-8)).
+Esse processo é realizado através dos nodos **convert payload** (configuração no [Anexo-IV](#anexo-4)), que converte o formato payload de buffer para um objeto JSON, e posteriormente as informações irrelevantes são removidas e o payload é reorganizado pelo nodulo **Reconfiguração** (configuração no [Anexo-V](#anexo-5)). Por fim, a mensagem é transformada em uma string JSON no nodulo **Trasformação String** (configuração no [Anexo-VI](#anexo-6)) para facilitar a união com as mensagens seguintes no fluxo de *Identificação de Tópico e Junção*. A união ocorre de forma diferente para cada tipo de módulo (monofásico, bifásico e trifásico), pois temos uma quantidade diferente de mensagens a serem unidas. Cada mensagem é identificada pelo nodulo **Identificação de fase** (configuração no [Anexo-VII](#anexo-7)), através do tópico em que a mensagem foi publicada. A união é realizada pelos nodulos **Junção Monofásico**, **Junção Bifásico** e **Junção Trifásico** (configuração de ambos no [Anexo-VIII](#anexo-8)).
 
 Após a união, é necessário modificar a mensagem resultante, que chega no seguinte formato:
 ```
 {"id":"5","topic":"Trifasico","variable":"PA","value":94.87,"unit":"W"},{"id":"5","topic":"Trifasico","variable":"PB","value":117.4,"unit":"W"},{"id":"5","topic":"Trifasico","variable":"PC","value":64.71,"unit":"W"},...}
 ```
-Para isso removemos as junções `"},{"` e alteramos o formato basico de cada menagem, no caso da corrente de Fase A, a mensagem ´{"id":"5","topic":"Trifasico","variable":"IA","value":1.08,"unit":"W"}´ passa a ser `{"id":"5", topic":"Trifasico", "variable":"IA", value":1.08, unit":"A"}` e é unida as outras. Isso é feito pelo nodulo **Junção e Alteração**(configuração no [Anexo-IX](#anexo-9)).
+Para isso removemos as junções `"},{"` e alteramos o formato basico de cada menagem, no caso da corrente de Fase A, a mensagem ´{"id":"5","topic":"Trifasico","variable":"IA","value":1.08,"unit":"W"}´ passa a ser `{"id":"5", topic":"Trifasico", "variable":"IA", value":1.08, unit":"A"}` e é unida as outras. Isso é feito pelo nodulo **Junção e Alteração** (configuração no [Anexo-IX](#anexo-9)).
 
 Recuperação da Mensagem resultante de Json String para Json Object:
 ```json
@@ -343,7 +343,7 @@ Recuperação da Mensagem resultante de Json String para Json Object:
 }
 ```
 	
-Muitos desses valores não são utilizados pelo projeto. Após a recuperação da string JSON para objeto JSON no nodulo **Recuperação**(configuração no [Anexo-X](#anexo-10)), os dados não utilizados, como 'unit', 'PT', 'QT', 'ST', e 'IT', são removidos pelo nodulo "Remoção"(configuração no [Anexo-XI](#anexo-11)), deixando o payload no seguinte formato:
+Muitos desses valores não são utilizados pelo projeto. Após a recuperação da string JSON para objeto JSON no nodulo **Recuperação** (configuração no [Anexo-X](#anexo-10)), os dados não utilizados, como 'unit', 'PT', 'QT', 'ST', e 'IT', são removidos pelo nodulo "Remoção" (configuração no [Anexo-XI](#anexo-11)), deixando o payload no seguinte formato:
 	
 ```json
 {
@@ -372,7 +372,7 @@ Muitos desses valores não são utilizados pelo projeto. Após a recuperação d
 ```
 	
 #### <a name="formatacao"><a/>Formatação
-Este subfluxo é responsável por fazer as formatações necessárias para o banco de dados. Nele, temos um nó chamado **Formatação**(configuração no [Anexo-XII](#anexo-12)), que possui diversas funcionalidades, incluindo a separação das medidas com casas decimais e a representação dos valores em notação científica, onde o número de ponto flutuante se torna um inteiro e o valor que o tornou inteiro é representado em outra propriedade chamada ***sf*** (abreviação para "scientific format").
+Este subfluxo é responsável por fazer as formatações necessárias para o banco de dados. Nele, temos um nó chamado **Formatação** (configuração no [Anexo-XII](#anexo-12)), que possui diversas funcionalidades, incluindo a separação das medidas com casas decimais e a representação dos valores em notação científica, onde o número de ponto flutuante se torna um inteiro e o valor que o tornou inteiro é representado em outra propriedade chamada ***sf*** (abreviação para "scientific format").
 
 <div align=center>
 	<img src="https://user-images.githubusercontent.com/56831082/225416305-f0331554-fa17-4f5b-8259-cd8eb22f9320.png" width=600><br>
@@ -406,14 +406,14 @@ Torna-se:
 	...
 }
 ```
-Outras funcionalidades deste nó é realizar o cálculo de medições que alguns módulos não executam, como a potência reativa, a potência aparente, o defasamento, entre outros, além disso temos um fluxo *Contador de mensagens*(configuração dos dois nodulos do fluxo no [Anexo-XIII](#anexo-13)) responsavel por zerar o contador de mensagens caso a varizavel do subflow **zerar** esteja selecionada nas opções de configuração do subflow, como a imagem abaixo mostra.
+Outras funcionalidades deste nó é realizar o cálculo de medições que alguns módulos não executam, como a potência reativa, a potência aparente, o defasamento, entre outros, além disso temos um fluxo *Contador de mensagens* (configuração dos dois nodulos do fluxo no [Anexo-XIII](#anexo-13)) responsavel por zerar o contador de mensagens caso a varizavel do subflow **zerar** esteja selecionada nas opções de configuração do subflow, como a imagem abaixo mostra.
 
 <div align=center>
 	<img src="https://user-images.githubusercontent.com/56831082/225413648-047bb42d-350a-47ac-94e7-d199fbbdc9bf.png" width=400><br>
 </div>
 
 #### <a name=“verifica-cadastro”><a/>Verifica cadastro
-Este subflow é responsável por verificar se o ID da mensagem que chegou no payload está cadastrado no banco de dados. Caso contrário, a mensagem não pode ser armazenada no banco. Para isso, no início do fluxo, a mensagem é duplicada pelo nó **Duplica**(configuração no [Anexo-XIV](#anexo-14)) pois o segundo nó utilizado, responsável pela verificação, sobrescreve o payload da mensagem. Logo, para não haver perdas, a mensagem é duplicada. No segundo nó **postgreSQL**(configuração no [Anexo-XV](#anexo-15)), temos uma query que busca o ID do mqtt_access referente ao ID do cliente da mensagem. Caso esse ID não seja definido, significa que o ID da mensagem não possui cadastro. Nesse caso, a mensagem é enviada ao subflow ***Sincronismo Local*** para verificar se as tabelas locais estão devidamente atualizadas, essa descisão e tomada pelo nó **Verifica Cadastro no banco**(configuração no [Anexo-XVI](#anexo-16)).
+Este subflow é responsável por verificar se o ID da mensagem que chegou no payload está cadastrado no banco de dados. Caso contrário, a mensagem não pode ser armazenada no banco. Para isso, no início do fluxo, a mensagem é duplicada pelo nó **Duplica** (configuração no [Anexo-XIV](#anexo-14)) pois o segundo nó utilizado, responsável pela verificação, sobrescreve o payload da mensagem. Logo, para não haver perdas, a mensagem é duplicada. No segundo nó **postgreSQL** (configuração no [Anexo-XV](#anexo-15)), temos uma query que busca o ID do mqtt_access referente ao ID do cliente da mensagem. Caso esse ID não seja definido, significa que o ID da mensagem não possui cadastro. Nesse caso, a mensagem é enviada ao subflow ***Sincronismo Local*** para verificar se as tabelas locais estão devidamente atualizadas, essa descisão e tomada pelo nó **Verifica Cadastro no banco** (configuração no [Anexo-XVI](#anexo-16)).
 
 <div align=center>
 	<img src="https://user-images.githubusercontent.com/56831082/225420298-4f21f277-3633-4af1-9756-56bd4bec12eb.png" width=950><br>
@@ -458,7 +458,7 @@ se torna:
 	...
 }
 ```
-Lembrando que phase_A representa a primeira fase. Portanto, se na instalação a primeira fase for a fase C, no código será representada por A, essa indexação é efetuada pelo nó **Segregação**(configuração no [Anexo-XVIII](#anexo-18)), além disso caso haja algum erro e mandada uma mensagem para o subflow ***Sincronismo Local*** para atualizar as tabelas locais de cadastro do banco local.
+Lembrando que phase_A, assim como todas medições com "_A" representa a primeira fase. Portanto, se na instalação a primeira fase for a fase C, no código será representada por A, essa indexação é efetuada pelo nó **Segregação** (configuração no [Anexo-XVIII](#anexo-18)), além disso caso haja algum erro e mandada uma mensagem para o subflow ***Sincronismo Local*** para atualizar as tabelas locais de cadastro do banco local.
 	
 #### <a name="cria-instancia"><a/>Cria Instancia
 #### <a name="envio-ao-banco"><a/>Envio ao banco
