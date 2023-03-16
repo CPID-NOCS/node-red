@@ -102,7 +102,7 @@
         ],
         "out": [
             {
-                "x": 1070,
+                "x": 1390,
                 "y": 820,
                 "wires": [
                     {
@@ -125,7 +125,7 @@
             "msg.payload"
         ],
         "status": {
-            "x": 1020,
+            "x": 1340,
             "y": 760,
             "wires": [
                 {
@@ -335,7 +335,7 @@
         ],
         "out": [
             {
-                "x": 870,
+                "x": 910,
                 "y": 640,
                 "wires": [
                     {
@@ -355,7 +355,7 @@
             "msg.plauload"
         ],
         "status": {
-            "x": 820,
+            "x": 860,
             "y": 580,
             "wires": [
                 {
@@ -419,7 +419,7 @@
         ],
         "out": [
             {
-                "x": 890,
+                "x": 930,
                 "y": 740,
                 "wires": [
                     {
@@ -439,7 +439,7 @@
             "msg.payload"
         ],
         "status": {
-            "x": 840,
+            "x": 880,
             "y": 800,
             "wires": [
                 {
@@ -474,8 +474,8 @@
             "msg.payload"
         ],
         "status": {
-            "x": 680,
-            "y": 500,
+            "x": 640,
+            "y": 420,
             "wires": [
                 {
                     "id": "5d43614299a5b76d",
@@ -506,7 +506,9 @@
             "49029129029e0331"
         ],
         "x": 14,
-        "y": 19
+        "y": 19,
+        "w": 1062,
+        "h": 868
     },
     {
         "id": "dca8bc654adbbf02",
@@ -531,7 +533,9 @@
             "5e9a61f501a537ae"
         ],
         "x": 14,
-        "y": 19
+        "y": 19,
+        "w": 582,
+        "h": 788
     },
     {
         "id": "8d913cb2ad803019",
@@ -555,7 +559,9 @@
             "5d1828b78c891a98"
         ],
         "x": 24,
-        "y": 19
+        "y": 19,
+        "w": 1032,
+        "h": 708
     },
     {
         "id": "0592eb0f2887c3ea",
@@ -580,7 +586,7 @@
         ],
         "x": 14,
         "y": 19,
-        "w": 742,
+        "w": 782,
         "h": 668
     },
     {
@@ -605,7 +611,9 @@
             "4e6d0bcfdddd096b"
         ],
         "x": 14,
-        "y": 19
+        "y": 19,
+        "w": 1004,
+        "h": 868
     },
     {
         "id": "cc9e6cb2286922e2",
@@ -630,7 +638,9 @@
             "87a810e83bc732ce"
         ],
         "x": 14,
-        "y": 19
+        "y": 19,
+        "w": 1262,
+        "h": 848
     },
     {
         "id": "4bbb49ad40394687",
@@ -656,7 +666,7 @@
         ],
         "x": 34,
         "y": 19,
-        "w": 738,
+        "w": 782,
         "h": 828
     },
     {
@@ -705,7 +715,7 @@
         ],
         "x": 14,
         "y": 19,
-        "w": 602,
+        "w": 562,
         "h": 768
     },
     {
@@ -823,15 +833,12 @@
             "abc1cc7f685db311",
             "d68cc4b4aa5992ee",
             "8927e4ccf542999d",
-            "5bc332cef7bd68dd",
-            "f69a606546d046ad",
-            "ded64dc9bb848911",
-            "a221c8c45108dded",
-            "c4cfe5adfe1318c2",
-            "c1afce0e69e05272"
+            "5bc332cef7bd68dd"
         ],
         "x": 54,
-        "y": 99
+        "y": 99,
+        "w": 832,
+        "h": 142
     },
     {
         "id": "0372f041345ff56b",
@@ -853,7 +860,9 @@
             "4c0c6dfcc390f93f"
         ],
         "x": 54,
-        "y": 99
+        "y": 99,
+        "w": 938,
+        "h": 428
     },
     {
         "id": "07617004c325cdb0",
@@ -878,7 +887,9 @@
             "0123b886a978d9a2"
         ],
         "x": 54,
-        "y": 539
+        "y": 539,
+        "w": 532,
+        "h": 162
     },
     {
         "id": "606bc7cf5600faf4",
@@ -901,7 +912,9 @@
             "57cf3c526ee8f1d9"
         ],
         "x": 54,
-        "y": 719
+        "y": 719,
+        "w": 412,
+        "h": 142
     },
     {
         "id": "a0a062d88e115230",
@@ -924,12 +937,15 @@
             "dc6a1f322af6636c",
             "e25b402cd2b1be3f",
             "059a8b0edfc718f5",
-            "261d0fc0d3cb6869",
             "2b409d0b8bba51cc",
-            "4204ca863fb0bc35"
+            "4204ca863fb0bc35",
+            "61608ffadbbef6dd",
+            "c3718ac6037398bd"
         ],
         "x": 54,
-        "y": 319
+        "y": 259,
+        "w": 1192,
+        "h": 202
     },
     {
         "id": "7a08cb8df76eb516",
@@ -952,7 +968,9 @@
             "87e724c87e97dc97"
         ],
         "x": 54,
-        "y": 539
+        "y": 539,
+        "w": 462,
+        "h": 142
     },
     {
         "id": "3d8914ac828c48e7",
@@ -975,7 +993,9 @@
             "a3e283b23edc1f7f"
         ],
         "x": 54,
-        "y": 699
+        "y": 699,
+        "w": 402,
+        "h": 142
     },
     {
         "id": "62780e20954084d0",
@@ -998,7 +1018,9 @@
             "09a3f46dd176e808"
         ],
         "x": 54,
-        "y": 639
+        "y": 639,
+        "w": 402,
+        "h": 142
     },
     {
         "id": "70d701831511dd80",
@@ -1020,7 +1042,9 @@
             "f8e788f202e28034"
         ],
         "x": 54,
-        "y": 99
+        "y": 99,
+        "w": 372,
+        "h": 142
     },
     {
         "id": "58e8ea5634e5a59c",
@@ -1043,7 +1067,9 @@
             "ced64b0b61ea785b"
         ],
         "x": 54,
-        "y": 259
+        "y": 259,
+        "w": 492,
+        "h": 142
     },
     {
         "id": "26d3a3ef0cd6942c",
@@ -1068,7 +1094,9 @@
             "8e6b524a8fa26f7b"
         ],
         "x": 54,
-        "y": 419
+        "y": 419,
+        "w": 512,
+        "h": 202
     },
     {
         "id": "498764931f4b71aa",
@@ -1897,7 +1925,9 @@
             "2de6760cdaf7f833"
         ],
         "x": 74,
-        "y": 519
+        "y": 519,
+        "w": 532,
+        "h": 182
     },
     {
         "id": "6a8629d966bc8d0e",
@@ -1922,7 +1952,9 @@
             "1249f497fea1a35d"
         ],
         "x": 74,
-        "y": 299
+        "y": 299,
+        "w": 472,
+        "h": 202
     },
     {
         "id": "596a5810aa7c9486",
@@ -1948,7 +1980,9 @@
             "18a9e0b0fa31c882"
         ],
         "x": 74,
-        "y": 99
+        "y": 99,
+        "w": 952,
+        "h": 182
     },
     {
         "id": "a103f22c7ee8d82d",
@@ -2051,7 +2085,7 @@
         ],
         "x": 54,
         "y": 99,
-        "w": 672,
+        "w": 712,
         "h": 142
     },
     {
@@ -2099,7 +2133,9 @@
             "f28f5b07b82ad25f"
         ],
         "x": 54,
-        "y": 519
+        "y": 519,
+        "w": 502,
+        "h": 142
     },
     {
         "id": "f2c4303acede0f49",
@@ -2123,7 +2159,9 @@
             "1b7087b411242447"
         ],
         "x": 54,
-        "y": 679
+        "y": 679,
+        "w": 412,
+        "h": 182
     },
     {
         "id": "3065cbbcf25013fd",
@@ -2149,7 +2187,9 @@
             "1b881169df1b0798"
         ],
         "x": 54,
-        "y": 99
+        "y": 99,
+        "w": 992,
+        "h": 202
     },
     {
         "id": "e446abe020d042ad",
@@ -2174,7 +2214,9 @@
             "692ad4797710b201"
         ],
         "x": 54,
-        "y": 319
+        "y": 319,
+        "w": 612,
+        "h": 182
     },
     {
         "id": "c20466e9245989df",
@@ -2276,7 +2318,7 @@
         ],
         "x": 74,
         "y": 99,
-        "w": 672,
+        "w": 712,
         "h": 182
     },
     {
@@ -2418,11 +2460,12 @@
             "fa6b3a1cf7951082",
             "9b89966f66391a78",
             "c416f21d38081a48",
-            "b37bc3c8d8340d6f"
+            "b37bc3c8d8340d6f",
+            "b04a2b22713471b7"
         ],
         "x": 54,
         "y": 539,
-        "w": 532,
+        "w": 492,
         "h": 222
     },
     {
@@ -2449,7 +2492,7 @@
         ],
         "x": 54,
         "y": 319,
-        "w": 432,
+        "w": 452,
         "h": 202
     },
     {
@@ -2526,7 +2569,9 @@
             "104af077a29300d7"
         ],
         "x": 94,
-        "y": 179
+        "y": 179,
+        "w": 872,
+        "h": 162
     },
     {
         "id": "4c0c6dfcc390f93f",
@@ -2547,7 +2592,9 @@
             "9efba4e0ab0cc2a5"
         ],
         "x": 94,
-        "y": 359
+        "y": 359,
+        "w": 192,
+        "h": 142
     },
     {
         "id": "7545bc9af9735841",
@@ -3433,11 +3480,11 @@
         "type": "json",
         "z": "d85720db46554979",
         "g": "67d25ef121d15f94",
-        "name": "",
+        "name": "convert payload",
         "property": "payload.packet.payload",
         "action": "",
         "pretty": false,
-        "x": 230,
+        "x": 260,
         "y": 200,
         "wires": [
             [
@@ -3450,7 +3497,7 @@
         "type": "change",
         "z": "d85720db46554979",
         "g": "67d25ef121d15f94",
-        "name": "Formatação",
+        "name": "Reconfiguração",
         "rules": [
             {
                 "t": "set",
@@ -3503,7 +3550,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 390,
+        "x": 460,
         "y": 200,
         "wires": [
             [
@@ -3516,15 +3563,15 @@
         "type": "json",
         "z": "d85720db46554979",
         "g": "67d25ef121d15f94",
-        "name": "",
+        "name": "Trasformação String",
         "property": "payload",
         "action": "str",
         "pretty": false,
-        "x": 550,
+        "x": 680,
         "y": 200,
         "wires": [
             [
-                "f69a606546d046ad"
+                "5bc332cef7bd68dd"
             ]
         ]
     },
@@ -3533,9 +3580,9 @@
         "type": "comment",
         "z": "d85720db46554979",
         "g": "67d25ef121d15f94",
-        "name": "Formatação",
+        "name": "Reconfiguração",
         "info": "",
-        "x": 150,
+        "x": 160,
         "y": 140,
         "wires": []
     },
@@ -3549,16 +3596,364 @@
         "links": [
             "059a8b0edfc718f5"
         ],
-        "x": 755,
-        "y": 260,
+        "x": 845,
+        "y": 200,
         "wires": []
     },
     {
-        "id": "f69a606546d046ad",
+        "id": "a0a25e1f9e7fab40",
+        "type": "catch",
+        "z": "d85720db46554979",
+        "g": "3d8914ac828c48e7",
+        "name": "",
+        "scope": null,
+        "uncaught": false,
+        "x": 160,
+        "y": 800,
+        "wires": [
+            [
+                "10ce0b5af640d9b6"
+            ]
+        ]
+    },
+    {
+        "id": "6ba7d76b06f3bb18",
+        "type": "comment",
+        "z": "d85720db46554979",
+        "g": "3d8914ac828c48e7",
+        "name": "Avisos",
+        "info": "",
+        "x": 130,
+        "y": 740,
+        "wires": []
+    },
+    {
+        "id": "2b409d0b8bba51cc",
+        "type": "json",
+        "z": "d85720db46554979",
+        "g": "a0a062d88e115230",
+        "name": "Recuperação",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 910,
+        "y": 380,
+        "wires": [
+            [
+                "c3718ac6037398bd"
+            ]
+        ]
+    },
+    {
+        "id": "4204ca863fb0bc35",
+        "type": "link out",
+        "z": "d85720db46554979",
+        "g": "a0a062d88e115230",
+        "name": "out 1",
+        "mode": "link",
+        "links": [
+            "0ea7eda264f5cec1"
+        ],
+        "x": 1205,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "60bdd308296943ef",
+        "type": "switch",
+        "z": "d85720db46554979",
+        "g": "a0a062d88e115230",
+        "name": "Identificação fase",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "cont",
+                "v": "\"topic\":\"Monofasico\"",
+                "vt": "str"
+            },
+            {
+                "t": "cont",
+                "v": "\"topic\":\"Bifasico\"",
+                "vt": "str"
+            },
+            {
+                "t": "cont",
+                "v": "\"topic\":\"Trifasico\"",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 3,
+        "x": 270,
+        "y": 380,
+        "wires": [
+            [
+                "7a8f749828a1f658"
+            ],
+            [],
+            [
+                "dc6a1f322af6636c"
+            ]
+        ]
+    },
+    {
+        "id": "7a8f749828a1f658",
+        "type": "join",
+        "z": "d85720db46554979",
+        "g": "a0a062d88e115230",
+        "name": "Junção Monofasico",
+        "mode": "custom",
+        "build": "string",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": ",",
+        "joinerType": "str",
+        "accumulate": false,
+        "timeout": "",
+        "count": "4",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "",
+        "reduceFixup": "",
+        "x": 490,
+        "y": 340,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "9dadcaaf455341da",
+        "type": "join",
+        "z": "d85720db46554979",
+        "g": "a0a062d88e115230",
+        "name": "Junção Bifasico",
+        "mode": "custom",
+        "build": "string",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": ",",
+        "joinerType": "str",
+        "accumulate": false,
+        "timeout": "",
+        "count": "13",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "",
+        "reduceFixup": "",
+        "x": 480,
+        "y": 380,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "dc6a1f322af6636c",
+        "type": "join",
+        "z": "d85720db46554979",
+        "g": "a0a062d88e115230",
+        "name": "Junção Trifasico",
+        "mode": "custom",
+        "build": "string",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": ",",
+        "joinerType": "str",
+        "accumulate": false,
+        "timeout": "",
+        "count": "39",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "",
+        "reduceFixup": "",
+        "x": 480,
+        "y": 420,
+        "wires": [
+            [
+                "61608ffadbbef6dd"
+            ]
+        ]
+    },
+    {
+        "id": "e25b402cd2b1be3f",
+        "type": "comment",
+        "z": "d85720db46554979",
+        "g": "a0a062d88e115230",
+        "name": "Identificação de Topico e junção",
+        "info": "",
+        "x": 210,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "059a8b0edfc718f5",
+        "type": "link in",
+        "z": "d85720db46554979",
+        "g": "a0a062d88e115230",
+        "name": "Indentificação de Topico",
+        "links": [
+            "5bc332cef7bd68dd"
+        ],
+        "x": 115,
+        "y": 380,
+        "wires": [
+            [
+                "60bdd308296943ef"
+            ]
+        ]
+    },
+    {
+        "id": "b805d4cd38d09b54",
+        "type": "complete",
+        "z": "d85720db46554979",
+        "g": "7a08cb8df76eb516",
+        "name": "",
+        "scope": [
+            "2b409d0b8bba51cc"
+        ],
+        "uncaught": false,
+        "x": 170,
+        "y": 640,
+        "wires": [
+            [
+                "0f22977e34f796a8"
+            ]
+        ]
+    },
+    {
+        "id": "0f22977e34f796a8",
+        "type": "template",
+        "z": "d85720db46554979",
+        "g": "7a08cb8df76eb516",
+        "name": "processando",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "processando",
+        "output": "str",
+        "x": 350,
+        "y": 640,
+        "wires": [
+            [
+                "9d063926b6edf5b8"
+            ]
+        ]
+    },
+    {
+        "id": "facec851db25aa60",
+        "type": "link in",
+        "z": "d85720db46554979",
+        "g": "cc9e6cb2286922e2",
+        "name": "status",
+        "links": [
+            "9d063926b6edf5b8",
+            "a3e283b23edc1f7f"
+        ],
+        "x": 1235,
+        "y": 760,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "9d063926b6edf5b8",
+        "type": "link out",
+        "z": "d85720db46554979",
+        "g": "7a08cb8df76eb516",
+        "name": "status",
+        "mode": "link",
+        "links": [
+            "facec851db25aa60"
+        ],
+        "x": 475,
+        "y": 640,
+        "wires": []
+    },
+    {
+        "id": "87e724c87e97dc97",
+        "type": "comment",
+        "z": "d85720db46554979",
+        "g": "7a08cb8df76eb516",
+        "name": "Status",
+        "info": "",
+        "x": 130,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "10ce0b5af640d9b6",
+        "type": "template",
+        "z": "d85720db46554979",
+        "g": "3d8914ac828c48e7",
+        "name": "erro",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "erro",
+        "output": "str",
+        "x": 310,
+        "y": 800,
+        "wires": [
+            [
+                "a3e283b23edc1f7f"
+            ]
+        ]
+    },
+    {
+        "id": "a3e283b23edc1f7f",
+        "type": "link out",
+        "z": "d85720db46554979",
+        "g": "3d8914ac828c48e7",
+        "name": "status avisos",
+        "mode": "link",
+        "links": [
+            "facec851db25aa60"
+        ],
+        "x": 415,
+        "y": 800,
+        "wires": []
+    },
+    {
+        "id": "0ea7eda264f5cec1",
+        "type": "link in",
+        "z": "d85720db46554979",
+        "g": "cc9e6cb2286922e2",
+        "name": "out 1",
+        "links": [
+            "4204ca863fb0bc35"
+        ],
+        "x": 1235,
+        "y": 820,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "87a810e83bc732ce",
+        "type": "comment",
+        "z": "d85720db46554979",
+        "g": "cc9e6cb2286922e2",
+        "name": "Tratamento",
+        "info": "",
+        "x": 110,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "61608ffadbbef6dd",
         "type": "change",
         "z": "d85720db46554979",
-        "g": "67d25ef121d15f94",
-        "name": "Filtro",
+        "g": "a0a062d88e115230",
+        "name": "Junção e Alteração",
         "rules": [
             {
                 "t": "change",
@@ -3881,19 +4276,19 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 690,
-        "y": 200,
+        "x": 710,
+        "y": 380,
         "wires": [
             [
-                "a221c8c45108dded"
+                "2b409d0b8bba51cc"
             ]
         ]
     },
     {
-        "id": "ded64dc9bb848911",
+        "id": "c3718ac6037398bd",
         "type": "change",
         "z": "d85720db46554979",
-        "g": "67d25ef121d15f94",
+        "g": "a0a062d88e115230",
         "name": "Remoção",
         "rules": [
             {
@@ -3987,449 +4382,13 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 340,
-        "y": 260,
-        "wires": [
-            [
-                "c4cfe5adfe1318c2"
-            ]
-        ]
-    },
-    {
-        "id": "a221c8c45108dded",
-        "type": "json",
-        "z": "d85720db46554979",
-        "g": "67d25ef121d15f94",
-        "name": "Recuperação",
-        "property": "payload",
-        "action": "",
-        "pretty": false,
-        "x": 170,
-        "y": 260,
-        "wires": [
-            [
-                "ded64dc9bb848911"
-            ]
-        ]
-    },
-    {
-        "id": "c4cfe5adfe1318c2",
-        "type": "function",
-        "z": "d85720db46554979",
-        "g": "67d25ef121d15f94",
-        "name": "Seleção",
-        "func": "var tamanho = 0;\nfor (var i in msg.payload)\n    if (msg.payload.hasOwnProperty(i))\n        tamanho++;\n\nif (tamanho > 2)\n    return msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 500,
-        "y": 260,
-        "wires": [
-            [
-                "c1afce0e69e05272"
-            ]
-        ]
-    },
-    {
-        "id": "c1afce0e69e05272",
-        "type": "json",
-        "z": "d85720db46554979",
-        "g": "67d25ef121d15f94",
-        "name": "",
-        "property": "payload",
-        "action": "str",
-        "pretty": false,
-        "x": 650,
-        "y": 260,
-        "wires": [
-            [
-                "5bc332cef7bd68dd"
-            ]
-        ]
-    },
-    {
-        "id": "a0a25e1f9e7fab40",
-        "type": "catch",
-        "z": "d85720db46554979",
-        "g": "3d8914ac828c48e7",
-        "name": "",
-        "scope": null,
-        "uncaught": false,
-        "x": 160,
-        "y": 800,
-        "wires": [
-            [
-                "10ce0b5af640d9b6"
-            ]
-        ]
-    },
-    {
-        "id": "6ba7d76b06f3bb18",
-        "type": "comment",
-        "z": "d85720db46554979",
-        "g": "3d8914ac828c48e7",
-        "name": "Avisos",
-        "info": "",
-        "x": 130,
-        "y": 740,
-        "wires": []
-    },
-    {
-        "id": "2b409d0b8bba51cc",
-        "type": "json",
-        "z": "d85720db46554979",
-        "g": "a0a062d88e115230",
-        "name": "Recuperação",
-        "property": "payload",
-        "action": "",
-        "pretty": false,
-        "x": 770,
-        "y": 440,
+        "x": 1080,
+        "y": 380,
         "wires": [
             [
                 "4204ca863fb0bc35"
             ]
         ]
-    },
-    {
-        "id": "261d0fc0d3cb6869",
-        "type": "change",
-        "z": "d85720db46554979",
-        "g": "a0a062d88e115230",
-        "name": "Junção",
-        "rules": [
-            {
-                "t": "change",
-                "p": "payload",
-                "pt": "msg",
-                "from": "},{",
-                "fromt": "str",
-                "to": ",",
-                "tot": "str"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 600,
-        "y": 440,
-        "wires": [
-            [
-                "2b409d0b8bba51cc"
-            ]
-        ]
-    },
-    {
-        "id": "4204ca863fb0bc35",
-        "type": "link out",
-        "z": "d85720db46554979",
-        "g": "a0a062d88e115230",
-        "name": "out 1",
-        "mode": "link",
-        "links": [
-            "0ea7eda264f5cec1"
-        ],
-        "x": 895,
-        "y": 440,
-        "wires": []
-    },
-    {
-        "id": "60bdd308296943ef",
-        "type": "switch",
-        "z": "d85720db46554979",
-        "g": "a0a062d88e115230",
-        "name": "Indentificação fase",
-        "property": "payload",
-        "propertyType": "msg",
-        "rules": [
-            {
-                "t": "cont",
-                "v": "\"topic\":\"Monofasico\"",
-                "vt": "str"
-            },
-            {
-                "t": "cont",
-                "v": "\"topic\":\"Bifasico\"",
-                "vt": "str"
-            },
-            {
-                "t": "cont",
-                "v": "\"topic\":\"Trifasico\"",
-                "vt": "str"
-            }
-        ],
-        "checkall": "true",
-        "repair": false,
-        "outputs": 3,
-        "x": 270,
-        "y": 440,
-        "wires": [
-            [
-                "7a8f749828a1f658"
-            ],
-            [],
-            [
-                "dc6a1f322af6636c"
-            ]
-        ]
-    },
-    {
-        "id": "7a8f749828a1f658",
-        "type": "join",
-        "z": "d85720db46554979",
-        "g": "a0a062d88e115230",
-        "name": "",
-        "mode": "custom",
-        "build": "string",
-        "property": "payload",
-        "propertyType": "msg",
-        "key": "topic",
-        "joiner": ",",
-        "joinerType": "str",
-        "accumulate": false,
-        "timeout": "",
-        "count": "4",
-        "reduceRight": false,
-        "reduceExp": "",
-        "reduceInit": "",
-        "reduceInitType": "",
-        "reduceFixup": "",
-        "x": 450,
-        "y": 400,
-        "wires": [
-            [
-                "261d0fc0d3cb6869"
-            ]
-        ]
-    },
-    {
-        "id": "9dadcaaf455341da",
-        "type": "join",
-        "z": "d85720db46554979",
-        "g": "a0a062d88e115230",
-        "name": "",
-        "mode": "custom",
-        "build": "string",
-        "property": "payload",
-        "propertyType": "msg",
-        "key": "topic",
-        "joiner": ",",
-        "joinerType": "str",
-        "accumulate": false,
-        "timeout": "",
-        "count": "13",
-        "reduceRight": false,
-        "reduceExp": "",
-        "reduceInit": "",
-        "reduceInitType": "",
-        "reduceFixup": "",
-        "x": 450,
-        "y": 440,
-        "wires": [
-            [
-                "261d0fc0d3cb6869"
-            ]
-        ]
-    },
-    {
-        "id": "dc6a1f322af6636c",
-        "type": "join",
-        "z": "d85720db46554979",
-        "g": "a0a062d88e115230",
-        "name": "",
-        "mode": "custom",
-        "build": "string",
-        "property": "payload",
-        "propertyType": "msg",
-        "key": "topic",
-        "joiner": ",",
-        "joinerType": "str",
-        "accumulate": false,
-        "timeout": "",
-        "count": "26",
-        "reduceRight": false,
-        "reduceExp": "",
-        "reduceInit": "",
-        "reduceInitType": "",
-        "reduceFixup": "",
-        "x": 450,
-        "y": 480,
-        "wires": [
-            [
-                "261d0fc0d3cb6869"
-            ]
-        ]
-    },
-    {
-        "id": "e25b402cd2b1be3f",
-        "type": "comment",
-        "z": "d85720db46554979",
-        "g": "a0a062d88e115230",
-        "name": "Indentificação de Topico e junção",
-        "info": "",
-        "x": 210,
-        "y": 360,
-        "wires": []
-    },
-    {
-        "id": "059a8b0edfc718f5",
-        "type": "link in",
-        "z": "d85720db46554979",
-        "g": "a0a062d88e115230",
-        "name": "Indentificação de Topico",
-        "links": [
-            "5bc332cef7bd68dd"
-        ],
-        "x": 115,
-        "y": 440,
-        "wires": [
-            [
-                "60bdd308296943ef"
-            ]
-        ]
-    },
-    {
-        "id": "b805d4cd38d09b54",
-        "type": "complete",
-        "z": "d85720db46554979",
-        "g": "7a08cb8df76eb516",
-        "name": "",
-        "scope": [
-            "2b409d0b8bba51cc"
-        ],
-        "uncaught": false,
-        "x": 170,
-        "y": 640,
-        "wires": [
-            [
-                "0f22977e34f796a8"
-            ]
-        ]
-    },
-    {
-        "id": "0f22977e34f796a8",
-        "type": "template",
-        "z": "d85720db46554979",
-        "g": "7a08cb8df76eb516",
-        "name": "processando",
-        "field": "payload",
-        "fieldType": "msg",
-        "format": "handlebars",
-        "syntax": "mustache",
-        "template": "processando",
-        "output": "str",
-        "x": 350,
-        "y": 640,
-        "wires": [
-            [
-                "9d063926b6edf5b8"
-            ]
-        ]
-    },
-    {
-        "id": "facec851db25aa60",
-        "type": "link in",
-        "z": "d85720db46554979",
-        "g": "cc9e6cb2286922e2",
-        "name": "status",
-        "links": [
-            "9d063926b6edf5b8",
-            "a3e283b23edc1f7f"
-        ],
-        "x": 905,
-        "y": 760,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "9d063926b6edf5b8",
-        "type": "link out",
-        "z": "d85720db46554979",
-        "g": "7a08cb8df76eb516",
-        "name": "status",
-        "mode": "link",
-        "links": [
-            "facec851db25aa60"
-        ],
-        "x": 475,
-        "y": 640,
-        "wires": []
-    },
-    {
-        "id": "87e724c87e97dc97",
-        "type": "comment",
-        "z": "d85720db46554979",
-        "g": "7a08cb8df76eb516",
-        "name": "Status",
-        "info": "",
-        "x": 130,
-        "y": 580,
-        "wires": []
-    },
-    {
-        "id": "10ce0b5af640d9b6",
-        "type": "template",
-        "z": "d85720db46554979",
-        "g": "3d8914ac828c48e7",
-        "name": "erro",
-        "field": "payload",
-        "fieldType": "msg",
-        "format": "handlebars",
-        "syntax": "mustache",
-        "template": "erro",
-        "output": "str",
-        "x": 310,
-        "y": 800,
-        "wires": [
-            [
-                "a3e283b23edc1f7f"
-            ]
-        ]
-    },
-    {
-        "id": "a3e283b23edc1f7f",
-        "type": "link out",
-        "z": "d85720db46554979",
-        "g": "3d8914ac828c48e7",
-        "name": "status avisos",
-        "mode": "link",
-        "links": [
-            "facec851db25aa60"
-        ],
-        "x": 415,
-        "y": 800,
-        "wires": []
-    },
-    {
-        "id": "0ea7eda264f5cec1",
-        "type": "link in",
-        "z": "d85720db46554979",
-        "g": "cc9e6cb2286922e2",
-        "name": "out 1",
-        "links": [
-            "4204ca863fb0bc35"
-        ],
-        "x": 905,
-        "y": 820,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "87a810e83bc732ce",
-        "type": "comment",
-        "z": "d85720db46554979",
-        "g": "cc9e6cb2286922e2",
-        "name": "Tratamento",
-        "info": "",
-        "x": 110,
-        "y": 60,
-        "wires": []
     },
     {
         "id": "b5a171c979c1d14e",
@@ -4489,7 +4448,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 400,
+        "x": 440,
         "y": 360,
         "wires": [
             []
@@ -4590,7 +4549,7 @@
         "type": "switch",
         "z": "96676db9a2f887ed",
         "g": "58e8ea5634e5a59c",
-        "name": "",
+        "name": "verifica zerar",
         "property": "zerar",
         "propertyType": "env",
         "rules": [
@@ -4601,7 +4560,7 @@
         "checkall": "true",
         "repair": false,
         "outputs": 1,
-        "x": 230,
+        "x": 250,
         "y": 360,
         "wires": [
             [
@@ -5654,9 +5613,7 @@
         "x": 135,
         "y": 1080,
         "wires": [
-            [
-                "dcc7c6f584808cce"
-            ]
+            []
         ]
     },
     {
@@ -10538,7 +10495,7 @@
         "links": [
             "e93d0d47e2e97002"
         ],
-        "x": 685,
+        "x": 725,
         "y": 200,
         "wires": []
     },
@@ -10547,14 +10504,14 @@
         "type": "function",
         "z": "34a182d43462f44e",
         "g": "7d093e4c3e197c6a",
-        "name": "Uni",
-        "func": "var msg2 = {}\nmsg2.payload = msg.temp\n\ntry{\n    msg2.payload.phase_A = msg.payload[0].phase[0]\n    msg2.payload.phase_B = msg.payload[0].phase[1]\n    msg2.payload.phase_C = msg.payload[0].phase[2]\n} catch(e){\n}\n\nreturn msg2;",
+        "name": "Segregação",
+        "func": "var msg2 = {}\nmsg2.payload = msg.temp\n\nif (typeof msg.payload[0].phase != \"undefined\"){\n    try{\n        msg2.payload.phase_A = msg.payload[0].phase[0]\n        msg2.payload.phase_B = msg.payload[0].phase[1]\n        msg2.payload.phase_C = msg.payload[0].phase[2]\n    } catch(e){}\n    return msg2;\n}",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 570,
+        "x": 590,
         "y": 200,
         "wires": [
             [
@@ -10644,7 +10601,7 @@
             "1bdf45fec5432b9b",
             "f91a7fb0598247fb"
         ],
-        "x": 715,
+        "x": 755,
         "y": 580,
         "wires": [
             []
@@ -10659,7 +10616,7 @@
         "links": [
             "f12517394d74bd51"
         ],
-        "x": 715,
+        "x": 755,
         "y": 640,
         "wires": [
             []
@@ -10681,9 +10638,9 @@
         "type": "comment",
         "z": "34a182d43462f44e",
         "g": "0592eb0f2887c3ea",
-        "name": "",
+        "name": "Indentificação das Fases",
         "info": "",
-        "x": 100,
+        "x": 150,
         "y": 60,
         "wires": []
     },
@@ -11106,7 +11063,7 @@
             "cf4ec4ad0b3238d1",
             "d23c3bb417f0e578"
         ],
-        "x": 705,
+        "x": 745,
         "y": 200,
         "wires": []
     },
@@ -11115,7 +11072,7 @@
         "type": "switch",
         "z": "f74e1af5aec31631",
         "g": "a08702cd6d20b021",
-        "name": "Indentificação fase",
+        "name": "Identificação instalação",
         "property": "payload.topic",
         "propertyType": "msg",
         "rules": [
@@ -11138,7 +11095,7 @@
         "checkall": "true",
         "repair": false,
         "outputs": 3,
-        "x": 290,
+        "x": 310,
         "y": 200,
         "wires": [
             [
@@ -11164,7 +11121,7 @@
         "syntax": "mustache",
         "template": "INSERT INTO public.organic_nodes_control_measurement(\n\tdate_time_stamp,\tmessage_counter,\tsetup_id,\tsource)\n\tVALUES ('{{payload.date_time_stamp}}', {{payload.message_counter}}, (SELECT id FROM public.organic_nodes_control_setup WHERE (device_id = (SELECT device_id FROM public.organic_nodes_control_mqttdevice WHERE (mqtt_access_id = (SELECT id FROM public.organic_nodes_control_mqttaccess WHERE (mqtt_id = '{{payload.id}}')))))), 0);\n\nINSERT INTO public.organic_nodes_control_frequencymeasure(\n\tfrequency,\tfrequency_sf,\tmeasurement_id)\n\tVALUES ({{payload.frequency}}, {{payload.frequency_sf}}, (SELECT id FROM public.organic_nodes_control_measurement WHERE (message_counter = {{payload.message_counter}} AND date_time_stamp = '{{payload.date_time_stamp}}') LIMIT 1));\n\nINSERT INTO public.organic_nodes_control_sensormeasure(\n\ttemperature,\ttemperature_sf,\tmeasurement_id)\n\tVALUES ({{payload.temperature}}, {{payload.temperature_sf}}, (SELECT id FROM public.organic_nodes_control_measurement WHERE (message_counter = {{payload.message_counter}} AND date_time_stamp = '{{payload.date_time_stamp}}') LIMIT 1));\n\t\nINSERT INTO public.organic_nodes_control_energymeasure(\n\tphase, current, current_sf, voltage, voltage_sf, measurement_id)\n\tVALUES ('{{payload.phase_A}}', {{payload.current_A}},{{payload.current_A_sf}},{{payload.voltage_A}},{{payload.voltage_A_sf}}, (SELECT id FROM public.organic_nodes_control_measurement WHERE (message_counter = {{payload.message_counter}} AND date_time_stamp = '{{payload.date_time_stamp}}') LIMIT 1));\n\nINSERT INTO public.organic_nodes_control_powermeasure(\n\tphase, voltage_current_angle, voltage_current_angle_sf,\tpower_factor,\tactive_power,\tactive_power_sf,\treactive_power,\treactive_power_sf,\tapparent_power,\tapparent_power_sf\t, measurement_id)\n\tVALUES ('{{payload.phase_A}}', {{payload.voltage_current_angle_A}},{{payload.voltage_current_angle_A_sf}},{{payload.power_factor_A}},{{payload.active_power_A}}, {{payload.active_power_A_sf}}, {{payload.reactive_power_A}}, {{payload.reactive_power_A_sf}}, {{payload.apparent_power_A}}, {{payload.apparent_power_A_sf}}, (SELECT id FROM public.organic_nodes_control_measurement WHERE (message_counter = {{payload.message_counter}} AND date_time_stamp = '{{payload.date_time_stamp}}') LIMIT 1));\n",
         "output": "str",
-        "x": 530,
+        "x": 570,
         "y": 160,
         "wires": [
             [
@@ -11184,7 +11141,7 @@
         "syntax": "mustache",
         "template": "INSERT INTO public.organic_nodes_control_measurement(\n\tdate_time_stamp,\tmessage_counter,\tsetup_id,\tsource)\n\tVALUES ('{{payload.date_time_stamp}}', {{payload.message_counter}}, (SELECT id FROM public.organic_nodes_control_setup WHERE (device_id = (SELECT device_id FROM public.organic_nodes_control_mqttdevice WHERE (mqtt_access_id = (SELECT id FROM public.organic_nodes_control_mqttaccess WHERE (mqtt_id = '{{payload.id}}')))))), 0);\n\nINSERT INTO public.organic_nodes_control_frequencymeasure(\n\tfrequency,\tfrequency_sf,\tmeasurement_id)\n\tVALUES ({{payload.frequency}}, {{payload.frequency_sf}}, (SELECT id FROM public.organic_nodes_control_measurement WHERE (message_counter = {{payload.message_counter}} AND date_time_stamp = '{{payload.date_time_stamp}}') LIMIT 1));\n\nINSERT INTO public.organic_nodes_control_sensormeasure(\n\ttemperature,\ttemperature_sf,\tmeasurement_id)\n\tVALUES ({{payload.temperature}}, {{payload.temperature_sf}}, (SELECT id FROM public.organic_nodes_control_measurement WHERE (message_counter = {{payload.message_counter}} AND date_time_stamp = '{{payload.date_time_stamp}}') LIMIT 1));\n\t\nINSERT INTO public.organic_nodes_control_energymeasure(\n\tphase, current, current_sf, voltage, voltage_sf, measurement_id)\n\tVALUES ('{{payload.phase_A}}', {{payload.current_A}},{{payload.current_A_sf}},{{payload.voltage_A}},{{payload.voltage_A_sf}}, (SELECT id FROM public.organic_nodes_control_measurement WHERE (message_counter = {{payload.message_counter}} AND date_time_stamp = '{{payload.date_time_stamp}}') LIMIT 1));\n\nINSERT INTO public.organic_nodes_control_powermeasure(\n\tphase, voltage_current_angle, voltage_current_angle_sf,\tpower_factor,\tactive_power,\tactive_power_sf,\treactive_power,\treactive_power_sf,\tapparent_power,\tapparent_power_sf\t, measurement_id)\n\tVALUES ('{{payload.phase_A}}', {{payload.voltage_current_angle_A}},{{payload.voltage_current_angle_A_sf}},{{payload.power_factor_A}},{{payload.active_power_A}}, {{payload.active_power_A_sf}}, {{payload.reactive_power_A}}, {{payload.reactive_power_A_sf}}, {{payload.apparent_power_A}}, {{payload.apparent_power_A_sf}}, (SELECT id FROM public.organic_nodes_control_measurement WHERE (message_counter = {{payload.message_counter}} AND date_time_stamp = '{{payload.date_time_stamp}}') LIMIT 1));\n\nINSERT INTO public.organic_nodes_control_energymeasure(\n\tphase, current, current_sf, voltage, voltage_sf, measurement_id)\n\tVALUES ('{{payload.phase_B}}', {{payload.current_B}},{{payload.current_B_sf}},{{payload.voltage_B}},{{payload.voltage_B_sf}}, (SELECT id FROM public.organic_nodes_control_measurement WHERE (message_counter = {{payload.message_counter}} AND date_time_stamp = '{{payload.date_time_stamp}}') LIMIT 1));\n\nINSERT INTO public.organic_nodes_control_powermeasure(\n\tphase, voltage_current_angle, voltage_current_angle_sf,\tpower_factor,\tactive_power,\tactive_power_sf,\treactive_power,\treactive_power_sf,\tapparent_power,\tapparent_power_sf\t, measurement_id)\n\tVALUES ('{{payload.phase_B}}', {{payload.voltage_current_angle_B}},{{payload.voltage_current_angle_B_sf}},{{payload.power_factor_B}},{{payload.active_power_B}}, {{payload.active_power_B_sf}}, {{payload.reactive_power_B}}, {{payload.reactive_power_B_sf}}, {{payload.apparent_power_B}}, {{payload.apparent_power_B_sf}}, (SELECT id FROM public.organic_nodes_control_measurement WHERE (message_counter = {{payload.message_counter}} AND date_time_stamp = '{{payload.date_time_stamp}}') LIMIT 1));\n\nINSERT INTO public.organic_nodes_control_voltagelagmeasure(\n\tangle, angle_sf,\tphase_combination, measurement_id)\n\tVALUES ({{payload.angle_voltage_A_B}}, {{payload.angle_voltage_A_B_sf}}, '{{payload.phase_A}}{{payload.phase_B}}', (SELECT id FROM public.organic_nodes_control_measurement WHERE (message_counter = {{payload.message_counter}} AND date_time_stamp = '{{payload.date_time_stamp}}') LIMIT 1));",
         "output": "str",
-        "x": 520,
+        "x": 560,
         "y": 200,
         "wires": [
             [
@@ -11204,7 +11161,7 @@
         "syntax": "mustache",
         "template": "INSERT INTO public.organic_nodes_control_measurement(\n\tdate_time_stamp,\tmessage_counter,\tsetup_id,\tsource)\n\tVALUES ('{{payload.date_time_stamp}}', {{payload.message_counter}}, (SELECT id FROM public.organic_nodes_control_setup WHERE (device_id = (SELECT device_id FROM public.organic_nodes_control_mqttdevice WHERE (mqtt_access_id = (SELECT id FROM public.organic_nodes_control_mqttaccess WHERE (mqtt_id = '{{payload.id}}')))))), 0);\n\nINSERT INTO public.organic_nodes_control_frequencymeasure(\n\tfrequency,\tfrequency_sf,\tmeasurement_id)\n\tVALUES ({{payload.frequency}}, {{payload.frequency_sf}}, (SELECT id FROM public.organic_nodes_control_measurement WHERE (message_counter = {{payload.message_counter}} AND date_time_stamp = '{{payload.date_time_stamp}}') LIMIT 1));\n\nINSERT INTO public.organic_nodes_control_sensormeasure(\n\ttemperature,\ttemperature_sf,\tmeasurement_id)\n\tVALUES ({{payload.temperature}}, {{payload.temperature_sf}}, (SELECT id FROM public.organic_nodes_control_measurement WHERE (message_counter = {{payload.message_counter}} AND date_time_stamp = '{{payload.date_time_stamp}}') LIMIT 1));\n\t\nINSERT INTO public.organic_nodes_control_energymeasure(\n\tphase, current, current_sf, voltage, voltage_sf, measurement_id)\n\tVALUES ('{{payload.phase_A}}', {{payload.current_A}},{{payload.current_A_sf}},{{payload.voltage_A}},{{payload.voltage_A_sf}}, (SELECT id FROM public.organic_nodes_control_measurement WHERE (message_counter = {{payload.message_counter}} AND date_time_stamp = '{{payload.date_time_stamp}}') LIMIT 1));\n\nINSERT INTO public.organic_nodes_control_powermeasure(\n\tphase, voltage_current_angle, voltage_current_angle_sf,\tpower_factor,\tactive_power,\tactive_power_sf,\treactive_power,\treactive_power_sf,\tapparent_power,\tapparent_power_sf\t, measurement_id)\n\tVALUES ('{{payload.phase_A}}', {{payload.voltage_current_angle_A}},{{payload.voltage_current_angle_A_sf}},{{payload.power_factor_A}},{{payload.active_power_A}}, {{payload.active_power_A_sf}}, {{payload.reactive_power_A}}, {{payload.reactive_power_A_sf}}, {{payload.apparent_power_A}}, {{payload.apparent_power_A_sf}}, (SELECT id FROM public.organic_nodes_control_measurement WHERE (message_counter = {{payload.message_counter}} AND date_time_stamp = '{{payload.date_time_stamp}}') LIMIT 1));\n\nINSERT INTO public.organic_nodes_control_energymeasure(\n\tphase, current, current_sf, voltage, voltage_sf, measurement_id)\n\tVALUES ('{{payload.phase_B}}', {{payload.current_B}},{{payload.current_B_sf}},{{payload.voltage_B}},{{payload.voltage_B_sf}}, (SELECT id FROM public.organic_nodes_control_measurement WHERE (message_counter = {{payload.message_counter}} AND date_time_stamp = '{{payload.date_time_stamp}}') LIMIT 1));\n\nINSERT INTO public.organic_nodes_control_powermeasure(\n\tphase, voltage_current_angle, voltage_current_angle_sf,\tpower_factor,\tactive_power,\tactive_power_sf,\treactive_power,\treactive_power_sf,\tapparent_power,\tapparent_power_sf\t, measurement_id)\n\tVALUES ('{{payload.phase_B}}', {{payload.voltage_current_angle_B}},{{payload.voltage_current_angle_B_sf}},{{payload.power_factor_B}},{{payload.active_power_B}}, {{payload.active_power_B_sf}}, {{payload.reactive_power_B}}, {{payload.reactive_power_B_sf}}, {{payload.apparent_power_B}}, {{payload.apparent_power_B_sf}}, (SELECT id FROM public.organic_nodes_control_measurement WHERE (message_counter = {{payload.message_counter}} AND date_time_stamp = '{{payload.date_time_stamp}}') LIMIT 1));\n\nINSERT INTO public.organic_nodes_control_voltagelagmeasure(\n\tangle, angle_sf,\tphase_combination, measurement_id)\n\tVALUES ({{payload.angle_voltage_A_B}}, {{payload.angle_voltage_A_B_sf}}, '{{payload.phase_A}}{{payload.phase_B}}', (SELECT id FROM public.organic_nodes_control_measurement WHERE (message_counter = {{payload.message_counter}} AND date_time_stamp = '{{payload.date_time_stamp}}') LIMIT 1));\n\t\nINSERT INTO public.organic_nodes_control_energymeasure(\n\tphase, current, current_sf, voltage, voltage_sf, measurement_id)\n\tVALUES ('{{payload.phase_C}}', {{payload.current_C}},{{payload.current_C_sf}},{{payload.voltage_C}},{{payload.voltage_C_sf}}, (SELECT id FROM public.organic_nodes_control_measurement WHERE (message_counter = {{payload.message_counter}} AND date_time_stamp = '{{payload.date_time_stamp}}') LIMIT 1));\n\nINSERT INTO public.organic_nodes_control_powermeasure(\n\tphase, voltage_current_angle, voltage_current_angle_sf,\tpower_factor,\tactive_power,\tactive_power_sf,\treactive_power,\treactive_power_sf,\tapparent_power,\tapparent_power_sf\t, measurement_id)\n\tVALUES ('{{payload.phase_C}}', {{payload.voltage_current_angle_C}},{{payload.voltage_current_angle_C_sf}},{{payload.power_factor_C}},{{payload.active_power_C}}, {{payload.active_power_C_sf}}, {{payload.reactive_power_C}}, {{payload.reactive_power_C_sf}}, {{payload.apparent_power_C}}, {{payload.apparent_power_C_sf}}, (SELECT id FROM public.organic_nodes_control_measurement WHERE (message_counter = {{payload.message_counter}} AND date_time_stamp = '{{payload.date_time_stamp}}') LIMIT 1));\n\nINSERT INTO public.organic_nodes_control_voltagelagmeasure(\n\tangle, angle_sf,\tphase_combination, measurement_id)\n\tVALUES ({{payload.angle_voltage_A_C}}, {{payload.angle_voltage_A_C_sf}}, '{{payload.phase_A}}{{payload.phase_C}}', (SELECT id FROM public.organic_nodes_control_measurement WHERE (message_counter = {{payload.message_counter}} AND date_time_stamp = '{{payload.date_time_stamp}}') LIMIT 1));\n\nINSERT INTO public.organic_nodes_control_voltagelagmeasure(\n\tangle, angle_sf,\tphase_combination, measurement_id)\n\tVALUES ({{payload.angle_voltage_B_C}}, {{payload.angle_voltage_B_C_sf}}, '{{payload.phase_B}}{{payload.phase_C}}', (SELECT id FROM public.organic_nodes_control_measurement WHERE (message_counter = {{payload.message_counter}} AND date_time_stamp = '{{payload.date_time_stamp}}') LIMIT 1));",
         "output": "str",
-        "x": 520,
+        "x": 560,
         "y": 240,
         "wires": [
             [
@@ -11421,7 +11378,7 @@
         "links": [
             "21aa61e535f67716"
         ],
-        "x": 725,
+        "x": 775,
         "y": 740,
         "wires": [
             []
@@ -11448,7 +11405,7 @@
             "7655d507feebce3a",
             "b6e02291ae67bdb6"
         ],
-        "x": 725,
+        "x": 775,
         "y": 800,
         "wires": [
             []
@@ -11562,7 +11519,7 @@
         "z": "d48fb9af316b0fe2",
         "g": "d4b0135a0a32e5c5",
         "name": "",
-        "x": 350,
+        "x": 330,
         "y": 680,
         "wires": []
     },
@@ -11576,8 +11533,8 @@
             "7f0a1ca5317c64f2",
             "fa6b3a1cf7951082"
         ],
-        "x": 575,
-        "y": 500,
+        "x": 535,
+        "y": 420,
         "wires": [
             []
         ]
@@ -11624,11 +11581,12 @@
         "syntax": "mustache",
         "template": "erro sincronismo local",
         "output": "str",
-        "x": 360,
+        "x": 340,
         "y": 640,
         "wires": [
             [
-                "fa6b3a1cf7951082"
+                "fa6b3a1cf7951082",
+                "b04a2b22713471b7"
             ]
         ]
     },
@@ -11640,11 +11598,10 @@
         "name": "status erro",
         "mode": "link",
         "links": [
-            "5d43614299a5b76d",
-            "151e541e6b2f0125"
+            "5d43614299a5b76d"
         ],
-        "x": 545,
-        "y": 640,
+        "x": 505,
+        "y": 720,
         "wires": []
     },
     {
@@ -11688,7 +11645,7 @@
         "links": [
             "5d43614299a5b76d"
         ],
-        "x": 445,
+        "x": 465,
         "y": 420,
         "wires": []
     },
@@ -11728,7 +11685,7 @@
         "g": "af5ab425cf03c631",
         "name": "reenvio",
         "links": [
-            "fa6b3a1cf7951082"
+            "b04a2b22713471b7"
         ],
         "x": 115,
         "y": 260,
@@ -11768,7 +11725,7 @@
         "syntax": "mustache",
         "template": "erro sincronismo remoto",
         "output": "str",
-        "x": 370,
+        "x": 350,
         "y": 720,
         "wires": [
             [
@@ -11824,6 +11781,20 @@
         "info": "",
         "x": 230,
         "y": 60,
+        "wires": []
+    },
+    {
+        "id": "b04a2b22713471b7",
+        "type": "link out",
+        "z": "d48fb9af316b0fe2",
+        "g": "d4b0135a0a32e5c5",
+        "name": "reenvio",
+        "mode": "link",
+        "links": [
+            "151e541e6b2f0125"
+        ],
+        "x": 505,
+        "y": 640,
         "wires": []
     },
     {
@@ -17125,6 +17096,13 @@
         "z": "291ed776b1a44ede",
         "g": "20cbcb56ccfe438a",
         "name": "",
+        "env": [
+            {
+                "name": "zerar",
+                "type": "bool",
+                "value": "true"
+            }
+        ],
         "x": 250,
         "y": 360,
         "wires": [
