@@ -357,7 +357,7 @@ Recuperação da Mensagem resultante de Json String para Json Object:
 }
 ```
 	
-Muitos desses valores não são utilizados pelo projeto. Após a recuperação da string JSON para objeto JSON no nodulo **Recuperação** (configuração no [Anexo-X](#anexo-10)), os dados não utilizados, como 'unit', 'PT', 'QT', 'ST', e 'IT', são removidos pelo nodulo "Remoção" (configuração no [Anexo-XI](#anexo-11)), deixando o payload no seguinte formato:
+Muitos desses valores não são utilizados pelo projeto. Após a recuperação da string JSON para objeto JSON no nodulo **Recuperação** (configuração no [Anexo-X](#anexo-10)), os dados não utilizados, como 'unit', 'PT', 'QT', 'ST', e 'IT', são removidos pelo nodulo **Remoção** (configuração no [Anexo-XI](#anexo-11)), deixando o payload no seguinte formato:
 	
 ```json
 {
@@ -544,7 +544,7 @@ O subflow ***Envia ao banco*** é um subflow simplificado que contém três nós
 	<img src="https://user-images.githubusercontent.com/56831082/225621699-1ff29810-3bc8-4772-bc8e-4d645424d769.png" wigth=800><br>
 </div>
 
-Caso haja qualquer erro no banco local, é feita uma sincronização local através do nó de "Sincronização Local", para corrigir qualquer falta de informações de cadastro que o banco local possa estar tendo. Após 1 segundo, a mensagem que ocasionou o erro é reenviada para ser armazenada no banco local.	
+Caso haja qualquer erro no banco local, é feita uma sincronização local através do subflow de ***Sincronização Local***, para corrigir qualquer falta de informações de cadastro que o banco local possa estar tendo. Após 1 segundo, a mensagem que ocasionou o erro é reenviada para ser armazenada no banco local.	
 		
 #### <a name="sincronismo-medicoes"><a/>Sincronismo Medições
 	
