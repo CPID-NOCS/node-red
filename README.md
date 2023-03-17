@@ -48,18 +48,41 @@
 	- [Anexo XXI - Cria instancia Bifasico](#anexo-21)
 	- [Anexo XXI - Cria instancia Trifasico](#anexo-22)
 	- [Anexo XXIII - Parametros](#anexo-23)
-	- [Anexo XXIV - contador (access_user)](#anexo-24)
-	- [Anexo XXV - NOCS](#anexo-25)
-	- [Anexo XXVI - cria msg.nocs](#anexo-26)
-	- [Anexo XXVII - Local](#anexo-27)
-	- [Anexo XXVIII - cria msg.local](#anexo-28)
-	- [Anexo XXIX - criação e atualizção (access_user)](#anexo-29)
-	- [Anexo XXX - Switch (access_user)](#anexo-30)
-	- [Anexo XXXI - Local - Data do primeiro dado](#anexo-31)
-	- [Anexo XXXII - Local - Data do ultimo dado](#anexo-32)
-	- [Anexo XXXIII - cria msg.date_inicial](#anexo-33)
-	- [Anexo XXXIV - cria msg.date_atual](#anexo-34)
-	- [Anexo XXXV - Verifica datas](#anexo-35)
+	
+	- [Anexo XXIV - Data ultima medição adicionada no remoto](#anexo-24)
+	- [Anexo XXV - Data ultima medição adicionada no local](#anexo-25)
+	- [Anexo XXVI - cria msg.last_update](#anexo-26)
+	- [Anexo XXVII - cria msg.last_upload](#anexo-27)
+	- [Anexo XXVIII - pega ID da ultima medição no banco local](#anexo-28)
+	- [Anexo XXIX - cria msg.last_update_id](#anexo-29)
+	- [Anexo XXX - incrementa](#anexo-30)
+	- [Anexo XXXI - Pega medição](#anexo-31)
+	- [Anexo XXXII - cria msg.measurement](#anexo-32)
+	- [Anexo XXXIII - Verifica se já existe](#anexo-33)
+	- [Anexo XXXIV - switch](#anexo-34)
+	- [Anexo XXXV - Pega frequency](#anexo-35)
+	- [Anexo XXXVI - cria msg.frequency](#anexo-36)
+	- [Anexo XXXVII - Pega power](#anexo-37)
+	- [Anexo XXXVIII - cria msg.power (ABC)](#anexo-38)
+	- [Anexo XXXIX - Pega sensor](#anexo-39)
+	- [Anexo XL - cria msg.sensor](#anexo-40)
+	- [Anexo XLI - Pega voltagelag](#anexo-41)
+	- [Anexo XLII - cria msg.voltagelag (ABC)](#anexo-42)
+	- [Anexo XLIII - Pega energy](#anexo-43)
+	- [Anexo XLIV - cria msg.energy (ABC)](#anexo-44)
+	- [Anexo XLV - instancia](#anexo-45)
+	- [Anexo XLVI - contador (access_user)](#anexo-46)
+	- [Anexo XLVII - NOCS](#anexo-47)
+	- [Anexo XLVIII - cria msg.nocs](#anexo-48)
+	- [Anexo XLIX - Local](#anexo-49)
+	- [Anexo L - cria msg.local](#anexo-50)
+	- [Anexo LI - criação e atualizção (access_user)](#anexo-51)
+	- [Anexo LII - Switch (access_user)](#anexo-52)
+	- [Anexo LIII - Local - Data do primeiro dado](#anexo-53)
+	- [Anexo LIV - Local - Data do ultimo dado](#anexo-54)
+	- [Anexo LV - cria msg.date_inicial](#anexo-55)
+	- [Anexo LVI - cria msg.date_atual](#anexo-56)
+	- [Anexo LVII - Verifica datas](#anexo-57)
 
 # <a name=“node-red”><a/>Node-red
 
@@ -553,7 +576,64 @@ O subflow ***Envia ao banco*** é um subflow simplificado que contém três nós
 
 Caso haja qualquer erro no banco local, é feita uma sincronização local através do subflow de ***Sincronização Local***, para corrigir qualquer falta de informações de cadastro que o banco local possa estar tendo. Após 1 segundo, a mensagem que ocasionou o erro é reenviada para ser armazenada no banco local.	
 		
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 #### <a name="sincronismo-medicoes"><a/>Sincronismo Medições
+
+Neste Subflow temos 4 fluxos, uma para a comparação das datas, outro para para requerimento do id da medição, outro para pegar os dados das tabelas locais que seram dispostos á tabela remota, e um ultimo fluxo sequencia responsavel por criar a instancia e adicionala ao banco de dados.
+
+<img src="https://user-images.githubusercontent.com/56831082/225998749-b4b7de89-da10-4446-b146-ecd4416efe82.png" width=890> 
+<img src="https://user-images.githubusercontent.com/56831082/225998758-c855a4ae-a68c-4c48-8040-eaf431fa3c34.png" width=890> 
+	
+O funcionamento deste subflow, se da na comparação das datas das ultimas medições tanto do banco local quanto do banco remoto, caso as datas estejam distintas, seguinifica dizer que temos que sincronizar o banco local com o remoto, a data e pega pelos nós **Data ultima medição adicionada no remoto** e o **Data ultima medição adicionada no local** (configurados no [Anexo-XXIV](#anexo-24) e [Anexo-XXV](#anexo-25), respctivamente), para evitar perder a mensagem dos payloads ambas são salvas nos nós **cria msg.last_update** para o banco remoto e **cria msg.last_upload** para o banco local (configurados no [Anexo-XXVI](#anexo-26) e [Anexo-XXVII](#anexo-27), respctivamente), o próprio nó  **cria msg.last_update** faz a compração das datas e toma a descisão se é ou não necessario fazer o sincroninsmo.
+	
+Caso seja necessario passamos para um segundo fluxo onde é pego o ID no banco local referente a ultima medição do banco remoto pelo nó **pega ID da ultima medição no banco local** (configuração no [Anexo-XXVIII](#anexo-28)), feito isso a mensagem é armazenada em um outro payload pelo nó **cria msg.last_update_id** (configuração no [Anexo-XXIX](#anexo-29)), esse ID e acrecido pelo nó **incrementa** (configuração no [Anexo-XXX](#anexo-30)) para que possamos começar a inserir as mensagens que não foram enviadas para o banco.
+	
+No próximo fluxo, pegamos todas as medições referentes ao ID da tabela de medições locais, a primeira tabela a ser pega e a tabela measurement no nó **Pega medição** (configuração no [Anexo-XXXI](#anexo-31)), pois nela temos as informações essenciais para se instanciar as outras tabelas, caso a tabela measurement retorner vazio significa dizer que chegamos no final da sincronização e ambas as tabelas, local, e remota estão sincronizadas, essa verificação e feita no próprio nó que duplica o payload **cria msg.measurement** (configuração no [Anexo-XXXII](#anexo-32)), um outro tratamento a ser feito e o de verificar se a medição já não esta instanciada no banco remoto, isso e verificado n nó **Verifica se já existe** (configuração no [Anexo-XXXIII](#anexo-33)), que retorna vazio caso não haja nenhuma referencia a medição no banco remoto (verificação efetuada no nó **switch** (configuração no [Anexo-XXXIV](#anexo-34)). Por fim a instancia é cria pelo nó **instancia** (configuração no [Anexo-XLV](#anexo-45)).
+	
+> Obs: a inserção é feita mensagem por mensagem, e o restante das configurações dos nós que pegam as medições podem ser encontrados do [Anexo-XXXV](#anexo-35) ao [Anexo-XLIV](#anexo-44))
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
@@ -571,25 +651,25 @@ Neste subflow, temos um destaque bastante importante: ele é chamado quando ocor
 
 O objetivo principal deste subflow é sincronizar as tabelas de cadastro locais com as do banco remoto, adicionando, removendo ou atualizando nas tabelas. No total, existem 17 tabelas cadastrais, incluindo access_user, country, state, city, company, area, hardware, firmware, devicesetup, devicecompany, devicetype, device, monitoreddevice, circuit, setup, mqttaccess e mqttdevice. O processo de sincronização é semelhante para todas as tabelas, e abaixo será apresentada a implementação de apenas uma tabela (access_user) para evitar repetições e tornar o arquivo de documentação mais conciso.
 
-Após o nó **espera sincronização** *stoptimer*, que aguarda 1 segundo antes de enviar a mensagem, a mensagem é encaminhada para todos os nós de sincronização das tabelas. Primeiramente, a mensagem passa por um nó **contador** (configuração no [Anexo-XXIV](#anexo-24)), que instancia um contador em uma variável global iniciada com o valor 1. Caso a variável já exista, apenas é obtido o valor que ela armazena. Esse contador será responsável por percorrer todas as linhas da tabela do banco remoto, já que é necessário verificar cada linha para atualizar eventuais mudanças em colunas específicas.
+Após o nó **espera sincronização** *stoptimer*, que aguarda 1 segundo antes de enviar a mensagem, a mensagem é encaminhada para todos os nós de sincronização das tabelas. Primeiramente, a mensagem passa por um nó **contador** (configuração no [Anexo-XLVI](#anexo-46)), que instancia um contador em uma variável global iniciada com o valor 1. Caso a variável já exista, apenas é obtido o valor que ela armazena. Esse contador será responsável por percorrer todas as linhas da tabela do banco remoto, já que é necessário verificar cada linha para atualizar eventuais mudanças em colunas específicas.
 	
-O segundo nó do fluxo é o nó de comunicação com o banco remoto **NOCS** (configuração no [Anexo-XXV](#anexo-25)). Nele, obtemos linha por linha da tabela de acordo com o valor do contador, que é utilizado como índice. Após pegarmos a linha no índice do contador, criamos outro payload para essa mensagem para evitar que ela seja apagada. Essa criação é feita pelo nó **cria msg.nocs** (configuração no [Anexo-XXVI](#anexo-26)). A mesma coisa é feita para o banco local: pegamos a linha no índice do contador com o nó **Local** (configuração no [Anexo-XXVII](#anexo-27)) e criamos outro payload em **cria msg.local** (configuração no [Anexo-XXVIII](#anexo-28)). Com isso, temos três possibilidades a serem tratadas pelo próximo nó, **criação e atualização** (configuração no [Anexo-XXIX](#anexo-29)):
+O segundo nó do fluxo é o nó de comunicação com o banco remoto **NOCS** (configuração no [Anexo-XLVII](#anexo-47)). Nele, obtemos linha por linha da tabela de acordo com o valor do contador, que é utilizado como índice. Após pegarmos a linha no índice do contador, criamos outro payload para essa mensagem para evitar que ela seja apagada. Essa criação é feita pelo nó **cria msg.nocs** (configuração no [Anexo-XLVIII](#anexo-48)). A mesma coisa é feita para o banco local: pegamos a linha no índice do contador com o nó **Local** (configuração no [Anexo-XLIX](#anexo-49)) e criamos outro payload em **cria msg.local** (configuração no [Anexo-L](#anexo-50)). Com isso, temos três possibilidades a serem tratadas pelo próximo nó, **criação e atualização** (configuração no [Anexo-LI](#anexo-51)):
 	
 - **DELETE** : caso a mensagem exista no banco local, mas não exista mais no remoto.
 - **UPDATE** : caso a mensagem exista no banco local e no remoto, mas com diferenças entre elas.
 - **INSERT** : caso a mensagem não exista no banco local, mas exista no banco remoto.
 - > Caso nenhuma das duas mensagens exista, significa que chegamos ao final da sincronização, e o contador volta a ter o valor 1. Caso contrário, o contador é acrescido. 
 	
-Após as decisões tomadas, é gerado um novo payload com a instância escolhida e a mensagem é enviada para dois nós no fluxo. Um deles é o nó **Local** do Postgres (verificar seção [Postgres](#postgres)), e o outro é o nó **switch** (configuração no [Anexo-XXX](#anexo-30)), que realiza verificações constantes para verificar o término da sincronização. Essa verificação é executada com base no contador. Se o contador for 1 novamente, o **switch** finaliza o loop. Caso contrário, o switch retorna a mensagem para o nó **contador** no início do fluxo.
+Após as decisões tomadas, é gerado um novo payload com a instância escolhida e a mensagem é enviada para dois nós no fluxo. Um deles é o nó **Local** do Postgres (verificar seção [Postgres](#postgres)), e o outro é o nó **switch** (configuração no [Anexo-LII](#anexo-52)), que realiza verificações constantes para verificar o término da sincronização. Essa verificação é executada com base no contador. Se o contador for 1 novamente, o **switch** finaliza o loop. Caso contrário, o switch retorna a mensagem para o nó **contador** no início do fluxo.
 
 #### <a name="sincronismo-tamanho-banco-local"><a/>Sincronismo tamanho banco local
-O fluxo deste subfluxo é dividido em dois subfluxos sequenciais. No primeiro, temos a requisição das datas da primeira e última mensagem registrada no banco local, referente a data inicial e atual. A data inicial é obtida pelo nó **Local - Data do primeiro dado** (configuração no [Anexo-XXIX](#anexo-29)), enquanto a data final é obtida pelo nó **Local - Data do último dado** (configuração no [Anexo-XXXI](#anexo-31)). Como dito em outras seções, os nós do Postgres sobrescrevem o payload local. Logo, para cada um dos nós citados anteriormente a mensagem é colocada em outros payloads secundários: *msg.date_inicial*, instanciado pelo nó **cria msg.date_inicial** (configuração no [Anexo-XXXII](#anexo-32)), e *msg.date_atual*, instanciado pelo nó **cria msg.date_atual** (configuração no [Anexo-XXXIII](#anexo-33)).
+O fluxo deste subfluxo é dividido em dois subfluxos sequenciais. No primeiro, temos a requisição das datas da primeira e última mensagem registrada no banco local, referente a data inicial e atual. A data inicial é obtida pelo nó **Local - Data do primeiro dado** (configuração no [Anexo-LIII](#anexo-53)), enquanto a data final é obtida pelo nó **Local - Data do último dado** (configuração no [Anexo-LVI](#anexo-54)). Como dito em outras seções, os nós do Postgres sobrescrevem o payload local. Logo, para cada um dos nós citados anteriormente a mensagem é colocada em outros payloads secundários: *msg.date_inicial*, instanciado pelo nó **cria msg.date_inicial** (configuração no [Anexo-LV](#anexo-55)), e *msg.date_atual*, instanciado pelo nó **cria msg.date_atual** (configuração no [Anexo-LVI](#anexo-56)).
 	
 <div align="center">
 	<img src="https://user-images.githubusercontent.com/56831082/225642480-fb6cdbd2-fcd5-4c6c-b95c-a837988fc893.png" width=750><br>
 </div>
 	
-Já no outro subfluxo, temos a verificação do distanciamento entre as duas datas pelo nó **Verifica datas** (configuração no [Anexo-XXXIV](#anexo-34)). Caso a mensagem inicial tenha extrapolado a quantidade de dias pré-definida, uma instância de delete é enviada ao banco local para apagar a mensagem, e o loop passa para a próxima mensagem do banco. Caso contrário, a sincronização está completa, e o loop se encerra.
+Já no outro subfluxo, temos a verificação do distanciamento entre as duas datas pelo nó **Verifica datas** (configuração no [Anexo-LVII](#anexo-57)). Caso a mensagem inicial tenha extrapolado a quantidade de dias pré-definida, uma instância de delete é enviada ao banco local para apagar a mensagem, e o loop passa para a próxima mensagem do banco. Caso contrário, a sincronização está completa, e o loop se encerra.
 	
 # <a name="conclusao"><a/>Conclusão
 
