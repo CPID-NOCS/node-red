@@ -373,7 +373,7 @@
         "category": "",
         "in": [
             {
-                "x": 130,
+                "x": 140,
                 "y": 200,
                 "wires": [
                     {
@@ -390,8 +390,8 @@
             "msg.payload"
         ],
         "status": {
-            "x": 1140,
-            "y": 840,
+            "x": 880,
+            "y": 800,
             "wires": [
                 {
                     "id": "3d4416342cc7ba80",
@@ -506,9 +506,7 @@
             "49029129029e0331"
         ],
         "x": 14,
-        "y": 19,
-        "w": 1062,
-        "h": 868
+        "y": 19
     },
     {
         "id": "dca8bc654adbbf02",
@@ -533,9 +531,7 @@
             "5e9a61f501a537ae"
         ],
         "x": 14,
-        "y": 19,
-        "w": 582,
-        "h": 788
+        "y": 19
     },
     {
         "id": "8d913cb2ad803019",
@@ -559,9 +555,7 @@
             "5d1828b78c891a98"
         ],
         "x": 24,
-        "y": 19,
-        "w": 1032,
-        "h": 708
+        "y": 19
     },
     {
         "id": "0592eb0f2887c3ea",
@@ -585,9 +579,7 @@
             "b2e99b61aad2d359"
         ],
         "x": 14,
-        "y": 19,
-        "w": 782,
-        "h": 668
+        "y": 19
     },
     {
         "id": "4f3abbcb43bb4e2e",
@@ -611,9 +603,7 @@
             "4e6d0bcfdddd096b"
         ],
         "x": 14,
-        "y": 19,
-        "w": 1004,
-        "h": 868
+        "y": 19
     },
     {
         "id": "cc9e6cb2286922e2",
@@ -638,9 +628,7 @@
             "87a810e83bc732ce"
         ],
         "x": 14,
-        "y": 19,
-        "w": 1262,
-        "h": 848
+        "y": 19
     },
     {
         "id": "4bbb49ad40394687",
@@ -665,9 +653,7 @@
             "e130368244133b83"
         ],
         "x": 34,
-        "y": 19,
-        "w": 782,
-        "h": 828
+        "y": 19
     },
     {
         "id": "96613fce14ad40a8",
@@ -810,9 +796,7 @@
             "f56b1859406935eb"
         ],
         "x": 14,
-        "y": 19,
-        "w": 1142,
-        "h": 4388
+        "y": 19
     },
     {
         "id": "67d25ef121d15f94",
@@ -836,9 +820,7 @@
             "5bc332cef7bd68dd"
         ],
         "x": 54,
-        "y": 99,
-        "w": 832,
-        "h": 142
+        "y": 99
     },
     {
         "id": "0372f041345ff56b",
@@ -860,9 +842,7 @@
             "4c0c6dfcc390f93f"
         ],
         "x": 54,
-        "y": 99,
-        "w": 938,
-        "h": 428
+        "y": 99
     },
     {
         "id": "07617004c325cdb0",
@@ -887,9 +867,7 @@
             "0123b886a978d9a2"
         ],
         "x": 54,
-        "y": 539,
-        "w": 532,
-        "h": 162
+        "y": 539
     },
     {
         "id": "606bc7cf5600faf4",
@@ -912,9 +890,7 @@
             "57cf3c526ee8f1d9"
         ],
         "x": 54,
-        "y": 719,
-        "w": 412,
-        "h": 142
+        "y": 719
     },
     {
         "id": "a0a062d88e115230",
@@ -943,9 +919,7 @@
             "c3718ac6037398bd"
         ],
         "x": 54,
-        "y": 259,
-        "w": 1192,
-        "h": 202
+        "y": 259
     },
     {
         "id": "7a08cb8df76eb516",
@@ -968,9 +942,7 @@
             "87e724c87e97dc97"
         ],
         "x": 54,
-        "y": 539,
-        "w": 462,
-        "h": 142
+        "y": 539
     },
     {
         "id": "3d8914ac828c48e7",
@@ -993,9 +965,7 @@
             "a3e283b23edc1f7f"
         ],
         "x": 54,
-        "y": 699,
-        "w": 402,
-        "h": 142
+        "y": 699
     },
     {
         "id": "62780e20954084d0",
@@ -1018,9 +988,7 @@
             "09a3f46dd176e808"
         ],
         "x": 54,
-        "y": 639,
-        "w": 402,
-        "h": 142
+        "y": 639
     },
     {
         "id": "70d701831511dd80",
@@ -1042,9 +1010,7 @@
             "f8e788f202e28034"
         ],
         "x": 54,
-        "y": 99,
-        "w": 372,
-        "h": 142
+        "y": 99
     },
     {
         "id": "58e8ea5634e5a59c",
@@ -1067,9 +1033,7 @@
             "ced64b0b61ea785b"
         ],
         "x": 54,
-        "y": 259,
-        "w": 492,
-        "h": 142
+        "y": 259
     },
     {
         "id": "26d3a3ef0cd6942c",
@@ -1094,9 +1058,7 @@
             "8e6b524a8fa26f7b"
         ],
         "x": 54,
-        "y": 419,
-        "w": 512,
-        "h": 202
+        "y": 419
     },
     {
         "id": "498764931f4b71aa",
@@ -1118,9 +1080,7 @@
             "96973cfa9742df19"
         ],
         "x": 54,
-        "y": 99,
-        "w": 412,
-        "h": 142
+        "y": 99
     },
     {
         "id": "a8c438ba71c0a43f",
@@ -1150,9 +1110,7 @@
             "4ba1e29a17d4625b"
         ],
         "x": 54,
-        "y": 259,
-        "w": 1072,
-        "h": 202
+        "y": 259
     },
     {
         "id": "53383e8862e9b803",
@@ -1182,9 +1140,7 @@
             "75b0e13e9d5d6173"
         ],
         "x": 54,
-        "y": 479,
-        "w": 1072,
-        "h": 202
+        "y": 479
     },
     {
         "id": "84114652054927ee",
@@ -1214,9 +1170,7 @@
             "8e0de14dbdc7e36c"
         ],
         "x": 54,
-        "y": 699,
-        "w": 1072,
-        "h": 202
+        "y": 699
     },
     {
         "id": "14955f02aa0317be",
@@ -1246,9 +1200,7 @@
             "cb34236a415a64dd"
         ],
         "x": 54,
-        "y": 919,
-        "w": 1072,
-        "h": 202
+        "y": 919
     },
     {
         "id": "e7f10f45daeaf688",
@@ -1278,9 +1230,7 @@
             "9af565314439fc4e"
         ],
         "x": 54,
-        "y": 1139,
-        "w": 1072,
-        "h": 202
+        "y": 1139
     },
     {
         "id": "240bcd834eb33cf7",
@@ -1310,9 +1260,7 @@
             "4aa12f5df2e22995"
         ],
         "x": 54,
-        "y": 1359,
-        "w": 1072,
-        "h": 202
+        "y": 1359
     },
     {
         "id": "f41dbc6febc7f940",
@@ -1342,9 +1290,7 @@
             "ca76449609927f3a"
         ],
         "x": 54,
-        "y": 1579,
-        "w": 1072,
-        "h": 202
+        "y": 1579
     },
     {
         "id": "5a6ed92c41528bb0",
@@ -1374,9 +1320,7 @@
             "2ecea0a103eac8af"
         ],
         "x": 54,
-        "y": 1799,
-        "w": 1072,
-        "h": 202
+        "y": 1799
     },
     {
         "id": "cee982dc38904cdb",
@@ -1406,9 +1350,7 @@
             "0f55a45b5d4722e1"
         ],
         "x": 54,
-        "y": 2019,
-        "w": 1072,
-        "h": 202
+        "y": 2019
     },
     {
         "id": "c3167a56125bb451",
@@ -1438,9 +1380,7 @@
             "93df8599ad612ec7"
         ],
         "x": 54,
-        "y": 2239,
-        "w": 1072,
-        "h": 222
+        "y": 2239
     },
     {
         "id": "a1f79c2e32ad7c7a",
@@ -1470,9 +1410,7 @@
             "2027e5a5f226d68c"
         ],
         "x": 54,
-        "y": 2479,
-        "w": 1072,
-        "h": 202
+        "y": 2479
     },
     {
         "id": "af65b1cf913c581f",
@@ -1502,9 +1440,7 @@
             "9188e3a48d2a39be"
         ],
         "x": 54,
-        "y": 2699,
-        "w": 1072,
-        "h": 202
+        "y": 2699
     },
     {
         "id": "27233bf2b30dc86e",
@@ -1534,9 +1470,7 @@
             "36e393322517e0b9"
         ],
         "x": 54,
-        "y": 2919,
-        "w": 1072,
-        "h": 202
+        "y": 2919
     },
     {
         "id": "28709fc7768f4c7f",
@@ -1566,9 +1500,7 @@
             "42b2aefe8a793e53"
         ],
         "x": 54,
-        "y": 3139,
-        "w": 1072,
-        "h": 202
+        "y": 3139
     },
     {
         "id": "709f9014691197e8",
@@ -1598,9 +1530,7 @@
             "2819e3062c0ec390"
         ],
         "x": 54,
-        "y": 3359,
-        "w": 1072,
-        "h": 202
+        "y": 3359
     },
     {
         "id": "4a661830d296a9f8",
@@ -1630,9 +1560,7 @@
             "0266a853038f15ee"
         ],
         "x": 54,
-        "y": 3579,
-        "w": 1072,
-        "h": 202
+        "y": 3579
     },
     {
         "id": "408c191f95cb3007",
@@ -1662,9 +1590,7 @@
             "cd564a67b7af70f5"
         ],
         "x": 54,
-        "y": 3799,
-        "w": 1072,
-        "h": 202
+        "y": 3799
     },
     {
         "id": "ce6090e7bcceefed",
@@ -1687,9 +1613,7 @@
             "4b54f36dc2249de7"
         ],
         "x": 54,
-        "y": 4239,
-        "w": 402,
-        "h": 142
+        "y": 4239
     },
     {
         "id": "f56b1859406935eb",
@@ -1714,9 +1638,7 @@
             "d9dfd6334355e3e0"
         ],
         "x": 54,
-        "y": 4019,
-        "w": 472,
-        "h": 202
+        "y": 4019
     },
     {
         "id": "38653289be348284",
@@ -1766,7 +1688,7 @@
         ],
         "x": 54,
         "y": 979,
-        "w": 452,
+        "w": 432,
         "h": 162
     },
     {
@@ -1925,9 +1847,7 @@
             "2de6760cdaf7f833"
         ],
         "x": 74,
-        "y": 519,
-        "w": 532,
-        "h": 182
+        "y": 519
     },
     {
         "id": "6a8629d966bc8d0e",
@@ -1952,9 +1872,7 @@
             "1249f497fea1a35d"
         ],
         "x": 74,
-        "y": 299,
-        "w": 472,
-        "h": 202
+        "y": 299
     },
     {
         "id": "596a5810aa7c9486",
@@ -1980,9 +1898,7 @@
             "18a9e0b0fa31c882"
         ],
         "x": 74,
-        "y": 99,
-        "w": 952,
-        "h": 182
+        "y": 99
     },
     {
         "id": "a103f22c7ee8d82d",
@@ -2032,9 +1948,7 @@
             "d9c1878b7171502d"
         ],
         "x": 54,
-        "y": 259,
-        "w": 472,
-        "h": 202
+        "y": 259
     },
     {
         "id": "725e348fb3d326eb",
@@ -2058,9 +1972,7 @@
             "c25702fb47b0c93f"
         ],
         "x": 54,
-        "y": 479,
-        "w": 412,
-        "h": 182
+        "y": 479
     },
     {
         "id": "7d093e4c3e197c6a",
@@ -2084,9 +1996,7 @@
             "7cd6bda2b53deacc"
         ],
         "x": 54,
-        "y": 99,
-        "w": 712,
-        "h": 142
+        "y": 99
     },
     {
         "id": "10821c84251bd152",
@@ -2133,9 +2043,7 @@
             "f28f5b07b82ad25f"
         ],
         "x": 54,
-        "y": 519,
-        "w": 502,
-        "h": 142
+        "y": 519
     },
     {
         "id": "f2c4303acede0f49",
@@ -2155,13 +2063,10 @@
             "9db4360617f953d5",
             "31c44d9fc3345bf2",
             "6765db85280605b0",
-            "bfbc8fe938c7db9b",
-            "1b7087b411242447"
+            "bfbc8fe938c7db9b"
         ],
         "x": 54,
-        "y": 679,
-        "w": 412,
-        "h": 182
+        "y": 679
     },
     {
         "id": "3065cbbcf25013fd",
@@ -2187,9 +2092,7 @@
             "1b881169df1b0798"
         ],
         "x": 54,
-        "y": 99,
-        "w": 992,
-        "h": 202
+        "y": 99
     },
     {
         "id": "e446abe020d042ad",
@@ -2208,15 +2111,12 @@
         "nodes": [
             "b500129a5f3786f8",
             "202c19416b01f73a",
-            "36c8241b8f5485ed",
             "5dba1dd7f8ef9f37",
             "802c2f6560b5c23b",
             "692ad4797710b201"
         ],
         "x": 54,
-        "y": 319,
-        "w": 612,
-        "h": 182
+        "y": 319
     },
     {
         "id": "c20466e9245989df",
@@ -2239,9 +2139,7 @@
             "b6e02291ae67bdb6"
         ],
         "x": 74,
-        "y": 519,
-        "w": 402,
-        "h": 142
+        "y": 519
     },
     {
         "id": "ba05562c85557e0e",
@@ -2266,9 +2164,7 @@
             "1e32a1581432b5b5"
         ],
         "x": 74,
-        "y": 299,
-        "w": 472,
-        "h": 202
+        "y": 299
     },
     {
         "id": "2eccd0e346715923",
@@ -2290,9 +2186,7 @@
             "7bab0adbcf4249c9"
         ],
         "x": 74,
-        "y": 679,
-        "w": 352,
-        "h": 142
+        "y": 679
     },
     {
         "id": "a08702cd6d20b021",
@@ -2317,9 +2211,7 @@
             "32f85d54cb02d364"
         ],
         "x": 74,
-        "y": 99,
-        "w": 712,
-        "h": 182
+        "y": 99
     },
     {
         "id": "1c1ece291a498e9c",
@@ -2569,9 +2461,7 @@
             "104af077a29300d7"
         ],
         "x": 94,
-        "y": 179,
-        "w": 872,
-        "h": 162
+        "y": 179
     },
     {
         "id": "4c0c6dfcc390f93f",
@@ -2592,9 +2482,7 @@
             "9efba4e0ab0cc2a5"
         ],
         "x": 94,
-        "y": 359,
-        "w": 192,
-        "h": 142
+        "y": 359
     },
     {
         "id": "7545bc9af9735841",
@@ -4844,20 +4732,20 @@
         "type": "function",
         "z": "38d792f0bb10ea75",
         "g": "d7f7f53f51e446ae",
-        "name": "function 10",
-        "func": "msg.last_update_id.id = msg.last_update_id.id + 1\nmsg.payload = \"\"\n\nif (typeof msg.measurement != \"undefined\"){\n    msg.measurement = JSON.parse(JSON.stringify(msg.measurement))\n    \n    msg.payload = msg.payload + \"INSERT INTO public.organic_nodes_control_measurement (date_time_stamp, message_counter, setup_id, source) VALUES('\" + msg.measurement.date_time_stamp + \"', \" + msg.measurement.message_counter + \", \" + msg.measurement.setup_id + \", \" + msg.measurement.source + \");\"\n    msg.payload = msg.payload + \"INSERT INTO public.organic_nodes_control_frequencymeasure(frequency, frequency_sf, measurement_id) VALUES(\" + msg.frequency.frequency + \", \" + msg.frequency.frequency_sf + \", (SELECT id FROM public.organic_nodes_control_measurement WHERE(message_counter = \" + msg.measurement.message_counter + \" AND date_time_stamp = '\" + msg.measurement.date_time_stamp +\"') LIMIT 1));\"\n    msg.payload = msg.payload + \"INSERT INTO public.organic_nodes_control_sensormeasure(temperature, temperature_sf, measurement_id) VALUES(\" + msg.sensor.temperature + \", \" + msg.sensor.temperature_sf + \", (SELECT id FROM public.organic_nodes_control_measurement WHERE(message_counter = \" + msg.measurement.message_counter + \" AND date_time_stamp = '\" + msg.measurement.date_time_stamp +\"') LIMIT 1));\"\n    msg.payload = msg.payload + \"INSERT INTO public.organic_nodes_control_energymeasure(phase, current, current_sf, voltage, voltage_sf, measurement_id)VALUES('\" + msg.energy.phase + \"', \" + msg.energy.current + \", \" + msg.energy.current_sf + \", \" + msg.energy.voltage + \", \" + msg.energy.voltage_sf + \", (SELECT id FROM public.organic_nodes_control_measurement WHERE(message_counter = \" + msg.measurement.message_counter + \" AND date_time_stamp = '\" + msg.measurement.date_time_stamp +\"') LIMIT 1));\"\n    msg.payload = msg.payload + \"INSERT INTO public.organic_nodes_control_powermeasure(phase, voltage_current_angle, voltage_current_angle_sf, power_factor, active_power, active_power_sf, reactive_power, reactive_power_sf, apparent_power, apparent_power_sf, measurement_id)VALUES('\" + msg.power.phase + \"', \" + msg.power.voltage_current_angle + \", \" + msg.power.voltage_current_angle_sf + \", \" + msg.power.power_factor + \", \" + msg.power.active_power + \", \" + msg.power.active_power_sf + \", \" + msg.power.reactive_power + \", \" + msg.power.reactive_power_sf + \", \" + msg.power.apparent_power + \", \" + msg.power.apparent_power_sf + \", (SELECT id FROM public.organic_nodes_control_measurement WHERE(message_counter = \" + msg.measurement.message_counter + \" AND date_time_stamp = '\" + msg.measurement.date_time_stamp +\"') LIMIT 1));\"\n    if (typeof msg.voltagelag != \"undefined\")\n        msg.payload = msg.payload + \"INSERT INTO public.organic_nodes_control_voltagelagmeasure(angle, angle_sf, phase_combination, measurement_id)VALUES(\" + msg.voltagelag.angle + \", \" + msg.voltagelag.angle_sf + \", '\" + msg.voltagelag.phase_combination + \"', (SELECT id FROM public.organic_nodes_control_measurement WHERE(message_counter = \" + msg.measurement.message_counter + \" AND date_time_stamp = '\" + msg.measurement.date_time_stamp +\"') LIMIT 1));\"\n    \n    msg.queryParameters = msg.payload\n    return msg\n}else {\n    global.set(\"sincronizando_remoto\", false)\n}",
+        "name": "instancia",
+        "func": "msg.last_update_id.id = msg.last_update_id.id + 1\nmsg.payload = \"\"\n\nmsg.payload = msg.payload + \"INSERT INTO public.organic_nodes_control_measurement (date_time_stamp, message_counter, setup_id, source) VALUES('\" + msg.measurement.date_time_stamp + \"', \" + msg.measurement.message_counter + \", \" + msg.measurement.setup_id + \", \" + msg.measurement.source + \");\"\nmsg.payload = msg.payload + \"INSERT INTO public.organic_nodes_control_frequencymeasure(frequency, frequency_sf, measurement_id) VALUES(\" + msg.frequency.frequency + \", \" + msg.frequency.frequency_sf + \", (SELECT id FROM public.organic_nodes_control_measurement WHERE(message_counter = \" + msg.measurement.message_counter + \" AND date_time_stamp = '\" + msg.measurement.date_time_stamp +\"') LIMIT 1));\"\nmsg.payload = msg.payload + \"INSERT INTO public.organic_nodes_control_sensormeasure(temperature, temperature_sf, measurement_id) VALUES(\" + msg.sensor.temperature + \", \" + msg.sensor.temperature_sf + \", (SELECT id FROM public.organic_nodes_control_measurement WHERE(message_counter = \" + msg.measurement.message_counter + \" AND date_time_stamp = '\" + msg.measurement.date_time_stamp +\"') LIMIT 1));\"\nfor (let energy of msg.energy)\n    msg.payload = msg.payload + \"INSERT INTO public.organic_nodes_control_energymeasure(phase, current, current_sf, voltage, voltage_sf, measurement_id)VALUES('\" + energy.phase + \"', \" + energy.current + \", \" + energy.current_sf + \", \" + energy.voltage + \", \" + energy.voltage_sf + \", (SELECT id FROM public.organic_nodes_control_measurement WHERE(message_counter = \" + msg.measurement.message_counter + \" AND date_time_stamp = '\" + msg.measurement.date_time_stamp +\"') LIMIT 1));\"\nfor (let power of msg.power)\n    msg.payload = msg.payload + \"INSERT INTO public.organic_nodes_control_powermeasure(phase, voltage_current_angle, voltage_current_angle_sf, power_factor, active_power, active_power_sf, reactive_power, reactive_power_sf, apparent_power, apparent_power_sf, measurement_id)VALUES('\" + power.phase + \"', \" + power.voltage_current_angle + \", \" + power.voltage_current_angle_sf + \", \" + power.power_factor + \", \" + power.active_power + \", \" + power.active_power_sf + \", \" + power.reactive_power + \", \" + power.reactive_power_sf + \", \" + power.apparent_power + \", \" + power.apparent_power_sf + \", (SELECT id FROM public.organic_nodes_control_measurement WHERE(message_counter = \" + msg.measurement.message_counter + \" AND date_time_stamp = '\" + msg.measurement.date_time_stamp +\"') LIMIT 1));\"\nif (typeof msg.voltagelag != \"undefined\")\n    for (let voltagelag of msg.voltagelag)\n        msg.payload = msg.payload + \"INSERT INTO public.organic_nodes_control_voltagelagmeasure(angle, angle_sf, phase_combination, measurement_id)VALUES(\" + voltagelag.angle + \", \" + voltagelag.angle_sf + \", '\" + voltagelag.phase_combination + \"', (SELECT id FROM public.organic_nodes_control_measurement WHERE(message_counter = \" + msg.measurement.message_counter + \" AND date_time_stamp = '\" + msg.measurement.date_time_stamp +\"') LIMIT 1));\"\n\nmsg.queryParameters = msg.payload\nreturn msg",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 270,
+        "x": 260,
         "y": 1080,
         "wires": [
             [
-                "a1b1a252b0cc604a",
                 "23c4238d8da6f334",
-                "5f6ddbe116ff4757"
+                "a32e6d9a708558a2",
+                "a1b1a252b0cc604a"
             ]
         ]
     },
@@ -4878,7 +4766,7 @@
         "limit_drop_intermediate": false,
         "limit_drop_if_in_queue": false,
         "outputs": false,
-        "x": 430,
+        "x": 410,
         "y": 1100,
         "wires": []
     },
@@ -4945,27 +4833,13 @@
         "type": "change",
         "z": "38d792f0bb10ea75",
         "g": "52c66abdf3919c1f",
-        "name": "cria msg.power_(ABC)",
+        "name": "cria msg.power (ABC)",
         "rules": [
             {
                 "t": "set",
-                "p": "power_A",
+                "p": "power",
                 "pt": "msg",
-                "to": "payload[0]",
-                "tot": "msg"
-            },
-            {
-                "t": "set",
-                "p": "power_B",
-                "pt": "msg",
-                "to": "payload[1]",
-                "tot": "msg"
-            },
-            {
-                "t": "set",
-                "p": "power_C",
-                "pt": "msg",
-                "to": "payload[2]",
+                "to": "payload",
                 "tot": "msg"
             }
         ],
@@ -5053,27 +4927,13 @@
         "type": "change",
         "z": "38d792f0bb10ea75",
         "g": "52c66abdf3919c1f",
-        "name": "cria msg.voltagelag_(ABC)",
+        "name": "cria msg.voltagelag (ABC)",
         "rules": [
             {
                 "t": "set",
-                "p": "voltagelag_AB",
+                "p": "voltagelag",
                 "pt": "msg",
-                "to": "payload[0]",
-                "tot": "msg"
-            },
-            {
-                "t": "set",
-                "p": "voltagelag_AC",
-                "pt": "msg",
-                "to": "payload[1]",
-                "tot": "msg"
-            },
-            {
-                "t": "set",
-                "p": "voltagelag_BC",
-                "pt": "msg",
-                "to": "payload[2]",
+                "to": "payload",
                 "tot": "msg"
             }
         ],
@@ -5082,7 +4942,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 500,
+        "x": 490,
         "y": 860,
         "wires": [
             [
@@ -5161,28 +5021,14 @@
         "type": "change",
         "z": "38d792f0bb10ea75",
         "g": "52c66abdf3919c1f",
-        "name": "cria msg.energy_(ABC)",
+        "name": "cria msg.energy (ABC)",
         "rules": [
             {
                 "t": "set",
-                "p": "energy_A",
+                "p": "energy",
                 "pt": "msg",
-                "to": "payload[0]",
+                "to": "payload",
                 "tot": "msg"
-            },
-            {
-                "t": "set",
-                "p": "energy_B",
-                "pt": "msg",
-                "to": "payload[1]",
-                "tot": "str"
-            },
-            {
-                "t": "set",
-                "p": "energy_C",
-                "pt": "msg",
-                "to": "payload[2]",
-                "tot": "str"
             }
         ],
         "action": "",
@@ -5190,7 +5036,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 490,
+        "x": 480,
         "y": 920,
         "wires": [
             [
@@ -5240,7 +5086,7 @@
         "links": [
             "ba1f97dd5f403313"
         ],
-        "x": 395,
+        "x": 375,
         "y": 1060,
         "wires": []
     },
@@ -5299,7 +5145,7 @@
         "z": "38d792f0bb10ea75",
         "g": "52c66abdf3919c1f",
         "name": "cria msg.measurement",
-        "func": "try{\n    msg.measurement = JSON.parse(JSON.stringify(msg.payload[0]))\n    return msg;\n}catch(e){}",
+        "func": "if (msg.payload.length){\n    msg.measurement = JSON.parse(JSON.stringify(msg.payload[0]))\n    return msg;\n}else{\n    global.set(\"sincronizando_remoto\", false);\n}",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -5338,7 +5184,7 @@
         "z": "38d792f0bb10ea75",
         "g": "464dd04fd59b4416",
         "name": "cria msg.last_upload",
-        "func": "try{\n    msg.last_upload = JSON.parse(JSON.stringify(msg.payload[0]))\n\n\n    if (msg.last_upload.date_time_stamp != msg.last_update.date_time_stamp){\n        global.set(\"sincronizando_remoto\", false)\n        return msg;\n    }else {\n        global.set(\"sincronizando_remoto\", false)\n    }\n} catch(e){}",
+        "func": "try{\n    msg.last_upload = JSON.parse(JSON.stringify(msg.payload[0]))\n\n\n    if (msg.last_upload.date_time_stamp != msg.last_update.date_time_stamp){\n        global.set(\"sincronizando_remoto\", true)\n        return msg;\n    }else {\n        global.set(\"sincronizando_remoto\", false)\n    }\n} catch(e){}",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -5503,9 +5349,9 @@
         "type": "link in",
         "z": "38d792f0bb10ea75",
         "g": "52c66abdf3919c1f",
-        "name": "sensor",
+        "name": "voltage_lag",
         "links": [
-            "5ab8c0a121cf0e58"
+            "ce589cab12b8ce60"
         ],
         "x": 125,
         "y": 860,
@@ -5520,7 +5366,7 @@
         "type": "link in",
         "z": "38d792f0bb10ea75",
         "g": "52c66abdf3919c1f",
-        "name": "voltage_lag",
+        "name": "energy",
         "links": [
             "177c08d34f1153ed"
         ],
@@ -5554,8 +5400,7 @@
         "name": "sensor",
         "mode": "link",
         "links": [
-            "49df46e372d3ac33",
-            "0551cf9e18d8a383"
+            "49df46e372d3ac33"
         ],
         "x": 685,
         "y": 740,
@@ -5566,9 +5411,11 @@
         "type": "link out",
         "z": "38d792f0bb10ea75",
         "g": "52c66abdf3919c1f",
-        "name": "link out 3",
+        "name": "voltage_lag",
         "mode": "link",
-        "links": [],
+        "links": [
+            "0551cf9e18d8a383"
+        ],
         "x": 685,
         "y": 800,
         "wires": []
@@ -5578,7 +5425,7 @@
         "type": "link out",
         "z": "38d792f0bb10ea75",
         "g": "52c66abdf3919c1f",
-        "name": "voltage_lag",
+        "name": "energy",
         "mode": "link",
         "links": [
             "9d02f39318aa5afe"
@@ -5613,7 +5460,9 @@
         "x": 135,
         "y": 1080,
         "wires": [
-            []
+            [
+                "dcc7c6f584808cce"
+            ]
         ]
     },
     {
@@ -5829,20 +5678,20 @@
         "wires": []
     },
     {
-        "id": "5f6ddbe116ff4757",
+        "id": "a32e6d9a708558a2",
         "type": "debug",
         "z": "38d792f0bb10ea75",
-        "name": "debug 18",
+        "name": "debug 20",
         "active": true,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
-        "complete": "measurement",
+        "complete": "last_update_id.id",
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
         "x": 1220,
-        "y": 1240,
+        "y": 1080,
         "wires": []
     },
     {
@@ -10654,8 +10503,8 @@
             "2d5d45d995cd7950",
             "bfbc8fe938c7db9b"
         ],
-        "x": 1035,
-        "y": 840,
+        "x": 775,
+        "y": 800,
         "wires": [
             []
         ]
@@ -10701,7 +10550,7 @@
         "links": [
             "3d4416342cc7ba80"
         ],
-        "x": 515,
+        "x": 485,
         "y": 620,
         "wires": []
     },
@@ -10735,8 +10584,7 @@
         "y": 780,
         "wires": [
             [
-                "6765db85280605b0",
-                "1b7087b411242447"
+                "6765db85280605b0"
             ]
         ]
     },
@@ -10786,16 +10634,6 @@
         "wires": []
     },
     {
-        "id": "1b7087b411242447",
-        "type": "subflow:ba2e913aeb86a3ea",
-        "z": "09685600d012d69f",
-        "g": "f2c4303acede0f49",
-        "name": "",
-        "x": 350,
-        "y": 820,
-        "wires": []
-    },
-    {
         "id": "9de51b97c7e82fbe",
         "type": "postgresql",
         "z": "09685600d012d69f",
@@ -10806,7 +10644,7 @@
         "split": false,
         "rowsPerMsg": 1,
         "outputs": 1,
-        "x": 310,
+        "x": 330,
         "y": 200,
         "wires": [
             [
@@ -10834,7 +10672,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 580,
+        "x": 600,
         "y": 200,
         "wires": [
             [
@@ -10853,7 +10691,7 @@
         "split": false,
         "rowsPerMsg": 1,
         "outputs": 1,
-        "x": 600,
+        "x": 320,
         "y": 260,
         "wires": [
             [
@@ -10881,7 +10719,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 850,
+        "x": 590,
         "y": 260,
         "wires": [
             [
@@ -10894,19 +10732,19 @@
         "type": "function",
         "z": "09685600d012d69f",
         "g": "e446abe020d042ad",
-        "name": "function 11",
-        "func": "var periodo = msg.date_atual.date_time_stamp - msg.date_inicial.date_time_stamp\nvar qtd_dias = Math.trunc(((periodo / 1000) / 3600) / 24)\n\nmsg.payload = \"\"\nvar data  = JSON.parse(JSON.stringify(msg.date_inicial))\n\nif (qtd_dias > msg.permanence_date)\n    msg.payload = \"DELETE FROM public.organic_nodes_control_measurement WHERE date_time_stamp = '\" + data.date_time_stamp +\"';\"\n\nmsg.queryParameters = msg.payload\nreturn msg;",
+        "name": "Verifica datas",
+        "func": "var periodo = msg.date_atual.date_time_stamp - msg.date_inicial.date_time_stamp\nvar qtd_dias = ((periodo / 1000) / 3600) / 24\n\nmsg.payload = \"\"\nvar data  = JSON.parse(JSON.stringify(msg.date_inicial))\n\nif (qtd_dias > msg.permanence_date){\n    msg.payload = \"DELETE FROM public.organic_nodes_control_measurement WHERE date_time_stamp = '\" + data.date_time_stamp +\"';\"\n    msg.queryParameters = msg.payload\n    return msg;\n}",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 250,
+        "x": 260,
         "y": 420,
         "wires": [
             [
-                "36c8241b8f5485ed",
-                "202c19416b01f73a"
+                "202c19416b01f73a",
+                "5dba1dd7f8ef9f37"
             ]
         ]
     },
@@ -10927,35 +10765,9 @@
         "limit_drop_intermediate": false,
         "limit_drop_if_in_queue": false,
         "outputs": false,
-        "x": 410,
+        "x": 430,
         "y": 460,
         "wires": []
-    },
-    {
-        "id": "36c8241b8f5485ed",
-        "type": "switch",
-        "z": "09685600d012d69f",
-        "g": "e446abe020d042ad",
-        "name": "",
-        "property": "payload",
-        "propertyType": "msg",
-        "rules": [
-            {
-                "t": "neq",
-                "v": "",
-                "vt": "str"
-            }
-        ],
-        "checkall": "true",
-        "repair": false,
-        "outputs": 1,
-        "x": 410,
-        "y": 420,
-        "wires": [
-            [
-                "5dba1dd7f8ef9f37"
-            ]
-        ]
     },
     {
         "id": "5dba1dd7f8ef9f37",
@@ -10967,7 +10779,7 @@
         "links": [
             "ef5798fc2f337728"
         ],
-        "x": 525,
+        "x": 395,
         "y": 420,
         "wires": []
     },
@@ -10991,7 +10803,7 @@
         "links": [
             "5dba1dd7f8ef9f37"
         ],
-        "x": 125,
+        "x": 135,
         "y": 240,
         "wires": [
             [
@@ -11037,7 +10849,7 @@
         "links": [
             "692ad4797710b201"
         ],
-        "x": 1005,
+        "x": 745,
         "y": 260,
         "wires": []
     },
@@ -11438,6 +11250,7 @@
         "y": 200,
         "wires": [
             [
+                "dad90e49f2defddc",
                 "a0a5d9ac3de89d35"
             ],
             [
@@ -11531,7 +11344,8 @@
         "name": "status",
         "links": [
             "7f0a1ca5317c64f2",
-            "fa6b3a1cf7951082"
+            "fa6b3a1cf7951082",
+            "b04a2b22713471b7"
         ],
         "x": 535,
         "y": 420,
@@ -11585,7 +11399,6 @@
         "y": 640,
         "wires": [
             [
-                "fa6b3a1cf7951082",
                 "b04a2b22713471b7"
             ]
         ]
@@ -11791,10 +11604,27 @@
         "name": "reenvio",
         "mode": "link",
         "links": [
-            "151e541e6b2f0125"
+            "151e541e6b2f0125",
+            "5d43614299a5b76d"
         ],
         "x": 505,
         "y": 640,
+        "wires": []
+    },
+    {
+        "id": "dad90e49f2defddc",
+        "type": "debug",
+        "z": "d48fb9af316b0fe2",
+        "name": "debug 19",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 820,
+        "y": 320,
         "wires": []
     },
     {
