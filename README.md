@@ -48,11 +48,18 @@
 	- [Anexo XXI - Cria instancia Bifasico](#anexo-21)
 	- [Anexo XXI - Cria instancia Trifasico](#anexo-22)
 	- [Anexo XXIII - Parametros](#anexo-23)
-	- [Anexo XXIV - Local - Data do primeiro dado](#anexo-24)
-	- [Anexo XXV - Local - Data do ultimo dado](#anexo-25)
-	- [Anexo XXVI - cria msg.date_inicial](#anexo-26)
-	- [Anexo XXVII - cria msg.date_atual](#anexo-27)
-	- [Anexo XXVIII - Verifica datas](#anexo-28)
+	- [Anexo XXIV - contador (access_user)](#anexo-24)
+	- [Anexo XXV - NOCS](#anexo-25)
+	- [Anexo XXVI - cria msg.nocs](#anexo-26)
+	- [Anexo XXVII - Local](#anexo-27)
+	- [Anexo XXVIII - cria msg.local](#anexo-28)
+	- [Anexo XXIX - criação e atualizção (access_user)](#anexo-29)
+	- [Anexo XXX - Switch (access_user)](#anexo-30)
+	- [Anexo XXXI - Local - Data do primeiro dado](#anexo-31)
+	- [Anexo XXXII - Local - Data do ultimo dado](#anexo-32)
+	- [Anexo XXXIII - cria msg.date_inicial](#anexo-33)
+	- [Anexo XXXIV - cria msg.date_atual](#anexo-34)
+	- [Anexo XXXV - Verifica datas](#anexo-35)
 
 # <a name=“node-red”><a/>Node-red
 
@@ -554,22 +561,35 @@ Caso haja qualquer erro no banco local, é feita uma sincronização local atrav
 	
 	
 #### <a name="sincronismo-local"><a/>Sincronismo Local
+Neste subflow, temos um destaque bastante importante: ele é chamado quando ocorre algum erro de sincronização em outros fluxos. Logo, inicialmente, precisamos de um nó que impeça uma sobrecarga de mensagens, de modo a evitar gargalos no sistema de sincronização. O nó utilizado para essa funcionalidade é o *stop timer* da palette **node-red-contrib-stoptimer**. Seu funcionamento é semelhante ao de um nó básico de delay, onde a mensagem espera um determinado tempo para continuar trafegando no fluxo. No entanto, ele difere porque todas as mensagens subsequentes são descartadas durante o intervalo de tempo determinado. Isso não interfere na execução do subflow, pois os nós de sincronização não utilizam a mensagem do payload para sincronizar o banco local. Portanto.
+	
+<img src="https://user-images.githubusercontent.com/56831082/225897255-15095e6b-d971-4a7b-9f57-cf3c13ed67ee.png" width=890> 
+<img src="https://user-images.githubusercontent.com/56831082/225897265-9e91cae8-fed9-4434-8e23-67a784d8ecff.png" width=890>
+<img src="https://user-images.githubusercontent.com/56831082/225897274-7b1a55da-a25d-4854-ad02-18406666d30d.png" width=890>
+<img src="https://user-images.githubusercontent.com/56831082/225901553-199b0f8c-3f34-4591-a393-d31a11f11807.png" width=890>
+<img src="https://user-images.githubusercontent.com/56831082/225898147-8b4a8af5-3da1-48a4-849e-72695ea4722c.png" width=950>
+
+O objetivo principal deste subflow é sincronizar as tabelas de cadastro locais com as do banco remoto, adicionando, removendo ou atualizando nas tabelas. No total, existem 17 tabelas cadastrais, incluindo access_user, country, state, city, company, area, hardware, firmware, devicesetup, devicecompany, devicetype, device, monitoreddevice, circuit, setup, mqttaccess e mqttdevice. O processo de sincronização é semelhante para todas as tabelas, e abaixo será apresentada a implementação de apenas uma tabela (access_user) para evitar repetições e tornar o arquivo de documentação mais conciso.
+
+Após o nó **espera sincronização** *stoptimer*, que aguarda 1 segundo antes de enviar a mensagem, a mensagem é encaminhada para todos os nós de sincronização das tabelas. Primeiramente, a mensagem passa por um nó **contador** (configuração no [Anexo-XXIV](#anexo-24)), que instancia um contador em uma variável global iniciada com o valor 1. Caso a variável já exista, apenas é obtido o valor que ela armazena. Esse contador será responsável por percorrer todas as linhas da tabela do banco remoto, já que é necessário verificar cada linha para atualizar eventuais mudanças em colunas específicas.
+	
+O segundo nó do fluxo é o nó de comunicação com o banco remoto **NOCS** (configuração no [Anexo-XXV](#anexo-25)). Nele, obtemos linha por linha da tabela de acordo com o valor do contador, que é utilizado como índice. Após pegarmos a linha no índice do contador, criamos outro payload para essa mensagem para evitar que ela seja apagada. Essa criação é feita pelo nó **cria msg.nocs** (configuração no [Anexo-XXVI](#anexo-26)). A mesma coisa é feita para o banco local: pegamos a linha no índice do contador com o nó **Local** (configuração no [Anexo-XXVII](#anexo-27)) e criamos outro payload em **cria msg.local** (configuração no [Anexo-XXVIII](#anexo-28)). Com isso, temos três possibilidades a serem tratadas pelo próximo nó, **criação e atualização** (configuração no [Anexo-XXIX](#anexo-29)):
+	
+- **DELETE** : caso a mensagem exista no banco local, mas não exista mais no remoto.
+- **UPDATE** : caso a mensagem exista no banco local e no remoto, mas com diferenças entre elas.
+- **INSERT** : caso a mensagem não exista no banco local, mas exista no banco remoto.
+- > Caso nenhuma das duas mensagens exista, significa que chegamos ao final da sincronização, e o contador volta a ter o valor 1. Caso contrário, o contador é acrescido. 
+	
+Após as decisões tomadas, é gerado um novo payload com a instância escolhida e a mensagem é enviada para dois nós no fluxo. Um deles é o nó **Local** do Postgres (verificar seção [Postgres](#postgres)), e o outro é o nó **switch** (configuração no [Anexo-XXX](#anexo-30)), que realiza verificações constantes para verificar o término da sincronização. Essa verificação é executada com base no contador. Se o contador for 1 novamente, o **switch** finaliza o loop. Caso contrário, o switch retorna a mensagem para o nó **contador** no início do fluxo.
+
 #### <a name="sincronismo-tamanho-banco-local"><a/>Sincronismo tamanho banco local
-O fluxo deste subfluxo é dividido em dois subfluxos sequenciais. No primeiro, temos a requisição das datas da primeira e última mensagem registrada no banco local, referente a data inicial e atual. A data inicial é obtida pelo nó **Local - Data do primeiro dado** (configuração no [Anexo-XXIV](#anexo-24)), enquanto a data final é obtida pelo nó **Local - Data do último dado** (configuração no [Anexo-XXV](#anexo-25)). Como dito em outras seções, os nós do Postgres sobrescrevem o payload local. Logo, para cada um dos nós citados anteriormente a mensagem é colocada em outros payloads secundários: *msg.date_inicial*, instanciado pelo nó **cria msg.date_inicial** (configuração no [Anexo-XXVI](#anexo-26)), e *msg.date_atual*, instanciado pelo nó **cria msg.date_atual** (configuração no [Anexo-XXVII](#anexo-27)).
+O fluxo deste subfluxo é dividido em dois subfluxos sequenciais. No primeiro, temos a requisição das datas da primeira e última mensagem registrada no banco local, referente a data inicial e atual. A data inicial é obtida pelo nó **Local - Data do primeiro dado** (configuração no [Anexo-XXIX](#anexo-29)), enquanto a data final é obtida pelo nó **Local - Data do último dado** (configuração no [Anexo-XXXI](#anexo-31)). Como dito em outras seções, os nós do Postgres sobrescrevem o payload local. Logo, para cada um dos nós citados anteriormente a mensagem é colocada em outros payloads secundários: *msg.date_inicial*, instanciado pelo nó **cria msg.date_inicial** (configuração no [Anexo-XXXII](#anexo-32)), e *msg.date_atual*, instanciado pelo nó **cria msg.date_atual** (configuração no [Anexo-XXXIII](#anexo-33)).
 	
 <div align="center">
 	<img src="https://user-images.githubusercontent.com/56831082/225642480-fb6cdbd2-fcd5-4c6c-b95c-a837988fc893.png" width=750><br>
 </div>
 	
-Já no outro subfluxo, temos a verificação do distanciamento entre as duas datas pelo nó **Verifica datas** (configuração no [Anexo-XXVIII](#anexo-28)). Caso a mensagem inicial tenha extrapolado a quantidade de dias pré-definida, uma instância de delete é enviada ao banco local para apagar a mensagem, e o loop passa para a próxima mensagem do banco. Caso contrário, a sincronização está completa, e o loop se encerra.
-	
-	
-	
-	
-	
-	
-	
-	
+Já no outro subfluxo, temos a verificação do distanciamento entre as duas datas pelo nó **Verifica datas** (configuração no [Anexo-XXXIV](#anexo-34)). Caso a mensagem inicial tenha extrapolado a quantidade de dias pré-definida, uma instância de delete é enviada ao banco local para apagar a mensagem, e o loop passa para a próxima mensagem do banco. Caso contrário, a sincronização está completa, e o loop se encerra.
 	
 # <a name="conclusao"><a/>Conclusão
 
@@ -1159,37 +1179,115 @@ else
 ```
 
 ---
-### <a name="anexo-24"><a/><div align="center"> Anexo XXIV - Local - Data do primeiro dado</div>
+### <a name="anexo-24"><a/><div align="center"> Anexo XXIV - contador (access_user_local)</div>
 
-*Query*
+```javascript
+msg.contador = global.get("access_user")
+
+if (typeof msg.contador == "undefined"){
+    global.set("access_user", 1)
+    msg.contador =1
+}
+return msg;
+```
+
+---
+### <a name="anexo-25"><a/><div align="center"> Anexo XXV - NOCS</div>
+
+**Query**
+```SQL
+SELECT * FROM public.core_access_user WHERE id = {{msg.contador}};
+```
+
+---
+### <a name="anexo-26"><a/><div align="center"> Anexo XXVI - cria msg.nocs</div>
+
+<div align="center">
+	<img src="https://user-images.githubusercontent.com/56831082/225919697-a4a13c66-6d4f-4191-a347-5709c1ed0bc7.png">
+</div>
+	
+---
+### <a name="anexo-27"><a/><div align="center"> Anexo XXVII - Local</div>
+
+**Query**
+```SQL
+SELECT * FROM public.core_access_user WHERE id = {{msg.contador}};
+```
+
+---
+### <a name="anexo-28"><a/><div align="center"> Anexo XXVIII - cria msg.local</div>
+
+<div align="center">
+	<img src="https://user-images.githubusercontent.com/56831082/225919964-fb652194-3db8-4e79-8f84-837b8fdcb39d.png">
+</div>
+	
+---
+### <a name="anexo-29"><a/><div align="center"> Anexo XXIX - criação e atualizção (access_user_local)</div>
+
+```javascript
+let count = global.get("access_user") | 0
+count = count + 1;
+global.set("access_user", count)
+
+msg.payload = ""
+
+let access_user_nocs = JSON.parse(JSON.stringify(msg.nocs))[0]
+let access_user_local = JSON.parse(JSON.stringify(msg.local))[0]
+
+if (typeof access_user_local != "undefined"){
+    if (typeof access_user_nocs == "undefined") // Deleta dados no banco caso o não existam no remoto
+        msg.payload = msg.payload + "DELETE FROM public.core_access_user WHERE id = " + access_user_local.id +";"
+    else if (JSON.stringify(access_user_nocs) != JSON.stringify(access_user_local)) // Atualiza dados no banco local caso ele exista
+        msg.payload = msg.payload + "UPDATE public.core_access_user SET id = " + access_user_nocs.id + ", password = '-' , last_login = '2023-03-06 15:59:09.823184-03', is_superuser = " + access_user_nocs.is_superuser + ", username = '" + access_user_nocs.username + "', first_name = '" + access_user_nocs.first_name + "', last_name = '" + access_user_nocs.last_name + "', email = '" + access_user_nocs.email + "', is_staff = " + access_user_nocs.is_staff + ", is_active = " + access_user_nocs.is_active + ", date_joined = '" + access_user_nocs.date_joined + "', cpf = '" + access_user_nocs.cpf + "', telephone = '" + access_user_nocs.telephone + "' WHERE id = "+access_user_local.id+";"
+}
+else if (typeof access_user_nocs != "undefined") // Cria dados no banco caso eles não existão
+    msg.payload = msg.payload + "INSERT INTO public.core_access_user VALUES(" + access_user_nocs.id + ", '-' , '2023-03-06 15:59:09.823184-03', " + access_user_nocs.is_superuser + ", '" + access_user_nocs.username + "', '" + access_user_nocs.first_name + "', '" + access_user_nocs.last_name + "', '" + access_user_nocs.email + "', " + access_user_nocs.is_staff + ", " + access_user_nocs.is_active + ", '" + access_user_nocs.date_joined + "', '" + access_user_nocs.cpf + "', '" + access_user_nocs.telephone + "');"
+else
+    global.set("access_user", 1)
+    
+msg.queryParameters = msg.payload
+return msg;
+```
+
+---
+### <a name="anexo-30"><a/><div align="center"> Anexo XXX - Switch (access_user_local)</div>
+
+<div align="center">
+	<img src="https://user-images.githubusercontent.com/56831082/225920466-32516b33-8dfe-4e30-80f3-13f04a82d0dd.png">
+</div>
+
+---
+### <a name="anexo-31"><a/><div align="center"> Anexo XXXI - Local - Data do primeiro dado</div>
+
+**Query**
 ```SQL
 SELECT date_time_stamp FROM public.organic_nodes_control_measurement ORDER BY id ASC LIMIT 1;
 ```
 
 ---
-### <a name="anexo-25"><a/><div align="center"> Anexo XXV - Local - Data do ultimo dado</div>
+### <a name="anexo-32"><a/><div align="center"> Anexo XXXII - Local - Data do ultimo dado</div>
 	
-*Query*
+**Query**
 ```SQL
 SELECT date_time_stamp FROM public.organic_nodes_control_measurement ORDER BY id DESC LIMIT 1;
 ```
 
 ---
-### <a name="anexo-26"><a/><div align="center"> Anexo XXVI - cria msg.date_inicial</div>
+### <a name="anexo-33"><a/><div align="center"> Anexo XXXIII - cria msg.date_inicial</div>
 
 <div align="center">
 	<img src="https://user-images.githubusercontent.com/56831082/225643844-29d192f3-a0cc-4bac-aed5-f2590f290c40.png"><br>
 </div>
 
 ---
-### <a name="anexo-27"><a/><div align="center"> Anexo XXVII - cria msg.date_atual</div>
+### <a name="anexo-34"><a/><div align="center"> Anexo XXXIV - cria msg.date_atual</div>
 
 <div align="center">
 	<img src="https://user-images.githubusercontent.com/56831082/225643865-1c453754-3f5e-47e6-9d85-50e5105c774f.png"><br>
 </div>
 	
 ---
-### <a name="anexo-28"><a/><div align="center"> Anexo XXVIII - Verifica datas</div>
+### <a name="anexo-35"><a/><div align="center"> Anexo XXXV - Verifica datas</div>
 	
 ```javascript
 var periodo = msg.date_atual.date_time_stamp - msg.date_inicial.date_time_stamp
