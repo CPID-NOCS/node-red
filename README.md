@@ -575,14 +575,6 @@ O subflow ***Envia ao banco*** é um subflow simplificado que contém três nós
 </div>
 
 Caso haja qualquer erro no banco local, é feita uma sincronização local através do subflow de ***Sincronização Local***, para corrigir qualquer falta de informações de cadastro que o banco local possa estar tendo. Após 1 segundo, a mensagem que ocasionou o erro é reenviada para ser armazenada no banco local.	
-		
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	
@@ -599,38 +591,18 @@ Caso haja qualquer erro no banco local, é feita uma sincronização local atrav
 	
 #### <a name="sincronismo-medicoes"><a/>Sincronismo Medições
 
-Neste Subflow temos 4 fluxos, uma para a comparação das datas, outro para para requerimento do id da medição, outro para pegar os dados das tabelas locais que seram dispostos á tabela remota, e um ultimo fluxo sequencia responsavel por criar a instancia e adicionala ao banco de dados.
+Neste subfluxo, temos quatro fluxos: um para a comparação de datas, outro para o requerimento do ID da medição, outro para a obtenção dos dados das tabelas locais que serão dispostos na tabela remota e, por fim, um último fluxo sequencial, responsável por criar a instância e adicioná-la ao banco de dados.
 
 <img src="https://user-images.githubusercontent.com/56831082/225998749-b4b7de89-da10-4446-b146-ecd4416efe82.png" width=890> 
 <img src="https://user-images.githubusercontent.com/56831082/225998758-c855a4ae-a68c-4c48-8040-eaf431fa3c34.png" width=890> 
 	
-O funcionamento deste subflow, se da na comparação das datas das ultimas medições tanto do banco local quanto do banco remoto, caso as datas estejam distintas, seguinifica dizer que temos que sincronizar o banco local com o remoto, a data e pega pelos nós **Data ultima medição adicionada no remoto** e o **Data ultima medição adicionada no local** (configurados no [Anexo-XXIV](#anexo-24) e [Anexo-XXV](#anexo-25), respctivamente), para evitar perder a mensagem dos payloads ambas são salvas nos nós **cria msg.last_update** para o banco remoto e **cria msg.last_upload** para o banco local (configurados no [Anexo-XXVI](#anexo-26) e [Anexo-XXVII](#anexo-27), respctivamente), o próprio nó  **cria msg.last_update** faz a compração das datas e toma a descisão se é ou não necessario fazer o sincroninsmo.
+O funcionamento deste subfluxo se dá pela comparação das datas das últimas medições tanto do banco local quanto do banco remoto. Caso as datas estejam distintas, significa que temos que sincronizar o banco local com o remoto. A data é obtida pelos nós **Data última medição adicionada no remoto** e **Data última medição adicionada no local** (configurados no [Anexo-XXIV](#anexo-24) e [Anexo-XXV](#anexo-25), respctivamente). Para evitar a perda da mensagem dos payloads, ambas são salvas nos nós **Cria msg.last_update** para o banco remoto e **Cria msg.last_upload** para o banco local (configurados no [Anexo-XXVI](#anexo-26) e [Anexo-XXVII](#anexo-27), respctivamente). O próprio nó **cria msg.last_update** faz a comparação das datas e toma a decisão se é ou não necessário fazer a sincronia.
+		
+Caso seja necessário, passamos para um segundo fluxo, onde é obtido o ID no banco local referente à última medição do banco remoto pelo nó **Pega ID da última medição no banco local** (configuração no [Anexo-XXVIII](#anexo-28)). Feito isso, a mensagem é armazenada em outro payload pelo nó **Cria msg.last_update_id** (configuração no [Anexo-XXIX](#anexo-29)). Esse ID é acrescido pelo nó **Incrementa** (configuração no [Anexo-XXX](#anexo-30)) para que possamos começar a inserir as mensagens que não foram enviadas para o banco.
 	
-Caso seja necessario passamos para um segundo fluxo onde é pego o ID no banco local referente a ultima medição do banco remoto pelo nó **pega ID da ultima medição no banco local** (configuração no [Anexo-XXVIII](#anexo-28)), feito isso a mensagem é armazenada em um outro payload pelo nó **cria msg.last_update_id** (configuração no [Anexo-XXIX](#anexo-29)), esse ID e acrecido pelo nó **incrementa** (configuração no [Anexo-XXX](#anexo-30)) para que possamos começar a inserir as mensagens que não foram enviadas para o banco.
-	
-No próximo fluxo, pegamos todas as medições referentes ao ID da tabela de medições locais, a primeira tabela a ser pega e a tabela measurement no nó **Pega medição** (configuração no [Anexo-XXXI](#anexo-31)), pois nela temos as informações essenciais para se instanciar as outras tabelas, caso a tabela measurement retorner vazio significa dizer que chegamos no final da sincronização e ambas as tabelas, local, e remota estão sincronizadas, essa verificação e feita no próprio nó que duplica o payload **cria msg.measurement** (configuração no [Anexo-XXXII](#anexo-32)), um outro tratamento a ser feito e o de verificar se a medição já não esta instanciada no banco remoto, isso e verificado n nó **Verifica se já existe** (configuração no [Anexo-XXXIII](#anexo-33)), que retorna vazio caso não haja nenhuma referencia a medição no banco remoto (verificação efetuada no nó **switch** (configuração no [Anexo-XXXIV](#anexo-34)). Por fim a instancia é cria pelo nó **instancia** (configuração no [Anexo-XLV](#anexo-45)).
-	
-> Obs: a inserção é feita mensagem por mensagem, e o restante das configurações dos nós que pegam as medições podem ser encontrados do [Anexo-XXXV](#anexo-35) ao [Anexo-XLIV](#anexo-44))
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+No próximo fluxo, pegamos todas as medições referentes ao ID da tabela de medições locais. A primeira tabela a ser obtida é a tabela *measurement* no nó **Pega medição** (configuração no [Anexo-XXXI](#anexo-31)), pois nela temos as informações essenciais para se instanciar as outras tabelas. Caso a tabela *measurement* retorne vazia, significa que chegamos ao final da sincronização e ambas as tabelas, local e remota, estão sincronizadas. Essa verificação é feita no próprio nó que duplica o payload **cria msg.measurement** (configuração no [Anexo-XXXII](#anexo-32)). Outro tratamento a ser feito é o de verificar se a medição já não está instanciada no banco remoto. Isso é verificado no nó **Verifica se já existe** (configuração no [Anexo-XXXIII](#anexo-33)), que retorna vazio caso não haja nenhuma referência à medição no banco remoto  (verificação efetuada no nó **switch** (configuração no [Anexo-XXXIV](#anexo-34)). Por fim, a instância é criada pelo nó **instancia** (configuração no [Anexo-XLV](#anexo-45)).
+
+> Obs: a inserção é feita mensagem por mensagem, e o restante das configurações dos nós que pegam as medições podem ser encontrados do [Anexo-XXXV](#anexo-35) ao [Anexo-XLIV](#anexo-44)).
 	
 	
 	
