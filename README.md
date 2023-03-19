@@ -130,9 +130,10 @@ git clean -f
 
 **Pegue as alterações do repositorio remoto**
 ```
-git pull -f origin main
+git pull -f origin V1
 ```
-pronto basta entrar com suas credenciais e logo logo as configurações serãao baixadas.
+	
+pronto basta entrar com suas credenciais e logo logo as configurações serão baixadas.
 
 ## <a name=“funcionamento-node-red”><a/>Funcionamento Node-Red
 
