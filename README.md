@@ -48,18 +48,41 @@
 	- [Anexo XXI - Cria instancia Bifasico](#anexo-21)
 	- [Anexo XXI - Cria instancia Trifasico](#anexo-22)
 	- [Anexo XXIII - Parametros](#anexo-23)
-	- [Anexo XXIV - contador (access_user)](#anexo-24)
-	- [Anexo XXV - NOCS](#anexo-25)
-	- [Anexo XXVI - cria msg.nocs](#anexo-26)
-	- [Anexo XXVII - Local](#anexo-27)
-	- [Anexo XXVIII - cria msg.local](#anexo-28)
-	- [Anexo XXIX - criação e atualizção (access_user)](#anexo-29)
-	- [Anexo XXX - Switch (access_user)](#anexo-30)
-	- [Anexo XXXI - Local - Data do primeiro dado](#anexo-31)
-	- [Anexo XXXII - Local - Data do ultimo dado](#anexo-32)
-	- [Anexo XXXIII - cria msg.date_inicial](#anexo-33)
-	- [Anexo XXXIV - cria msg.date_atual](#anexo-34)
-	- [Anexo XXXV - Verifica datas](#anexo-35)
+	
+	- [Anexo XXIV - Data ultima medição adicionada no remoto](#anexo-24)
+	- [Anexo XXV - Data ultima medição adicionada no local](#anexo-25)
+	- [Anexo XXVI - cria msg.last_update](#anexo-26)
+	- [Anexo XXVII - cria msg.last_upload](#anexo-27)
+	- [Anexo XXVIII - pega ID da ultima medição no banco local](#anexo-28)
+	- [Anexo XXIX - cria msg.last_update_id](#anexo-29)
+	- [Anexo XXX - incrementa](#anexo-30)
+	- [Anexo XXXI - Pega medição](#anexo-31)
+	- [Anexo XXXII - cria msg.measurement](#anexo-32)
+	- [Anexo XXXIII - Verifica se já existe](#anexo-33)
+	- [Anexo XXXIV - switch](#anexo-34)
+	- [Anexo XXXV - Pega frequency](#anexo-35)
+	- [Anexo XXXVI - cria msg.frequency](#anexo-36)
+	- [Anexo XXXVII - Pega power](#anexo-37)
+	- [Anexo XXXVIII - cria msg.power (ABC)](#anexo-38)
+	- [Anexo XXXIX - Pega sensor](#anexo-39)
+	- [Anexo XL - cria msg.sensor](#anexo-40)
+	- [Anexo XLI - Pega voltagelag](#anexo-41)
+	- [Anexo XLII - cria msg.voltagelag (ABC)](#anexo-42)
+	- [Anexo XLIII - Pega energy](#anexo-43)
+	- [Anexo XLIV - cria msg.energy (ABC)](#anexo-44)
+	- [Anexo XLV - instancia](#anexo-45)
+	- [Anexo XLVI - contador (access_user)](#anexo-46)
+	- [Anexo XLVII - NOCS](#anexo-47)
+	- [Anexo XLVIII - cria msg.nocs](#anexo-48)
+	- [Anexo XLIX - Local](#anexo-49)
+	- [Anexo L - cria msg.local](#anexo-50)
+	- [Anexo LI - criação e atualizção (access_user)](#anexo-51)
+	- [Anexo LII - Switch (access_user)](#anexo-52)
+	- [Anexo LIII - Local - Data do primeiro dado](#anexo-53)
+	- [Anexo LIV - Local - Data do ultimo dado](#anexo-54)
+	- [Anexo LV - cria msg.date_inicial](#anexo-55)
+	- [Anexo LVI - cria msg.date_atual](#anexo-56)
+	- [Anexo LVII - Verifica datas](#anexo-57)
 
 # <a name=“node-red”><a/>Node-red
 
@@ -552,8 +575,37 @@ O subflow ***Envia ao banco*** é um subflow simplificado que contém três nós
 </div>
 
 Caso haja qualquer erro no banco local, é feita uma sincronização local através do subflow de ***Sincronização Local***, para corrigir qualquer falta de informações de cadastro que o banco local possa estar tendo. Após 1 segundo, a mensagem que ocasionou o erro é reenviada para ser armazenada no banco local.	
-		
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 #### <a name="sincronismo-medicoes"><a/>Sincronismo Medições
+
+Neste subfluxo, temos quatro fluxos: um para a comparação de datas, outro para o requerimento do ID da medição, outro para a obtenção dos dados das tabelas locais que serão dispostos na tabela remota e, por fim, um último fluxo sequencial, responsável por criar a instância e adicioná-la ao banco de dados.
+
+<img src="https://user-images.githubusercontent.com/56831082/225998749-b4b7de89-da10-4446-b146-ecd4416efe82.png" width=890> 
+<img src="https://user-images.githubusercontent.com/56831082/225998758-c855a4ae-a68c-4c48-8040-eaf431fa3c34.png" width=890> 
+	
+O funcionamento deste subfluxo se dá pela comparação das datas das últimas medições tanto do banco local quanto do banco remoto. Caso as datas estejam distintas, significa que temos que sincronizar o banco local com o remoto. A data é obtida pelos nós **Data última medição adicionada no remoto** e **Data última medição adicionada no local** (configurados no [Anexo-XXIV](#anexo-24) e [Anexo-XXV](#anexo-25), respctivamente). Para evitar a perda da mensagem dos payloads, ambas são salvas nos nós **Cria msg.last_update** para o banco remoto e **Cria msg.last_upload** para o banco local (configurados no [Anexo-XXVI](#anexo-26) e [Anexo-XXVII](#anexo-27), respctivamente). O próprio nó **cria msg.last_update** faz a comparação das datas e toma a decisão se é ou não necessário fazer a sincronia.
+		
+Caso seja necessário, passamos para um segundo fluxo, onde é obtido o ID no banco local referente à última medição do banco remoto pelo nó **Pega ID da última medição no banco local** (configuração no [Anexo-XXVIII](#anexo-28)). Feito isso, a mensagem é armazenada em outro payload pelo nó **Cria msg.last_update_id** (configuração no [Anexo-XXIX](#anexo-29)). Esse ID é acrescido pelo nó **Incrementa** (configuração no [Anexo-XXX](#anexo-30)) para que possamos começar a inserir as mensagens que não foram enviadas para o banco.
+	
+No próximo fluxo, pegamos todas as medições referentes ao ID da tabela de medições locais. A primeira tabela a ser obtida é a tabela *measurement* no nó **Pega medição** (configuração no [Anexo-XXXI](#anexo-31)), pois nela temos as informações essenciais para se instanciar as outras tabelas. Caso a tabela *measurement* retorne vazia, significa que chegamos ao final da sincronização e ambas as tabelas, local e remota, estão sincronizadas. Essa verificação é feita no próprio nó que duplica o payload **cria msg.measurement** (configuração no [Anexo-XXXII](#anexo-32)). Outro tratamento a ser feito é o de verificar se a medição já não está instanciada no banco remoto. Isso é verificado no nó **Verifica se já existe** (configuração no [Anexo-XXXIII](#anexo-33)), que retorna vazio caso não haja nenhuma referência à medição no banco remoto  (verificação efetuada no nó **switch** (configuração no [Anexo-XXXIV](#anexo-34)). Por fim, a instância é criada pelo nó **instancia** (configuração no [Anexo-XLV](#anexo-45)).
+
+> Obs: a inserção é feita mensagem por mensagem, e o restante das configurações dos nós que pegam as medições podem ser encontrados do [Anexo-XXXV](#anexo-35) ao [Anexo-XLIV](#anexo-44)).
+	
+	
+	
 	
 	
 	
@@ -571,25 +623,25 @@ Neste subflow, temos um destaque bastante importante: ele é chamado quando ocor
 
 O objetivo principal deste subflow é sincronizar as tabelas de cadastro locais com as do banco remoto, adicionando, removendo ou atualizando nas tabelas. No total, existem 17 tabelas cadastrais, incluindo access_user, country, state, city, company, area, hardware, firmware, devicesetup, devicecompany, devicetype, device, monitoreddevice, circuit, setup, mqttaccess e mqttdevice. O processo de sincronização é semelhante para todas as tabelas, e abaixo será apresentada a implementação de apenas uma tabela (access_user) para evitar repetições e tornar o arquivo de documentação mais conciso.
 
-Após o nó **espera sincronização** *stoptimer*, que aguarda 1 segundo antes de enviar a mensagem, a mensagem é encaminhada para todos os nós de sincronização das tabelas. Primeiramente, a mensagem passa por um nó **contador** (configuração no [Anexo-XXIV](#anexo-24)), que instancia um contador em uma variável global iniciada com o valor 1. Caso a variável já exista, apenas é obtido o valor que ela armazena. Esse contador será responsável por percorrer todas as linhas da tabela do banco remoto, já que é necessário verificar cada linha para atualizar eventuais mudanças em colunas específicas.
+Após o nó **espera sincronização** *stoptimer*, que aguarda 1 segundo antes de enviar a mensagem, a mensagem é encaminhada para todos os nós de sincronização das tabelas. Primeiramente, a mensagem passa por um nó **contador** (configuração no [Anexo-XLVI](#anexo-46)), que instancia um contador em uma variável global iniciada com o valor 1. Caso a variável já exista, apenas é obtido o valor que ela armazena. Esse contador será responsável por percorrer todas as linhas da tabela do banco remoto, já que é necessário verificar cada linha para atualizar eventuais mudanças em colunas específicas.
 	
-O segundo nó do fluxo é o nó de comunicação com o banco remoto **NOCS** (configuração no [Anexo-XXV](#anexo-25)). Nele, obtemos linha por linha da tabela de acordo com o valor do contador, que é utilizado como índice. Após pegarmos a linha no índice do contador, criamos outro payload para essa mensagem para evitar que ela seja apagada. Essa criação é feita pelo nó **cria msg.nocs** (configuração no [Anexo-XXVI](#anexo-26)). A mesma coisa é feita para o banco local: pegamos a linha no índice do contador com o nó **Local** (configuração no [Anexo-XXVII](#anexo-27)) e criamos outro payload em **cria msg.local** (configuração no [Anexo-XXVIII](#anexo-28)). Com isso, temos três possibilidades a serem tratadas pelo próximo nó, **criação e atualização** (configuração no [Anexo-XXIX](#anexo-29)):
+O segundo nó do fluxo é o nó de comunicação com o banco remoto **NOCS** (configuração no [Anexo-XLVII](#anexo-47)). Nele, obtemos linha por linha da tabela de acordo com o valor do contador, que é utilizado como índice. Após pegarmos a linha no índice do contador, criamos outro payload para essa mensagem para evitar que ela seja apagada. Essa criação é feita pelo nó **cria msg.nocs** (configuração no [Anexo-XLVIII](#anexo-48)). A mesma coisa é feita para o banco local: pegamos a linha no índice do contador com o nó **Local** (configuração no [Anexo-XLIX](#anexo-49)) e criamos outro payload em **cria msg.local** (configuração no [Anexo-L](#anexo-50)). Com isso, temos três possibilidades a serem tratadas pelo próximo nó, **criação e atualização** (configuração no [Anexo-LI](#anexo-51)):
 	
 - **DELETE** : caso a mensagem exista no banco local, mas não exista mais no remoto.
 - **UPDATE** : caso a mensagem exista no banco local e no remoto, mas com diferenças entre elas.
 - **INSERT** : caso a mensagem não exista no banco local, mas exista no banco remoto.
 - > Caso nenhuma das duas mensagens exista, significa que chegamos ao final da sincronização, e o contador volta a ter o valor 1. Caso contrário, o contador é acrescido. 
 	
-Após as decisões tomadas, é gerado um novo payload com a instância escolhida e a mensagem é enviada para dois nós no fluxo. Um deles é o nó **Local** do Postgres (verificar seção [Postgres](#postgres)), e o outro é o nó **switch** (configuração no [Anexo-XXX](#anexo-30)), que realiza verificações constantes para verificar o término da sincronização. Essa verificação é executada com base no contador. Se o contador for 1 novamente, o **switch** finaliza o loop. Caso contrário, o switch retorna a mensagem para o nó **contador** no início do fluxo.
+Após as decisões tomadas, é gerado um novo payload com a instância escolhida e a mensagem é enviada para dois nós no fluxo. Um deles é o nó **Local** do Postgres (verificar seção [Postgres](#postgres)), e o outro é o nó **switch** (configuração no [Anexo-LII](#anexo-52)), que realiza verificações constantes para verificar o término da sincronização. Essa verificação é executada com base no contador. Se o contador for 1 novamente, o **switch** finaliza o loop. Caso contrário, o switch retorna a mensagem para o nó **contador** no início do fluxo.
 
 #### <a name="sincronismo-tamanho-banco-local"><a/>Sincronismo tamanho banco local
-O fluxo deste subfluxo é dividido em dois subfluxos sequenciais. No primeiro, temos a requisição das datas da primeira e última mensagem registrada no banco local, referente a data inicial e atual. A data inicial é obtida pelo nó **Local - Data do primeiro dado** (configuração no [Anexo-XXIX](#anexo-29)), enquanto a data final é obtida pelo nó **Local - Data do último dado** (configuração no [Anexo-XXXI](#anexo-31)). Como dito em outras seções, os nós do Postgres sobrescrevem o payload local. Logo, para cada um dos nós citados anteriormente a mensagem é colocada em outros payloads secundários: *msg.date_inicial*, instanciado pelo nó **cria msg.date_inicial** (configuração no [Anexo-XXXII](#anexo-32)), e *msg.date_atual*, instanciado pelo nó **cria msg.date_atual** (configuração no [Anexo-XXXIII](#anexo-33)).
+O fluxo deste subfluxo é dividido em dois subfluxos sequenciais. No primeiro, temos a requisição das datas da primeira e última mensagem registrada no banco local, referente a data inicial e atual. A data inicial é obtida pelo nó **Local - Data do primeiro dado** (configuração no [Anexo-LIII](#anexo-53)), enquanto a data final é obtida pelo nó **Local - Data do último dado** (configuração no [Anexo-LVI](#anexo-54)). Como dito em outras seções, os nós do Postgres sobrescrevem o payload local. Logo, para cada um dos nós citados anteriormente a mensagem é colocada em outros payloads secundários: *msg.date_inicial*, instanciado pelo nó **cria msg.date_inicial** (configuração no [Anexo-LV](#anexo-55)), e *msg.date_atual*, instanciado pelo nó **cria msg.date_atual** (configuração no [Anexo-LVI](#anexo-56)).
 	
 <div align="center">
 	<img src="https://user-images.githubusercontent.com/56831082/225642480-fb6cdbd2-fcd5-4c6c-b95c-a837988fc893.png" width=750><br>
 </div>
 	
-Já no outro subfluxo, temos a verificação do distanciamento entre as duas datas pelo nó **Verifica datas** (configuração no [Anexo-XXXIV](#anexo-34)). Caso a mensagem inicial tenha extrapolado a quantidade de dias pré-definida, uma instância de delete é enviada ao banco local para apagar a mensagem, e o loop passa para a próxima mensagem do banco. Caso contrário, a sincronização está completa, e o loop se encerra.
+Já no outro subfluxo, temos a verificação do distanciamento entre as duas datas pelo nó **Verifica datas** (configuração no [Anexo-LVII](#anexo-57)). Caso a mensagem inicial tenha extrapolado a quantidade de dias pré-definida, uma instância de delete é enviada ao banco local para apagar a mensagem, e o loop passa para a próxima mensagem do banco. Caso contrário, a sincronização está completa, e o loop se encerra.
 	
 # <a name="conclusao"><a/>Conclusão
 
@@ -1177,9 +1229,204 @@ if (sinc == false)
 else 
     return [null, msg];
 ```
+	
+---
+### <a name="anexo-24"><a/><div align="center"> Anexo XXIV - Data ultima medição adicionada no remoto</div>
+
+**Query**
+```SQL
+SELECT date_time_stamp FROM public.organic_nodes_control_measurement WHERE source = 0  ORDER BY date_time_stamp DESC LIMIT 1;
+```
 
 ---
-### <a name="anexo-24"><a/><div align="center"> Anexo XXIV - contador (access_user_local)</div>
+### <a name="anexo-25"><a/><div align="center"> Anexo XXV - Data ultima medição adicionada no local</div>
+
+**Query**
+```SQL
+SELECT date_time_stamp FROM public.organic_nodes_control_measurement WHERE source = 0  ORDER BY date_time_stamp DESC LIMIT 1;
+```
+
+---
+### <a name="anexo-26"><a/><div align="center"> Anexo XXVI - cria msg.last_update</div>
+
+```javascript
+msg.last_update = JSON.parse(JSON.stringify(msg.payload[0]))
+return msg;
+```
+
+---
+### <a name="anexo-27"><a/><div align="center"> Anexo XXVII - cria msg.last_upload</div>
+
+```javascript
+try{
+    msg.last_upload = JSON.parse(JSON.stringify(msg.payload[0]))
+
+
+    if (msg.last_upload.date_time_stamp != msg.last_update.date_time_stamp){
+        global.set("sincronizando_remoto", true)
+        return msg;
+    }else {
+        global.set("sincronizando_remoto", false)
+    }
+} catch(e){}
+```
+
+---
+### <a name="anexo-28"><a/><div align="center"> Anexo XXVIII - pega ID da ultima medição no banco local</div>
+
+**Query**
+```SQL
+SELECT id FROM public.organic_nodes_control_measurement WHERE date_time_stamp = '{{{msg.last_update.date_time_stamp}}}';
+```
+
+---
+### <a name="anexo-29"><a/><div align="center"> Anexo XXIX - cria msg.last_update_id</div>
+<div align=center>
+	<img src="https://user-images.githubusercontent.com/56831082/226146972-661e7735-3934-438e-9c33-d4e2eb27bb9e.jpg">
+</div>
+
+---
+### <a name="anexo-30"><a/><div align="center"> Anexo XXX - incrementa</div>
+
+```javascript
+msg.last_update_id.id = msg.last_update_id.id + 1
+return msg;
+```
+
+---
+### <a name="anexo-31"><a/><div align="center"> Anexo XXXI - Pega medição</div>
+
+**Query**
+```SQL
+SELECT * FROM public.organic_nodes_control_measurement WHERE id = {{{msg.last_update_id.id}}}	
+```
+
+---
+### <a name="anexo-32"><a/><div align="center"> Anexo XXXII - cria msg.measurement</div>
+
+```javascript
+if (msg.payload.length){
+    msg.measurement = JSON.parse(JSON.stringify(msg.payload[0]))
+    return msg;
+}else{
+    global.set("sincronizando_remoto", false);
+}	
+```
+
+---
+### <a name="anexo-33"><a/><div align="center"> Anexo XXXIII - Verifica se já existe</div>
+
+**Query**
+```SQL
+SELECT * FROM public.organic_nodes_control_measurement WHERE(message_counter = {{{msg.measurement.message_counter}}} AND date_time_stamp = '{{{msg.measurement.date_time_stamp}}}')
+```
+
+---
+### <a name="anexo-34"><a/><div align="center"> Anexo XXXIV - switch</div>
+
+<div align=center>
+	<img src="https://user-images.githubusercontent.com/56831082/226147140-4f1c145f-16db-4a77-ac56-dd158bc66591.jpg">
+</div>
+
+---
+### <a name="anexo-35"><a/><div align="center"> Anexo XXXV - Pega frequency</div>
+
+**Query**
+```SQL
+SELECT * FROM public.organic_nodes_control_frequencymeasure WHERE measurement_id = {{{msg.last_update_id.id}}}
+```
+
+---
+### <a name="anexo-36"><a/><div align="center"> Anexo XXXVI - cria msg.frequency</div>
+
+<div align=center>
+	<img src="https://user-images.githubusercontent.com/56831082/226147113-c9b1722a-8400-480a-8686-0e05ed0d947f.jpg">
+</div>
+
+---
+### <a name="anexo-37"><a/><div align="center"> Anexo XXXVII - Pega power</div>
+
+**Query**
+```SQL
+SELECT * FROM public.organic_nodes_control_powermeasure WHERE measurement_id = {{{msg.last_update_id.id}}}
+```
+
+---
+### <a name="anexo-38"><a/><div align="center"> Anexo XXXVII - cria msg.power (ABC)</div>
+
+<div align=center>
+	<img src="https://user-images.githubusercontent.com/56831082/226147127-6866d9a2-a82d-48c0-960f-f2dd1ede9ad2.jpg">
+</div>
+
+---
+### <a name="anexo-39"><a/><div align="center"> Anexo XXXIX - Pega sensor</div>
+
+**Query**
+```SQL
+SELECT * FROM public.organic_nodes_control_sensormeasure WHERE measurement_id = {{{msg.last_update_id.id}}}
+```
+
+---
+### <a name="anexo-40"><a/><div align="center"> Anexo XL - cria msg.sensor</div>
+
+<div align=center>
+	<img src="https://user-images.githubusercontent.com/56831082/226147156-31108d61-c464-4485-b3cd-58ea23422f3c.png">
+</div>
+
+---
+### <a name="anexo-41"><a/><div align="center"> Anexo XLI - Pega voltagelag</div>
+
+**Query**
+```SQL
+SELECT * FROM public.organic_nodes_control_voltagelagmeasure WHERE measurement_id = {{{msg.last_update_id.id}}}
+```
+
+---
+### <a name="anexo-42"><a/><div align="center"> Anexo XLII - cria msg.voltagelag (ABC)</div>
+
+<div align=center>
+	<img src="https://user-images.githubusercontent.com/56831082/226147167-dd915a6b-09de-47ce-b733-a1ab57d7e83f.png">
+</div>
+
+---
+### <a name="anexo-43"><a/><div align="center"> Anexo XLIII - Pega energy</div>
+
+**Query**
+```SQL
+SELECT * FROM public.organic_nodes_control_energymeasure WHERE measurement_id = {{{msg.last_update_id.id}}}
+```
+
+---
+### <a name="anexo-44"><a/><div align="center"> Anexo XLIV - cria msg.energy (ABC)</div>
+
+<div align=center>
+	<img src="https://user-images.githubusercontent.com/56831082/226147176-b88f2fc2-558b-40c9-9048-cd281a648fbc.png">
+</div>
+
+---
+### <a name="anexo-45"><a/><div align="center"> Anexo XLV - instancia</div>
+
+```javascript
+msg.last_update_id.id = msg.last_update_id.id + 1
+msg.payload = ""
+
+msg.payload = msg.payload + "INSERT INTO public.organic_nodes_control_measurement (date_time_stamp, message_counter, setup_id, source) VALUES('" + msg.measurement.date_time_stamp + "', " + msg.measurement.message_counter + ", " + msg.measurement.setup_id + ", " + msg.measurement.source + ");"
+msg.payload = msg.payload + "INSERT INTO public.organic_nodes_control_frequencymeasure(frequency, frequency_sf, measurement_id) VALUES(" + msg.frequency.frequency + ", " + msg.frequency.frequency_sf + ", (SELECT id FROM public.organic_nodes_control_measurement WHERE(message_counter = " + msg.measurement.message_counter + " AND date_time_stamp = '" + msg.measurement.date_time_stamp +"') LIMIT 1));"
+msg.payload = msg.payload + "INSERT INTO public.organic_nodes_control_sensormeasure(temperature, temperature_sf, measurement_id) VALUES(" + msg.sensor.temperature + ", " + msg.sensor.temperature_sf + ", (SELECT id FROM public.organic_nodes_control_measurement WHERE(message_counter = " + msg.measurement.message_counter + " AND date_time_stamp = '" + msg.measurement.date_time_stamp +"') LIMIT 1));"
+for (let energy of msg.energy)
+    msg.payload = msg.payload + "INSERT INTO public.organic_nodes_control_energymeasure(phase, current, current_sf, voltage, voltage_sf, measurement_id)VALUES('" + energy.phase + "', " + energy.current + ", " + energy.current_sf + ", " + energy.voltage + ", " + energy.voltage_sf + ", (SELECT id FROM public.organic_nodes_control_measurement WHERE(message_counter = " + msg.measurement.message_counter + " AND date_time_stamp = '" + msg.measurement.date_time_stamp +"') LIMIT 1));"
+for (let power of msg.power)
+    msg.payload = msg.payload + "INSERT INTO public.organic_nodes_control_powermeasure(phase, voltage_current_angle, voltage_current_angle_sf, power_factor, active_power, active_power_sf, reactive_power, reactive_power_sf, apparent_power, apparent_power_sf, measurement_id)VALUES('" + power.phase + "', " + power.voltage_current_angle + ", " + power.voltage_current_angle_sf + ", " + power.power_factor + ", " + power.active_power + ", " + power.active_power_sf + ", " + power.reactive_power + ", " + power.reactive_power_sf + ", " + power.apparent_power + ", " + power.apparent_power_sf + ", (SELECT id FROM public.organic_nodes_control_measurement WHERE(message_counter = " + msg.measurement.message_counter + " AND date_time_stamp = '" + msg.measurement.date_time_stamp +"') LIMIT 1));"
+if (typeof msg.voltagelag != "undefined")
+    for (let voltagelag of msg.voltagelag)
+        msg.payload = msg.payload + "INSERT INTO public.organic_nodes_control_voltagelagmeasure(angle, angle_sf, phase_combination, measurement_id)VALUES(" + voltagelag.angle + ", " + voltagelag.angle_sf + ", '" + voltagelag.phase_combination + "', (SELECT id FROM public.organic_nodes_control_measurement WHERE(message_counter = " + msg.measurement.message_counter + " AND date_time_stamp = '" + msg.measurement.date_time_stamp +"') LIMIT 1));"
+
+msg.queryParameters = msg.payload
+return msg
+```
+
+---
+### <a name="anexo-46"><a/><div align="center"> Anexo XLVI - contador (access_user_local)</div>
 
 ```javascript
 msg.contador = global.get("access_user")
@@ -1192,7 +1439,7 @@ return msg;
 ```
 
 ---
-### <a name="anexo-25"><a/><div align="center"> Anexo XXV - NOCS</div>
+### <a name="anexo-47"><a/><div align="center"> Anexo XLVII - NOCS</div>
 
 **Query**
 ```SQL
@@ -1200,14 +1447,14 @@ SELECT * FROM public.core_access_user WHERE id = {{msg.contador}};
 ```
 
 ---
-### <a name="anexo-26"><a/><div align="center"> Anexo XXVI - cria msg.nocs</div>
+### <a name="anexo-48"><a/><div align="center"> Anexo XLVIII - cria msg.nocs</div>
 
 <div align="center">
 	<img src="https://user-images.githubusercontent.com/56831082/225919697-a4a13c66-6d4f-4191-a347-5709c1ed0bc7.png">
 </div>
 	
 ---
-### <a name="anexo-27"><a/><div align="center"> Anexo XXVII - Local</div>
+### <a name="anexo-49"><a/><div align="center"> Anexo XLIX - Local</div>
 
 **Query**
 ```SQL
@@ -1215,14 +1462,14 @@ SELECT * FROM public.core_access_user WHERE id = {{msg.contador}};
 ```
 
 ---
-### <a name="anexo-28"><a/><div align="center"> Anexo XXVIII - cria msg.local</div>
+### <a name="anexo-50"><a/><div align="center"> Anexo L - cria msg.local</div>
 
 <div align="center">
 	<img src="https://user-images.githubusercontent.com/56831082/225919964-fb652194-3db8-4e79-8f84-837b8fdcb39d.png">
 </div>
 	
 ---
-### <a name="anexo-29"><a/><div align="center"> Anexo XXIX - criação e atualizção (access_user_local)</div>
+### <a name="anexo-51"><a/><div align="center"> Anexo LI - criação e atualizção (access_user_local)</div>
 
 ```javascript
 let count = global.get("access_user") | 0
@@ -1250,14 +1497,14 @@ return msg;
 ```
 
 ---
-### <a name="anexo-30"><a/><div align="center"> Anexo XXX - Switch (access_user_local)</div>
+### <a name="anexo-52"><a/><div align="center"> Anexo LII - Switch (access_user_local)</div>
 
 <div align="center">
 	<img src="https://user-images.githubusercontent.com/56831082/225920466-32516b33-8dfe-4e30-80f3-13f04a82d0dd.png">
 </div>
 
 ---
-### <a name="anexo-31"><a/><div align="center"> Anexo XXXI - Local - Data do primeiro dado</div>
+### <a name="anexo-53"><a/><div align="center"> Anexo LIII - Local - Data do primeiro dado</div>
 
 **Query**
 ```SQL
@@ -1265,7 +1512,7 @@ SELECT date_time_stamp FROM public.organic_nodes_control_measurement ORDER BY id
 ```
 
 ---
-### <a name="anexo-32"><a/><div align="center"> Anexo XXXII - Local - Data do ultimo dado</div>
+### <a name="anexo-54"><a/><div align="center"> Anexo LIV - Local - Data do ultimo dado</div>
 	
 **Query**
 ```SQL
@@ -1273,21 +1520,21 @@ SELECT date_time_stamp FROM public.organic_nodes_control_measurement ORDER BY id
 ```
 
 ---
-### <a name="anexo-33"><a/><div align="center"> Anexo XXXIII - cria msg.date_inicial</div>
+### <a name="anexo-55"><a/><div align="center"> Anexo LV - cria msg.date_inicial</div>
 
 <div align="center">
 	<img src="https://user-images.githubusercontent.com/56831082/225643844-29d192f3-a0cc-4bac-aed5-f2590f290c40.png"><br>
 </div>
 
 ---
-### <a name="anexo-34"><a/><div align="center"> Anexo XXXIV - cria msg.date_atual</div>
+### <a name="anexo-56"><a/><div align="center"> Anexo LVI - cria msg.date_atual</div>
 
 <div align="center">
 	<img src="https://user-images.githubusercontent.com/56831082/225643865-1c453754-3f5e-47e6-9d85-50e5105c774f.png"><br>
 </div>
 	
 ---
-### <a name="anexo-35"><a/><div align="center"> Anexo XXXV - Verifica datas</div>
+### <a name="anexo-57"><a/><div align="center"> Anexo LVII - Verifica datas</div>
 	
 ```javascript
 var periodo = msg.date_atual.date_time_stamp - msg.date_inicial.date_time_stamp
