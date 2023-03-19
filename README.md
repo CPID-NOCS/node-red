@@ -1229,9 +1229,163 @@ if (sinc == false)
 else 
     return [null, msg];
 ```
+	
+---
+### <a name="anexo-24"><a/><div align="center"> Anexo XXIV - Data ultima medição adicionada no remoto</div>
+
+```javascript
+	
+```
 
 ---
-### <a name="anexo-24"><a/><div align="center"> Anexo XXIV - contador (access_user_local)</div>
+### <a name="anexo-25"><a/><div align="center"> Anexo XXV - Data ultima medição adicionada no local</div>
+
+```javascript
+	
+```
+
+---
+### <a name="anexo-26"><a/><div align="center"> Anexo XXVI - cria msg.last_update</div>
+
+```javascript
+	
+```
+
+---
+### <a name="anexo-27"><a/><div align="center"> Anexo XXVII - cria msg.last_upload</div>
+
+```javascript
+	
+```
+
+---
+### <a name="anexo-28"><a/><div align="center"> Anexo XXVIII - pega ID da ultima medição no banco local</div>
+
+```javascript
+	
+```
+
+---
+### <a name="anexo-29"><a/><div align="center"> Anexo XXIX - cria msg.last_update_id</div>
+
+```javascript
+	
+```
+
+---
+### <a name="anexo-30"><a/><div align="center"> Anexo XXX - incrementa</div>
+
+```javascript
+	
+```
+
+---
+### <a name="anexo-31"><a/><div align="center"> Anexo XXXI - Pega medição</div>
+
+```javascript
+	
+```
+
+---
+### <a name="anexo-32"><a/><div align="center"> Anexo XXXII - cria msg.measurement</div>
+
+```javascript
+	
+```
+
+---
+### <a name="anexo-33"><a/><div align="center"> Anexo XXXIII - Verifica se já existe</div>
+
+```javascript
+	
+```
+
+---
+### <a name="anexo-34"><a/><div align="center"> Anexo XXXIV - switch</div>
+
+```javascript
+	
+```
+
+---
+### <a name="anexo-35"><a/><div align="center"> Anexo XXXV - Pega frequency</div>
+
+```javascript
+	
+```
+
+---
+### <a name="anexo-36"><a/><div align="center"> Anexo XXXVI - cria msg.frequency</div>
+
+```javascript
+	
+```
+
+---
+### <a name="anexo-37"><a/><div align="center"> Anexo XXXVII - Pega power</div>
+
+```javascript
+	
+```
+
+---
+### <a name="anexo-38"><a/><div align="center"> Anexo XXXVII - cria msg.power (ABC)</div>
+
+```javascript
+	
+```
+
+---
+### <a name="anexo-39"><a/><div align="center"> Anexo XXXIX - Pega sensor</div>
+
+```javascript
+	
+```
+
+---
+### <a name="anexo-40"><a/><div align="center"> Anexo XL - cria msg.sensor</div>
+
+```javascript
+	
+```
+
+---
+### <a name="anexo-41"><a/><div align="center"> Anexo XLI - Pega voltagelag</div>
+
+```javascript
+	
+```
+
+---
+### <a name="anexo-42"><a/><div align="center"> Anexo XLII - cria msg.voltagelag (ABC)</div>
+
+```javascript
+	
+```
+
+---
+### <a name="anexo-43"><a/><div align="center"> Anexo XLIII - Pega energy</div>
+
+```javascript
+	
+```
+
+---
+### <a name="anexo-44"><a/><div align="center"> Anexo XLIV - cria msg.energy (ABC)</div>
+
+```javascript
+	
+```
+
+---
+### <a name="anexo-45"><a/><div align="center"> Anexo XLV - instancia</div>
+
+```javascript
+	
+```
+
+---
+### <a name="anexo-46"><a/><div align="center"> Anexo XLVI - contador (access_user_local)</div>
 
 ```javascript
 msg.contador = global.get("access_user")
@@ -1244,7 +1398,7 @@ return msg;
 ```
 
 ---
-### <a name="anexo-25"><a/><div align="center"> Anexo XXV - NOCS</div>
+### <a name="anexo-47"><a/><div align="center"> Anexo XLVII - NOCS</div>
 
 **Query**
 ```SQL
@@ -1252,14 +1406,14 @@ SELECT * FROM public.core_access_user WHERE id = {{msg.contador}};
 ```
 
 ---
-### <a name="anexo-26"><a/><div align="center"> Anexo XXVI - cria msg.nocs</div>
+### <a name="anexo-48"><a/><div align="center"> Anexo XLVIII - cria msg.nocs</div>
 
 <div align="center">
 	<img src="https://user-images.githubusercontent.com/56831082/225919697-a4a13c66-6d4f-4191-a347-5709c1ed0bc7.png">
 </div>
 	
 ---
-### <a name="anexo-27"><a/><div align="center"> Anexo XXVII - Local</div>
+### <a name="anexo-49"><a/><div align="center"> Anexo XLIX - Local</div>
 
 **Query**
 ```SQL
@@ -1267,14 +1421,14 @@ SELECT * FROM public.core_access_user WHERE id = {{msg.contador}};
 ```
 
 ---
-### <a name="anexo-28"><a/><div align="center"> Anexo XXVIII - cria msg.local</div>
+### <a name="anexo-50"><a/><div align="center"> Anexo L - cria msg.local</div>
 
 <div align="center">
 	<img src="https://user-images.githubusercontent.com/56831082/225919964-fb652194-3db8-4e79-8f84-837b8fdcb39d.png">
 </div>
 	
 ---
-### <a name="anexo-29"><a/><div align="center"> Anexo XXIX - criação e atualizção (access_user_local)</div>
+### <a name="anexo-51"><a/><div align="center"> Anexo LI - criação e atualizção (access_user_local)</div>
 
 ```javascript
 let count = global.get("access_user") | 0
@@ -1302,14 +1456,14 @@ return msg;
 ```
 
 ---
-### <a name="anexo-30"><a/><div align="center"> Anexo XXX - Switch (access_user_local)</div>
+### <a name="anexo-52"><a/><div align="center"> Anexo LII - Switch (access_user_local)</div>
 
 <div align="center">
 	<img src="https://user-images.githubusercontent.com/56831082/225920466-32516b33-8dfe-4e30-80f3-13f04a82d0dd.png">
 </div>
 
 ---
-### <a name="anexo-31"><a/><div align="center"> Anexo XXXI - Local - Data do primeiro dado</div>
+### <a name="anexo-53"><a/><div align="center"> Anexo LIII - Local - Data do primeiro dado</div>
 
 **Query**
 ```SQL
@@ -1317,7 +1471,7 @@ SELECT date_time_stamp FROM public.organic_nodes_control_measurement ORDER BY id
 ```
 
 ---
-### <a name="anexo-32"><a/><div align="center"> Anexo XXXII - Local - Data do ultimo dado</div>
+### <a name="anexo-54"><a/><div align="center"> Anexo LIV - Local - Data do ultimo dado</div>
 	
 **Query**
 ```SQL
@@ -1325,21 +1479,21 @@ SELECT date_time_stamp FROM public.organic_nodes_control_measurement ORDER BY id
 ```
 
 ---
-### <a name="anexo-33"><a/><div align="center"> Anexo XXXIII - cria msg.date_inicial</div>
+### <a name="anexo-55"><a/><div align="center"> Anexo LV - cria msg.date_inicial</div>
 
 <div align="center">
 	<img src="https://user-images.githubusercontent.com/56831082/225643844-29d192f3-a0cc-4bac-aed5-f2590f290c40.png"><br>
 </div>
 
 ---
-### <a name="anexo-34"><a/><div align="center"> Anexo XXXIV - cria msg.date_atual</div>
+### <a name="anexo-56"><a/><div align="center"> Anexo LVI - cria msg.date_atual</div>
 
 <div align="center">
 	<img src="https://user-images.githubusercontent.com/56831082/225643865-1c453754-3f5e-47e6-9d85-50e5105c774f.png"><br>
 </div>
 	
 ---
-### <a name="anexo-35"><a/><div align="center"> Anexo XXXV - Verifica datas</div>
+### <a name="anexo-57"><a/><div align="center"> Anexo LVII - Verifica datas</div>
 	
 ```javascript
 var periodo = msg.date_atual.date_time_stamp - msg.date_inicial.date_time_stamp
