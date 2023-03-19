@@ -1233,155 +1233,196 @@ else
 ---
 ### <a name="anexo-24"><a/><div align="center"> Anexo XXIV - Data ultima medição adicionada no remoto</div>
 
-```javascript
-	
+**Query**
+```SQL
+SELECT date_time_stamp FROM public.organic_nodes_control_measurement WHERE source = 0  ORDER BY date_time_stamp DESC LIMIT 1;
 ```
 
 ---
 ### <a name="anexo-25"><a/><div align="center"> Anexo XXV - Data ultima medição adicionada no local</div>
 
-```javascript
-	
+**Query**
+```SQL
+SELECT date_time_stamp FROM public.organic_nodes_control_measurement WHERE source = 0  ORDER BY date_time_stamp DESC LIMIT 1;
 ```
 
 ---
 ### <a name="anexo-26"><a/><div align="center"> Anexo XXVI - cria msg.last_update</div>
 
 ```javascript
-	
+msg.last_update = JSON.parse(JSON.stringify(msg.payload[0]))
+return msg;
 ```
 
 ---
 ### <a name="anexo-27"><a/><div align="center"> Anexo XXVII - cria msg.last_upload</div>
 
 ```javascript
-	
+try{
+    msg.last_upload = JSON.parse(JSON.stringify(msg.payload[0]))
+
+
+    if (msg.last_upload.date_time_stamp != msg.last_update.date_time_stamp){
+        global.set("sincronizando_remoto", true)
+        return msg;
+    }else {
+        global.set("sincronizando_remoto", false)
+    }
+} catch(e){}
 ```
 
 ---
 ### <a name="anexo-28"><a/><div align="center"> Anexo XXVIII - pega ID da ultima medição no banco local</div>
 
-```javascript
-	
+**Query**
+```SQL
+SELECT id FROM public.organic_nodes_control_measurement WHERE date_time_stamp = '{{{msg.last_update.date_time_stamp}}}';
 ```
 
 ---
 ### <a name="anexo-29"><a/><div align="center"> Anexo XXIX - cria msg.last_update_id</div>
-
-```javascript
-	
-```
+<div align=center>
+	<img src="https://user-images.githubusercontent.com/56831082/226146972-661e7735-3934-438e-9c33-d4e2eb27bb9e.jpg">
+</div>
 
 ---
 ### <a name="anexo-30"><a/><div align="center"> Anexo XXX - incrementa</div>
 
 ```javascript
-	
+msg.last_update_id.id = msg.last_update_id.id + 1
+return msg;
 ```
 
 ---
 ### <a name="anexo-31"><a/><div align="center"> Anexo XXXI - Pega medição</div>
 
-```javascript
-	
+**Query**
+```SQL
+SELECT * FROM public.organic_nodes_control_measurement WHERE id = {{{msg.last_update_id.id}}}	
 ```
 
 ---
 ### <a name="anexo-32"><a/><div align="center"> Anexo XXXII - cria msg.measurement</div>
 
 ```javascript
-	
+if (msg.payload.length){
+    msg.measurement = JSON.parse(JSON.stringify(msg.payload[0]))
+    return msg;
+}else{
+    global.set("sincronizando_remoto", false);
+}	
 ```
 
 ---
 ### <a name="anexo-33"><a/><div align="center"> Anexo XXXIII - Verifica se já existe</div>
 
-```javascript
-	
+**Query**
+```SQL
+SELECT * FROM public.organic_nodes_control_measurement WHERE(message_counter = {{{msg.measurement.message_counter}}} AND date_time_stamp = '{{{msg.measurement.date_time_stamp}}}')
 ```
 
 ---
 ### <a name="anexo-34"><a/><div align="center"> Anexo XXXIV - switch</div>
 
-```javascript
-	
-```
+<div align=center>
+	<img src="https://user-images.githubusercontent.com/56831082/226147140-4f1c145f-16db-4a77-ac56-dd158bc66591.jpg">
+</div>
 
 ---
 ### <a name="anexo-35"><a/><div align="center"> Anexo XXXV - Pega frequency</div>
 
-```javascript
-	
+**Query**
+```SQL
+SELECT * FROM public.organic_nodes_control_frequencymeasure WHERE measurement_id = {{{msg.last_update_id.id}}}
 ```
 
 ---
 ### <a name="anexo-36"><a/><div align="center"> Anexo XXXVI - cria msg.frequency</div>
 
-```javascript
-	
-```
+<div align=center>
+	<img src="https://user-images.githubusercontent.com/56831082/226147113-c9b1722a-8400-480a-8686-0e05ed0d947f.jpg">
+</div>
 
 ---
 ### <a name="anexo-37"><a/><div align="center"> Anexo XXXVII - Pega power</div>
 
-```javascript
-	
+**Query**
+```SQL
+SELECT * FROM public.organic_nodes_control_powermeasure WHERE measurement_id = {{{msg.last_update_id.id}}}
 ```
 
 ---
 ### <a name="anexo-38"><a/><div align="center"> Anexo XXXVII - cria msg.power (ABC)</div>
 
-```javascript
-	
-```
+<div align=center>
+	<img src="https://user-images.githubusercontent.com/56831082/226147127-6866d9a2-a82d-48c0-960f-f2dd1ede9ad2.jpg">
+</div>
 
 ---
 ### <a name="anexo-39"><a/><div align="center"> Anexo XXXIX - Pega sensor</div>
 
-```javascript
-	
+**Query**
+```SQL
+SELECT * FROM public.organic_nodes_control_sensormeasure WHERE measurement_id = {{{msg.last_update_id.id}}}
 ```
 
 ---
 ### <a name="anexo-40"><a/><div align="center"> Anexo XL - cria msg.sensor</div>
 
-```javascript
-	
-```
+<div align=center>
+	<img src="https://user-images.githubusercontent.com/56831082/226147156-31108d61-c464-4485-b3cd-58ea23422f3c.png">
+</div>
 
 ---
 ### <a name="anexo-41"><a/><div align="center"> Anexo XLI - Pega voltagelag</div>
 
-```javascript
-	
+**Query**
+```SQL
+SELECT * FROM public.organic_nodes_control_voltagelagmeasure WHERE measurement_id = {{{msg.last_update_id.id}}}
 ```
 
 ---
 ### <a name="anexo-42"><a/><div align="center"> Anexo XLII - cria msg.voltagelag (ABC)</div>
 
-```javascript
-	
-```
+<div align=center>
+	<img src="https://user-images.githubusercontent.com/56831082/226147167-dd915a6b-09de-47ce-b733-a1ab57d7e83f.png">
+</div>
 
 ---
 ### <a name="anexo-43"><a/><div align="center"> Anexo XLIII - Pega energy</div>
 
-```javascript
-	
+**Query**
+```SQL
+SELECT * FROM public.organic_nodes_control_energymeasure WHERE measurement_id = {{{msg.last_update_id.id}}}
 ```
 
 ---
 ### <a name="anexo-44"><a/><div align="center"> Anexo XLIV - cria msg.energy (ABC)</div>
 
-```javascript
-	
-```
+<div align=center>
+	<img src="https://user-images.githubusercontent.com/56831082/226147176-b88f2fc2-558b-40c9-9048-cd281a648fbc.png">
+</div>
 
 ---
 ### <a name="anexo-45"><a/><div align="center"> Anexo XLV - instancia</div>
 
 ```javascript
-	
+msg.last_update_id.id = msg.last_update_id.id + 1
+msg.payload = ""
+
+msg.payload = msg.payload + "INSERT INTO public.organic_nodes_control_measurement (date_time_stamp, message_counter, setup_id, source) VALUES('" + msg.measurement.date_time_stamp + "', " + msg.measurement.message_counter + ", " + msg.measurement.setup_id + ", " + msg.measurement.source + ");"
+msg.payload = msg.payload + "INSERT INTO public.organic_nodes_control_frequencymeasure(frequency, frequency_sf, measurement_id) VALUES(" + msg.frequency.frequency + ", " + msg.frequency.frequency_sf + ", (SELECT id FROM public.organic_nodes_control_measurement WHERE(message_counter = " + msg.measurement.message_counter + " AND date_time_stamp = '" + msg.measurement.date_time_stamp +"') LIMIT 1));"
+msg.payload = msg.payload + "INSERT INTO public.organic_nodes_control_sensormeasure(temperature, temperature_sf, measurement_id) VALUES(" + msg.sensor.temperature + ", " + msg.sensor.temperature_sf + ", (SELECT id FROM public.organic_nodes_control_measurement WHERE(message_counter = " + msg.measurement.message_counter + " AND date_time_stamp = '" + msg.measurement.date_time_stamp +"') LIMIT 1));"
+for (let energy of msg.energy)
+    msg.payload = msg.payload + "INSERT INTO public.organic_nodes_control_energymeasure(phase, current, current_sf, voltage, voltage_sf, measurement_id)VALUES('" + energy.phase + "', " + energy.current + ", " + energy.current_sf + ", " + energy.voltage + ", " + energy.voltage_sf + ", (SELECT id FROM public.organic_nodes_control_measurement WHERE(message_counter = " + msg.measurement.message_counter + " AND date_time_stamp = '" + msg.measurement.date_time_stamp +"') LIMIT 1));"
+for (let power of msg.power)
+    msg.payload = msg.payload + "INSERT INTO public.organic_nodes_control_powermeasure(phase, voltage_current_angle, voltage_current_angle_sf, power_factor, active_power, active_power_sf, reactive_power, reactive_power_sf, apparent_power, apparent_power_sf, measurement_id)VALUES('" + power.phase + "', " + power.voltage_current_angle + ", " + power.voltage_current_angle_sf + ", " + power.power_factor + ", " + power.active_power + ", " + power.active_power_sf + ", " + power.reactive_power + ", " + power.reactive_power_sf + ", " + power.apparent_power + ", " + power.apparent_power_sf + ", (SELECT id FROM public.organic_nodes_control_measurement WHERE(message_counter = " + msg.measurement.message_counter + " AND date_time_stamp = '" + msg.measurement.date_time_stamp +"') LIMIT 1));"
+if (typeof msg.voltagelag != "undefined")
+    for (let voltagelag of msg.voltagelag)
+        msg.payload = msg.payload + "INSERT INTO public.organic_nodes_control_voltagelagmeasure(angle, angle_sf, phase_combination, measurement_id)VALUES(" + voltagelag.angle + ", " + voltagelag.angle_sf + ", '" + voltagelag.phase_combination + "', (SELECT id FROM public.organic_nodes_control_measurement WHERE(message_counter = " + msg.measurement.message_counter + " AND date_time_stamp = '" + msg.measurement.date_time_stamp +"') LIMIT 1));"
+
+msg.queryParameters = msg.payload
+return msg
 ```
 
 ---
