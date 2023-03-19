@@ -130,7 +130,7 @@ git clean -f
 
 **Pegue as alterações do repositorio remoto**
 ```
-git pull -f origin V1
+git pull -f origin main
 ```
 	
 pronto basta entrar com suas credenciais e logo logo as configurações serão baixadas.
