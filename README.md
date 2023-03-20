@@ -1084,18 +1084,13 @@ if (typeof msg.payload[0].phase[0] != "undefined"){
 
 ### <a name="anexo-20"><a/><div align="center"> Anexo XX - Cria instacia Monofasico</div>
 	
-```SQL
-INSERT INTO public.organic_nodes_control_measurement(
+```SQLINSERT INTO public.organic_nodes_control_measurement(
 	date_time_stamp,	message_counter,	setup_id,	source)
 	VALUES ('{{payload.date_time_stamp}}', {{payload.message_counter}}, (SELECT id FROM public.organic_nodes_control_setup WHERE (device_id = (SELECT device_id FROM public.organic_nodes_control_mqttdevice WHERE (mqtt_access_id = (SELECT id FROM public.organic_nodes_control_mqttaccess WHERE (mqtt_id = '{{payload.id}}')))))), 0);
 
 INSERT INTO public.organic_nodes_control_frequencymeasure(
 	frequency,	frequency_sf,	measurement_id)
 	VALUES ({{payload.frequency}}, {{payload.frequency_sf}}, (SELECT id FROM public.organic_nodes_control_measurement WHERE (message_counter = {{payload.message_counter}} AND date_time_stamp = '{{payload.date_time_stamp}}') LIMIT 1));
-
-INSERT INTO public.organic_nodes_control_sensormeasure(
-	temperature,	temperature_sf,	measurement_id)
-	VALUES ({{payload.temperature}}, {{payload.temperature_sf}}, (SELECT id FROM public.organic_nodes_control_measurement WHERE (message_counter = {{payload.message_counter}} AND date_time_stamp = '{{payload.date_time_stamp}}') LIMIT 1));
 	
 INSERT INTO public.organic_nodes_control_energymeasure(
 	phase, current, current_sf, voltage, voltage_sf, measurement_id)
