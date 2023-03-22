@@ -754,9 +754,7 @@
             "e0919e2a7130b098"
         ],
         "x": 14,
-        "y": 19,
-        "w": 1062,
-        "h": 1588
+        "y": 19
     },
     {
         "id": "eaafc316090ff166",
@@ -1661,9 +1659,7 @@
             "d15eb528c28e6139"
         ],
         "x": 54,
-        "y": 1439,
-        "w": 412,
-        "h": 142
+        "y": 1439
     },
     {
         "id": "d7f7f53f51e446ae",
@@ -1687,9 +1683,7 @@
             "d5483a424d414257"
         ],
         "x": 54,
-        "y": 979,
-        "w": 432,
-        "h": 162
+        "y": 979
     },
     {
         "id": "52c66abdf3919c1f",
@@ -1736,9 +1730,7 @@
             "5e9ad062dca474c0"
         ],
         "x": 54,
-        "y": 519,
-        "w": 992,
-        "h": 442
+        "y": 519
     },
     {
         "id": "158a0e6425e5cae7",
@@ -1764,9 +1756,7 @@
             "bbb55af31e6c49f6"
         ],
         "x": 54,
-        "y": 319,
-        "w": 992,
-        "h": 182
+        "y": 319
     },
     {
         "id": "464dd04fd59b4416",
@@ -1791,9 +1781,7 @@
             "b4fb6f59c5be0484"
         ],
         "x": 54,
-        "y": 99,
-        "w": 812,
-        "h": 202
+        "y": 99
     },
     {
         "id": "d9a0266626dfcca2",
@@ -1820,9 +1808,7 @@
             "0295006cf57005dc"
         ],
         "x": 54,
-        "y": 1159,
-        "w": 472,
-        "h": 262
+        "y": 1159
     },
     {
         "id": "548a7071933c632c",
@@ -3580,7 +3566,9 @@
             [
                 "7a8f749828a1f658"
             ],
-            [],
+            [
+                "9dadcaaf455341da"
+            ],
             [
                 "dc6a1f322af6636c"
             ]
@@ -3601,7 +3589,7 @@
         "joinerType": "str",
         "accumulate": false,
         "timeout": "",
-        "count": "4",
+        "count": "5",
         "reduceRight": false,
         "reduceExp": "",
         "reduceInit": "",
@@ -3610,7 +3598,9 @@
         "x": 490,
         "y": 340,
         "wires": [
-            []
+            [
+                "61608ffadbbef6dd"
+            ]
         ]
     },
     {
@@ -3628,7 +3618,7 @@
         "joinerType": "str",
         "accumulate": false,
         "timeout": "",
-        "count": "13",
+        "count": "8",
         "reduceRight": false,
         "reduceExp": "",
         "reduceInit": "",
@@ -3637,7 +3627,9 @@
         "x": 480,
         "y": 380,
         "wires": [
-            []
+            [
+                "61608ffadbbef6dd"
+            ]
         ]
     },
     {
@@ -10336,7 +10328,7 @@
         "z": "34a182d43462f44e",
         "g": "7d093e4c3e197c6a",
         "name": "Segregação",
-        "func": "var msg2 = {}\nmsg2.payload = msg.temp\n\nif (typeof msg.payload[0].phase != \"undefined\"){\n    try{\n        msg2.payload.phase_A = msg.payload[0].phase[0]\n        msg2.payload.phase_B = msg.payload[0].phase[1]\n        msg2.payload.phase_C = msg.payload[0].phase[2]\n    } catch(e){}\n    return msg2;\n}",
+        "func": "var msg2 = {}\nmsg2.payload = msg.temp\n\nif (typeof msg.payload[0].phase[0] != \"undefined\"){\n    msg2.payload.phase_A = msg.payload[0].phase[0]\n    if (typeof msg.payload[0].phase[1] != \"undefined\"){\n        msg2.payload.phase_B = msg.payload[0].phase[1]\n        if (typeof msg.payload[0].phase[2] != \"undefined\")\n            msg2.payload.phase_C = msg.payload[0].phase[2]\n    }\n    return msg2;\n}",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -10913,7 +10905,7 @@
         "fieldType": "msg",
         "format": "handlebars",
         "syntax": "mustache",
-        "template": "INSERT INTO public.organic_nodes_control_measurement(\n\tdate_time_stamp,\tmessage_counter,\tsetup_id,\tsource)\n\tVALUES ('{{payload.date_time_stamp}}', {{payload.message_counter}}, (SELECT id FROM public.organic_nodes_control_setup WHERE (device_id = (SELECT device_id FROM public.organic_nodes_control_mqttdevice WHERE (mqtt_access_id = (SELECT id FROM public.organic_nodes_control_mqttaccess WHERE (mqtt_id = '{{payload.id}}')))))), 0);\n\nINSERT INTO public.organic_nodes_control_frequencymeasure(\n\tfrequency,\tfrequency_sf,\tmeasurement_id)\n\tVALUES ({{payload.frequency}}, {{payload.frequency_sf}}, (SELECT id FROM public.organic_nodes_control_measurement WHERE (message_counter = {{payload.message_counter}} AND date_time_stamp = '{{payload.date_time_stamp}}') LIMIT 1));\n\nINSERT INTO public.organic_nodes_control_sensormeasure(\n\ttemperature,\ttemperature_sf,\tmeasurement_id)\n\tVALUES ({{payload.temperature}}, {{payload.temperature_sf}}, (SELECT id FROM public.organic_nodes_control_measurement WHERE (message_counter = {{payload.message_counter}} AND date_time_stamp = '{{payload.date_time_stamp}}') LIMIT 1));\n\t\nINSERT INTO public.organic_nodes_control_energymeasure(\n\tphase, current, current_sf, voltage, voltage_sf, measurement_id)\n\tVALUES ('{{payload.phase_A}}', {{payload.current_A}},{{payload.current_A_sf}},{{payload.voltage_A}},{{payload.voltage_A_sf}}, (SELECT id FROM public.organic_nodes_control_measurement WHERE (message_counter = {{payload.message_counter}} AND date_time_stamp = '{{payload.date_time_stamp}}') LIMIT 1));\n\nINSERT INTO public.organic_nodes_control_powermeasure(\n\tphase, voltage_current_angle, voltage_current_angle_sf,\tpower_factor,\tactive_power,\tactive_power_sf,\treactive_power,\treactive_power_sf,\tapparent_power,\tapparent_power_sf\t, measurement_id)\n\tVALUES ('{{payload.phase_A}}', {{payload.voltage_current_angle_A}},{{payload.voltage_current_angle_A_sf}},{{payload.power_factor_A}},{{payload.active_power_A}}, {{payload.active_power_A_sf}}, {{payload.reactive_power_A}}, {{payload.reactive_power_A_sf}}, {{payload.apparent_power_A}}, {{payload.apparent_power_A_sf}}, (SELECT id FROM public.organic_nodes_control_measurement WHERE (message_counter = {{payload.message_counter}} AND date_time_stamp = '{{payload.date_time_stamp}}') LIMIT 1));\n",
+        "template": "INSERT INTO public.organic_nodes_control_measurement(\n\tdate_time_stamp,\tmessage_counter,\tsetup_id,\tsource)\n\tVALUES ('{{payload.date_time_stamp}}', {{payload.message_counter}}, (SELECT id FROM public.organic_nodes_control_setup WHERE (device_id = (SELECT device_id FROM public.organic_nodes_control_mqttdevice WHERE (mqtt_access_id = (SELECT id FROM public.organic_nodes_control_mqttaccess WHERE (mqtt_id = '{{payload.id}}')))))), 0);\n\nINSERT INTO public.organic_nodes_control_frequencymeasure(\n\tfrequency,\tfrequency_sf,\tmeasurement_id)\n\tVALUES ({{payload.frequency}}, {{payload.frequency_sf}}, (SELECT id FROM public.organic_nodes_control_measurement WHERE (message_counter = {{payload.message_counter}} AND date_time_stamp = '{{payload.date_time_stamp}}') LIMIT 1));\n\t\nINSERT INTO public.organic_nodes_control_energymeasure(\n\tphase, current, current_sf, voltage, voltage_sf, measurement_id)\n\tVALUES ('{{payload.phase_A}}', {{payload.current_A}},{{payload.current_A_sf}},{{payload.voltage_A}},{{payload.voltage_A_sf}}, (SELECT id FROM public.organic_nodes_control_measurement WHERE (message_counter = {{payload.message_counter}} AND date_time_stamp = '{{payload.date_time_stamp}}') LIMIT 1));\n\nINSERT INTO public.organic_nodes_control_powermeasure(\n\tphase, voltage_current_angle, voltage_current_angle_sf,\tpower_factor,\tactive_power,\tactive_power_sf,\treactive_power,\treactive_power_sf,\tapparent_power,\tapparent_power_sf\t, measurement_id)\n\tVALUES ('{{payload.phase_A}}', {{payload.voltage_current_angle_A}},{{payload.voltage_current_angle_A_sf}},{{payload.power_factor_A}},{{payload.active_power_A}}, {{payload.active_power_A_sf}}, {{payload.reactive_power_A}}, {{payload.reactive_power_A_sf}}, {{payload.apparent_power_A}}, {{payload.apparent_power_A_sf}}, (SELECT id FROM public.organic_nodes_control_measurement WHERE (message_counter = {{payload.message_counter}} AND date_time_stamp = '{{payload.date_time_stamp}}') LIMIT 1));\n",
         "output": "str",
         "x": 570,
         "y": 160,
@@ -11349,7 +11341,8 @@
         "wires": [
             [
                 "b6711c456bb8c1b7",
-                "9b89966f66391a78"
+                "9b89966f66391a78",
+                "8e4003bd38002b5e"
             ]
         ]
     },
@@ -11590,6 +11583,22 @@
         ],
         "x": 505,
         "y": 640,
+        "wires": []
+    },
+    {
+        "id": "8e4003bd38002b5e",
+        "type": "debug",
+        "z": "d48fb9af316b0fe2",
+        "name": "debug 18",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 700,
+        "y": 560,
         "wires": []
     },
     {
