@@ -16883,13 +16883,6 @@
         "z": "291ed776b1a44ede",
         "g": "20cbcb56ccfe438a",
         "name": "",
-        "env": [
-            {
-                "name": "zerar",
-                "type": "bool",
-                "value": "true"
-            }
-        ],
         "x": 250,
         "y": 360,
         "wires": [
