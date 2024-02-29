@@ -120,7 +120,7 @@ git init
 
 **Adicione o repositorio remoto**
 ```
-git remote add origin https://github.com/CPID-NOCS/node-red.git
+git remote add origin https://nocs-2024@dev.azure.com/nocs-2024/organic-nodes/_git/organic-nodes
 ```
 
 **Limpe o repositorio local**
@@ -130,7 +130,7 @@ git clean -f
 
 **Pegue as alterações do repositorio remoto**
 ```
-git pull -f origin V1
+git pull -f origin Task-15
 ```
 	
 pronto basta entrar com suas credenciais e logo logo as configurações serão baixadas.
@@ -202,7 +202,7 @@ Inicialmente, temos todos os nodes separados em dois fluxos: o **Receive Data** 
 >### <a name=“receive-data”><a/>Receive Data
 
 <div align="center">
-    <img src="https://github.com/CPID-NOCS/node-red/blob/master/Imagens/flow-receive-data.png" width=600><br>
+    <img src="/Imagens/flow-receive-data.png" width=600><br>
 </div>
 
 O fluxo de dados no receive se da na aquisição dos dados que veem via mqtt no subflow ***MQTT***, sendo que as mensagens eviadas pelos medidores da IE veem de forma separada, como por exemplo no medidor trifasico são enviados os dados separadamente, potencia ativa, potencia retiva, potencia aparente, corrent, tensão, fator de potencia, defasagem, etc, cada um em uma mensagem separada, logo no subflow ***Tratamento da mensagem*** as mensagem são tratadas e unidas para posteriormente serem formatadas no subflow ***Formatação***.
