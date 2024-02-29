@@ -130,7 +130,7 @@ git clean -f
 
 **Pegue as alterações do repositorio remoto**
 ```
-git pull -f origin main
+git pull -f origin V1
 ```
 	
 pronto basta entrar com suas credenciais e logo logo as configurações serão baixadas.
@@ -320,7 +320,7 @@ O subfluxo ***Tratamento da mensagem*** é separado em dois fluxos:
 - E um *Identificação de Tópico e Junção*, que junta as mensagens de acordo com o tópico;
 
 <div align="center">
-    <img src="https://user-images.githubusercontent.com/56831082/226430569-d721c1ef-5569-4534-b4dd-88bf36758696.png" width=900><br>
+    <img src="https://user-images.githubusercontent.com/56831082/225388516-8f52fca6-135b-4a26-a2fe-4a34ac3d677c.png" width=900><br>
 </div>
 	
 O objeto inicial chega no formato:
@@ -577,6 +577,19 @@ O subflow ***Envia ao banco*** é um subflow simplificado que contém três nós
 
 Caso haja qualquer erro no banco local, é feita uma sincronização local através do subflow de ***Sincronização Local***, para corrigir qualquer falta de informações de cadastro que o banco local possa estar tendo. Após 1 segundo, a mensagem que ocasionou o erro é reenviada para ser armazenada no banco local.	
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 #### <a name="sincronismo-medicoes"><a/>Sincronismo Medições
 
 Neste subfluxo, temos quatro fluxos: um para a comparação de datas, outro para o requerimento do ID da medição, outro para a obtenção dos dados das tabelas locais que serão dispostos na tabela remota e, por fim, um último fluxo sequencial, responsável por criar a instância e adicioná-la ao banco de dados.
@@ -591,6 +604,14 @@ Caso seja necessário, passamos para um segundo fluxo, onde é obtido o ID no ba
 No próximo fluxo, pegamos todas as medições referentes ao ID da tabela de medições locais. A primeira tabela a ser obtida é a tabela *measurement* no nó **Pega medição** (configuração no [Anexo-XXXI](#anexo-31)), pois nela temos as informações essenciais para se instanciar as outras tabelas. Caso a tabela *measurement* retorne vazia, significa que chegamos ao final da sincronização e ambas as tabelas, local e remota, estão sincronizadas. Essa verificação é feita no próprio nó que duplica o payload **cria msg.measurement** (configuração no [Anexo-XXXII](#anexo-32)). Outro tratamento a ser feito é o de verificar se a medição já não está instanciada no banco remoto. Isso é verificado no nó **Verifica se já existe** (configuração no [Anexo-XXXIII](#anexo-33)), que retorna vazio caso não haja nenhuma referência à medição no banco remoto  (verificação efetuada no nó **switch** (configuração no [Anexo-XXXIV](#anexo-34)). Por fim, a instância é criada pelo nó **instancia** (configuração no [Anexo-XLV](#anexo-45)).
 
 > Obs: a inserção é feita mensagem por mensagem, e o restante das configurações dos nós que pegam as medições podem ser encontrados do [Anexo-XXXV](#anexo-35) ao [Anexo-XLIV](#anexo-44)).
+	
+	
+	
+	
+	
+	
+	
+	
 	
 #### <a name="sincronismo-local"><a/>Sincronismo Local
 Neste subflow, temos um destaque bastante importante: ele é chamado quando ocorre algum erro de sincronização em outros fluxos. Logo, inicialmente, precisamos de um nó que impeça uma sobrecarga de mensagens, de modo a evitar gargalos no sistema de sincronização. O nó utilizado para essa funcionalidade é o *stop timer* da palette **node-red-contrib-stoptimer**. Seu funcionamento é semelhante ao de um nó básico de delay, onde a mensagem espera um determinado tempo para continuar trafegando no fluxo. No entanto, ele difere porque todas as mensagens subsequentes são descartadas durante o intervalo de tempo determinado. Isso não interfere na execução do subflow, pois os nós de sincronização não utilizam a mensagem do payload para sincronizar o banco local. Portanto.
@@ -686,7 +707,7 @@ Logo abaixo temos todos os anexos de configuração dos nodes
 ---
 ### <a name="anexo-8"><a/><div align="center"> Anexo VIII - Junção (Monofasico/Bifasico/Trifasico)</div>
 	
-| <img src="https://user-images.githubusercontent.com/56831082/226430008-61b90dde-119c-4180-b136-738f2c3f784e.png"><br><sub>Monofasico</sub> | <img src="https://user-images.githubusercontent.com/56831082/225396953-3b499743-6857-4631-86cf-26a9a929e883.png"><br><sub>Bifasico</sub>| <img src="https://user-images.githubusercontent.com/56831082/225396981-dcd6282b-eda2-40ec-863a-9b62e37565d3.png"><br><sub>Trifasico</sub> |
+| <img src="https://user-images.githubusercontent.com/56831082/225396933-33cd8ec0-3122-4e3d-8be9-26bca8154986.png"><br><sub>Monofasico</sub> | <img src="https://user-images.githubusercontent.com/56831082/225396953-3b499743-6857-4631-86cf-26a9a929e883.png"><br><sub>Bifasico</sub>| <img src="https://user-images.githubusercontent.com/56831082/225396981-dcd6282b-eda2-40ec-863a-9b62e37565d3.png"><br><sub>Trifasico</sub> |
 | :---: | :---: | :---: |
 
 ---	
@@ -1062,13 +1083,12 @@ return msg;
 var msg2 = {}
 msg2.payload = msg.temp
 
-if (typeof msg.payload[0].phase[0] != "undefined"){
-    msg2.payload.phase_A = msg.payload[0].phase[0]
-    if (typeof msg.payload[0].phase[1] != "undefined"){
+if (typeof msg.payload[0].phase != "undefined"){
+    try{
+        msg2.payload.phase_A = msg.payload[0].phase[0]
         msg2.payload.phase_B = msg.payload[0].phase[1]
-        if (typeof msg.payload[0].phase[2] != "undefined")
-            msg2.payload.phase_C = msg.payload[0].phase[2]
-    }
+        msg2.payload.phase_C = msg.payload[0].phase[2]
+    } catch(e){}
     return msg2;
 }
 ```
@@ -1084,13 +1104,18 @@ if (typeof msg.payload[0].phase[0] != "undefined"){
 
 ### <a name="anexo-20"><a/><div align="center"> Anexo XX - Cria instacia Monofasico</div>
 	
-```SQLINSERT INTO public.organic_nodes_control_measurement(
+```SQL
+INSERT INTO public.organic_nodes_control_measurement(
 	date_time_stamp,	message_counter,	setup_id,	source)
 	VALUES ('{{payload.date_time_stamp}}', {{payload.message_counter}}, (SELECT id FROM public.organic_nodes_control_setup WHERE (device_id = (SELECT device_id FROM public.organic_nodes_control_mqttdevice WHERE (mqtt_access_id = (SELECT id FROM public.organic_nodes_control_mqttaccess WHERE (mqtt_id = '{{payload.id}}')))))), 0);
 
 INSERT INTO public.organic_nodes_control_frequencymeasure(
 	frequency,	frequency_sf,	measurement_id)
 	VALUES ({{payload.frequency}}, {{payload.frequency_sf}}, (SELECT id FROM public.organic_nodes_control_measurement WHERE (message_counter = {{payload.message_counter}} AND date_time_stamp = '{{payload.date_time_stamp}}') LIMIT 1));
+
+INSERT INTO public.organic_nodes_control_sensormeasure(
+	temperature,	temperature_sf,	measurement_id)
+	VALUES ({{payload.temperature}}, {{payload.temperature_sf}}, (SELECT id FROM public.organic_nodes_control_measurement WHERE (message_counter = {{payload.message_counter}} AND date_time_stamp = '{{payload.date_time_stamp}}') LIMIT 1));
 	
 INSERT INTO public.organic_nodes_control_energymeasure(
 	phase, current, current_sf, voltage, voltage_sf, measurement_id)

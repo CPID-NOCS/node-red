@@ -4,7 +4,10 @@
     "version": "0.0.1",
     "private": true,
     "dependencies": {
-        "node-red-contrib-delay-topic-message": "~1.3.1",
-        "node-red-contrib-stoptimer": "~0.0.7"
+        "node-red-contrib-aedes": "~0.13.0",
+        "node-red-contrib-ovia-os": "~0.1.10",
+        "node-red-contrib-postgresql": "~0.14.0",
+        "node-red-contrib-re-postgres": "~0.3.4",
+        "node-red-dashboard": "~3.6.2"
     }
 }

@@ -1,7 +1,7 @@
 {
     "node-red": {
         "name": "node-red",
-        "version": "3.0.2",
+        "version": "3.1.5",
         "local": false,
         "user": false,
         "nodes": {
@@ -94,6 +94,17 @@
                 "user": false,
                 "module": "node-red",
                 "file": "/usr/src/node-red/node_modules/@node-red/nodes/core/common/90-comment.js"
+            },
+            "global-config": {
+                "name": "global-config",
+                "types": [
+                    "global-config"
+                ],
+                "enabled": true,
+                "local": false,
+                "user": false,
+                "module": "node-red",
+                "file": "/usr/src/node-red/node_modules/@node-red/nodes/core/common/91-global-config.js"
             },
             "unknown": {
                 "name": "unknown",
@@ -416,424 +427,11 @@
             }
         }
     },
-    "node-red-contrib-delay-topic-message": {
-        "name": "node-red-contrib-delay-topic-message",
-        "version": "1.3.1",
-        "local": true,
-        "user": true,
-        "nodes": {
-            "delay-topic-message": {
-                "name": "delay-topic-message",
-                "types": [
-                    "delay-topic-message"
-                ],
-                "enabled": true,
-                "local": true,
-                "user": false,
-                "module": "node-red-contrib-delay-topic-message",
-                "file": "/data/node_modules/node-red-contrib-delay-topic-message/delay-topic-message.js"
-            }
-        }
-    },
-    "node-red-contrib-stoptimer": {
-        "name": "node-red-contrib-stoptimer",
-        "version": "0.0.7",
-        "local": true,
-        "user": true,
-        "nodes": {
-            "stoptimer": {
-                "name": "stoptimer",
-                "types": [
-                    "stoptimer"
-                ],
-                "enabled": true,
-                "local": true,
-                "user": false,
-                "module": "node-red-contrib-stoptimer",
-                "file": "/data/node_modules/node-red-contrib-stoptimer/stoptimer.js"
-            }
-        }
-    },
-    "@inutil-labs/node-red-whin-whatsapp": {
-        "name": "@inutil-labs/node-red-whin-whatsapp",
-        "version": "0.0.2",
-        "local": true,
-        "user": false,
-        "nodes": {
-            "whin-send": {
-                "name": "whin-send",
-                "types": [
-                    "whin-send",
-                    "whin-receive",
-                    "whin-config"
-                ],
-                "enabled": true,
-                "local": true,
-                "user": false,
-                "module": "@inutil-labs/node-red-whin-whatsapp",
-                "file": "/data/node_modules/@inutil-labs/node-red-whin-whatsapp/whin.js"
-            }
-        }
-    },
-    "@mschaeffler/node-red-lora": {
-        "name": "@mschaeffler/node-red-lora",
-        "version": "1.2.6",
-        "local": true,
-        "user": false,
-        "nodes": {
-            "lorawan-server": {
-                "name": "lorawan-server",
-                "types": [
-                    "lorawan-server"
-                ],
-                "enabled": true,
-                "local": true,
-                "user": false,
-                "module": "@mschaeffler/node-red-lora",
-                "file": "/data/node_modules/@mschaeffler/node-red-lora/lorawan-server.js"
-            },
-            "lorawan-keys": {
-                "name": "lorawan-keys",
-                "types": [
-                    "lorawan-keys"
-                ],
-                "enabled": true,
-                "local": true,
-                "user": false,
-                "module": "@mschaeffler/node-red-lora",
-                "file": "/data/node_modules/@mschaeffler/node-red-lora/lorawan-keys.js"
-            },
-            "lorawan-decoder": {
-                "name": "lorawan-decoder",
-                "types": [
-                    "lorawan-packet-decoder"
-                ],
-                "enabled": true,
-                "local": true,
-                "user": false,
-                "module": "@mschaeffler/node-red-lora",
-                "file": "/data/node_modules/@mschaeffler/node-red-lora/lorawan-packet-decoder.js"
-            },
-            "lorawan-encoder": {
-                "name": "lorawan-encoder",
-                "types": [
-                    "lorawan-packet-encoder"
-                ],
-                "enabled": true,
-                "local": true,
-                "user": false,
-                "module": "@mschaeffler/node-red-lora",
-                "file": "/data/node_modules/@mschaeffler/node-red-lora/lorawan-packet-encoder.js"
-            },
-            "lorawan-checkFC": {
-                "name": "lorawan-checkFC",
-                "types": [
-                    "lorawan-packet-checkFC"
-                ],
-                "enabled": true,
-                "local": true,
-                "user": false,
-                "module": "@mschaeffler/node-red-lora",
-                "file": "/data/node_modules/@mschaeffler/node-red-lora/lorawan-packet-checkFC.js"
-            },
-            "lorawan-send": {
-                "name": "lorawan-send",
-                "types": [
-                    "lorawan-queue-message"
-                ],
-                "enabled": true,
-                "local": true,
-                "user": false,
-                "module": "@mschaeffler/node-red-lora",
-                "file": "/data/node_modules/@mschaeffler/node-red-lora/lorawan-queue-message.js"
-            }
-        }
-    },
-    "node-red-contrib-aedes": {
-        "name": "node-red-contrib-aedes",
-        "version": "0.8.2",
-        "local": true,
-        "user": false,
-        "nodes": {
-            "aedes-mqtt-broker": {
-                "name": "aedes-mqtt-broker",
-                "types": [
-                    "aedes broker"
-                ],
-                "enabled": true,
-                "local": true,
-                "user": false,
-                "module": "node-red-contrib-aedes",
-                "file": "/data/node_modules/node-red-contrib-aedes/aedes.js"
-            }
-        }
-    },
-    "node-red-contrib-buffer-parser": {
-        "name": "node-red-contrib-buffer-parser",
-        "version": "3.2.2",
-        "local": true,
-        "user": false,
-        "nodes": {
-            "buffer-parser": {
-                "name": "buffer-parser",
-                "types": [
-                    "buffer-parser"
-                ],
-                "enabled": true,
-                "local": true,
-                "user": false,
-                "module": "node-red-contrib-buffer-parser",
-                "file": "/data/node_modules/node-red-contrib-buffer-parser/buffer-parser.js"
-            },
-            "buffer-maker": {
-                "name": "buffer-maker",
-                "types": [
-                    "buffer-maker"
-                ],
-                "enabled": true,
-                "local": true,
-                "user": false,
-                "module": "node-red-contrib-buffer-parser",
-                "file": "/data/node_modules/node-red-contrib-buffer-parser/buffer-maker.js"
-            }
-        }
-    },
-    "node-red-contrib-home-assistant-websocket": {
-        "name": "node-red-contrib-home-assistant-websocket",
-        "version": "0.46.0",
-        "local": true,
-        "user": false,
-        "nodes": {
-            "all": {
-                "name": "all",
-                "types": [
-                    "ha_entity_filter",
-                    "ha-api",
-                    "ha-binary-sensor",
-                    "ha-button",
-                    "api-call-service",
-                    "server",
-                    "api-current-state",
-                    "ha-device",
-                    "ha-device-config",
-                    "ha-entity",
-                    "ha-entity-config",
-                    "server-events",
-                    "server-state-changed",
-                    "ha-fire-event",
-                    "ha-get-entities",
-                    "api-get-history",
-                    "poll-state",
-                    "api-render-template",
-                    "ha-sensor",
-                    "ha-switch",
-                    "ha-tag",
-                    "ha-time",
-                    "trigger-state",
-                    "ha-update-config",
-                    "ha-wait-until",
-                    "ha-webhook",
-                    "ha-zone"
-                ],
-                "enabled": true,
-                "local": true,
-                "user": false,
-                "module": "node-red-contrib-home-assistant-websocket",
-                "file": "/data/node_modules/node-red-contrib-home-assistant-websocket/dist/index.js"
-            }
-        }
-    },
-    "node-red-contrib-kore-whatsappbot": {
-        "name": "node-red-contrib-kore-whatsappbot",
-        "version": "0.2.35",
-        "local": true,
-        "user": false,
-        "nodes": {
-            "whatsapp-kore-bot": {
-                "name": "whatsapp-kore-bot",
-                "types": [
-                    "whatsapp-kore-bot"
-                ],
-                "enabled": true,
-                "local": true,
-                "user": false,
-                "module": "node-red-contrib-kore-whatsappbot",
-                "file": "/data/node_modules/node-red-contrib-kore-whatsappbot/whatsapp-bot.js"
-            },
-            "whatsapp-kore-client": {
-                "name": "whatsapp-kore-client",
-                "types": [
-                    "whatsapp-kore-client"
-                ],
-                "enabled": true,
-                "local": true,
-                "user": false,
-                "module": "node-red-contrib-kore-whatsappbot",
-                "file": "/data/node_modules/node-red-contrib-kore-whatsappbot/whatsapp-client.js"
-            },
-            "whatsapp-sendMessage": {
-                "name": "whatsapp-sendMessage",
-                "types": [
-                    "whatsapp-sendmessage"
-                ],
-                "enabled": true,
-                "local": true,
-                "user": false,
-                "module": "node-red-contrib-kore-whatsappbot",
-                "file": "/data/node_modules/node-red-contrib-kore-whatsappbot/whatsapp-sendMessage.js"
-            },
-            "whatsapp-sendImage": {
-                "name": "whatsapp-sendImage",
-                "types": [
-                    "whatsapp-sendimage"
-                ],
-                "enabled": true,
-                "local": true,
-                "user": false,
-                "module": "node-red-contrib-kore-whatsappbot",
-                "file": "/data/node_modules/node-red-contrib-kore-whatsappbot/whatsapp-sendImage.js"
-            },
-            "whatsapp-sendButtons": {
-                "name": "whatsapp-sendButtons",
-                "types": [
-                    "whatsapp-sendbuttons"
-                ],
-                "enabled": true,
-                "local": true,
-                "user": false,
-                "module": "node-red-contrib-kore-whatsappbot",
-                "file": "/data/node_modules/node-red-contrib-kore-whatsappbot/whatsapp-sendButtons.js"
-            },
-            "whatsapp-storeMessage": {
-                "name": "whatsapp-storeMessage",
-                "types": [
-                    "whatsapp-storemessage"
-                ],
-                "enabled": true,
-                "local": true,
-                "user": false,
-                "module": "node-red-contrib-kore-whatsappbot",
-                "file": "/data/node_modules/node-red-contrib-kore-whatsappbot/whatsapp-storeMessage.js"
-            },
-            "whatsapp-addTag": {
-                "name": "whatsapp-addTag",
-                "types": [
-                    "whatsapp-addtag"
-                ],
-                "enabled": true,
-                "local": true,
-                "user": false,
-                "module": "node-red-contrib-kore-whatsappbot",
-                "file": "/data/node_modules/node-red-contrib-kore-whatsappbot/whatsapp-addTag.js"
-            },
-            "whatsapp-endChat": {
-                "name": "whatsapp-endChat",
-                "types": [
-                    "whatsapp-endchat"
-                ],
-                "enabled": true,
-                "local": true,
-                "user": false,
-                "module": "node-red-contrib-kore-whatsappbot",
-                "file": "/data/node_modules/node-red-contrib-kore-whatsappbot/whatsapp-endChat.js"
-            }
-        }
-    },
-    "node-red-contrib-play-audio": {
-        "name": "node-red-contrib-play-audio",
-        "version": "2.5.0",
-        "local": true,
-        "user": false,
-        "nodes": {
-            "play-audio": {
-                "name": "play-audio",
-                "types": [
-                    "play audio"
-                ],
-                "enabled": true,
-                "local": true,
-                "user": false,
-                "module": "node-red-contrib-play-audio",
-                "file": "/data/node_modules/node-red-contrib-play-audio/play-audio.js"
-            }
-        }
-    },
-    "node-red-contrib-postgresql": {
-        "name": "node-red-contrib-postgresql",
-        "version": "0.11.2",
-        "local": true,
-        "user": false,
-        "nodes": {
-            "postgresql": {
-                "name": "postgresql",
-                "types": [
-                    "postgreSQLConfig",
-                    "postgresql"
-                ],
-                "enabled": true,
-                "local": true,
-                "user": false,
-                "module": "node-red-contrib-postgresql",
-                "file": "/data/node_modules/node-red-contrib-postgresql/postgresql.js"
-            }
-        }
-    },
-    "node-red-contrib-re-postgres": {
-        "name": "node-red-contrib-re-postgres",
-        "version": "0.3.3",
-        "local": true,
-        "user": false,
-        "nodes": {
-            "PostgreSql": {
-                "name": "PostgreSql",
-                "types": [
-                    "postgresdb",
-                    "postgres"
-                ],
-                "enabled": true,
-                "local": true,
-                "user": false,
-                "module": "node-red-contrib-re-postgres",
-                "file": "/data/node_modules/node-red-contrib-re-postgres/lib/pg.js"
-            }
-        }
-    },
-    "node-red-contrib-xterm": {
-        "name": "node-red-contrib-xterm",
-        "version": "1.0.1",
-        "local": true,
-        "user": false,
-        "nodes": {
-            "xterm_config": {
-                "name": "xterm_config",
-                "types": [
-                    "xterm_config",
-                    "xterm_config_sidebar"
-                ],
-                "enabled": true,
-                "local": true,
-                "user": false,
-                "module": "node-red-contrib-xterm",
-                "file": "/data/node_modules/node-red-contrib-xterm/xterm_config.js"
-            },
-            "xterm_in": {
-                "name": "xterm_in",
-                "types": [
-                    "xterm_in"
-                ],
-                "enabled": true,
-                "local": true,
-                "user": false,
-                "module": "node-red-contrib-xterm",
-                "file": "/data/node_modules/node-red-contrib-xterm/xterm_in.js"
-            }
-        }
-    },
     "node-red-dashboard": {
         "name": "node-red-dashboard",
-        "version": "3.2.0",
+        "version": "3.6.2",
         "local": true,
-        "user": false,
+        "user": true,
         "nodes": {
             "ui_base": {
                 "name": "ui_base",
@@ -1068,104 +666,87 @@
             }
         }
     },
-    "node-red-node-pi-gpio": {
-        "name": "node-red-node-pi-gpio",
-        "version": "2.0.5",
+    "node-red-contrib-re-postgres": {
+        "name": "node-red-contrib-re-postgres",
+        "version": "0.3.4",
         "local": true,
-        "user": false,
+        "user": true,
         "nodes": {
-            "rpi-gpio": {
-                "name": "rpi-gpio",
+            "PostgreSql": {
+                "name": "PostgreSql",
                 "types": [
-                    "rpi-gpio in",
-                    "rpi-gpio out",
-                    "rpi-mouse",
-                    "rpi-keyboard"
+                    "postgresdb",
+                    "postgres"
                 ],
                 "enabled": true,
                 "local": true,
                 "user": false,
-                "module": "node-red-node-pi-gpio",
-                "file": "/data/node_modules/node-red-node-pi-gpio/36-rpi-gpio.js"
+                "module": "node-red-contrib-re-postgres",
+                "file": "/data/node_modules/node-red-contrib-re-postgres/lib/pg.js"
             }
         }
     },
-    "node-red-node-ping": {
-        "name": "node-red-node-ping",
-        "version": "0.3.3",
+    "node-red-contrib-postgresql": {
+        "name": "node-red-contrib-postgresql",
+        "version": "0.14.0",
         "local": true,
-        "user": false,
+        "user": true,
         "nodes": {
-            "ping": {
-                "name": "ping",
+            "postgresql": {
+                "name": "postgresql",
                 "types": [
-                    "ping"
+                    "postgreSQLConfig",
+                    "postgresql"
                 ],
                 "enabled": true,
                 "local": true,
                 "user": false,
-                "module": "node-red-node-ping",
-                "file": "/data/node_modules/node-red-node-ping/88-ping.js"
+                "module": "node-red-contrib-postgresql",
+                "file": "/data/node_modules/node-red-contrib-postgresql/postgresql.js"
             }
         }
     },
-    "node-red-node-random": {
-        "name": "node-red-node-random",
-        "version": "0.4.0",
+    "node-red-contrib-aedes": {
+        "name": "node-red-contrib-aedes",
+        "version": "0.13.0",
         "local": true,
-        "user": false,
+        "user": true,
         "nodes": {
-            "random": {
-                "name": "random",
+            "aedes-mqtt-broker": {
+                "name": "aedes-mqtt-broker",
                 "types": [
-                    "random"
+                    "aedes broker"
                 ],
                 "enabled": true,
                 "local": true,
                 "user": false,
-                "module": "node-red-node-random",
-                "file": "/data/node_modules/node-red-node-random/random.js"
+                "module": "node-red-contrib-aedes",
+                "file": "/data/node_modules/node-red-contrib-aedes/aedes.js"
             }
         }
     },
-    "node-red-node-serialport": {
-        "name": "node-red-node-serialport",
-        "version": "1.0.1",
+    "node-red-contrib-ovia-os": {
+        "name": "node-red-contrib-ovia-os",
+        "version": "0.1.10",
         "local": true,
-        "user": false,
+        "user": true,
         "nodes": {
-            "serialport": {
-                "name": "serialport",
+            "os": {
+                "name": "os",
                 "types": [
-                    "serial in",
-                    "serial out",
-                    "serial request",
-                    "serial-port"
+                    "OS",
+                    "Drives",
+                    "Uptime",
+                    "CPUs",
+                    "Loadavg",
+                    "Memory",
+                    "NetworkIntf"
                 ],
                 "enabled": true,
                 "local": true,
                 "user": false,
-                "module": "node-red-node-serialport",
-                "file": "/data/node_modules/node-red-node-serialport/25-serial.js"
-            }
-        }
-    },
-    "node-red-node-smooth": {
-        "name": "node-red-node-smooth",
-        "version": "0.1.2",
-        "local": true,
-        "user": false,
-        "nodes": {
-            "smooth": {
-                "name": "smooth",
-                "types": [
-                    "smooth"
-                ],
-                "enabled": true,
-                "local": true,
-                "user": false,
-                "module": "node-red-node-smooth",
-                "file": "/data/node_modules/node-red-node-smooth/17-smooth.js"
+                "module": "node-red-contrib-ovia-os",
+                "file": "/data/node_modules/node-red-contrib-ovia-os/os/os.js"
             }
         }
     }
