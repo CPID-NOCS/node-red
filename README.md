@@ -149,7 +149,7 @@ Após a instalação, ao acessar a ferramenta você terá os seguintes component
 - Centro: Ambiente de desenvolvimento. Onde ficam os Flows criados com suas automações baseado em nós.
 - Lado direito: Você tem um conjunto de informações, área de ajuda, área de debug, configurações de layout.
 
-<img src="https://github.com/CPID-NOCS/node-red/blob/master/Imagens/introducao.png" width=850><br>
+<img src="Imagens/introducao.png" width="850">
 
 > ### <a name=“ferramentas”><a/>Ferramentas
 
@@ -202,7 +202,7 @@ Inicialmente, temos todos os nodes separados em dois fluxos: o **Receive Data** 
 >### <a name=“receive-data”><a/>Receive Data
 
 <div align="center">
-    <img src="/Imagens/flow-receive-data.png" width=600><br>
+    <img src="Imagens/flow-receive-data.png" width="600">
 </div>
 
 O fluxo de dados no receive se da na aquisição dos dados que veem via mqtt no subflow ***MQTT***, sendo que as mensagens eviadas pelos medidores da IE veem de forma separada, como por exemplo no medidor trifasico são enviados os dados separadamente, potencia ativa, potencia retiva, potencia aparente, corrent, tensão, fator de potencia, defasagem, etc, cada um em uma mensagem separada, logo no subflow ***Tratamento da mensagem*** as mensagem são tratadas e unidas para posteriormente serem formatadas no subflow ***Formatação***.
@@ -269,10 +269,12 @@ Contudo, é unida a outras mensagens, tornando-se:
 ```
 Essa mensagem contém apenas os valores que serão utilizados para criar a instância de inserção dos dados no banco de dados.
 
+Neste flow, temos uma configuração importante a ser feita, que é configurar o valor da central_id no nó de injeção. Esse valor é crucial para algumas queries enviadas ao banco de dados. Certifique-se de inserir o valor de acordo com o cadastro no banco de dados da NOCS.
+
 >### <a name=“postgres”><a/>Postgres
 
 <div align="center">
-    <img src="https://github.com/CPID-NOCS/node-red/blob/master/Imagens/flows-postgres.png" width=600><br>
+    <img src="Imagens/flows-postgres.png" width=600>
 </div>
 
 O fluxo do Postgres funciona como uma ferramenta de conexão entre o Node-RED e o banco de dados, permitindo diversas interações com o banco. Por exemplo, é possível verificar o cadastro de um determinado usuário, sincronizar as tabelas locais com as informações do banco remoto, solicitar quais fases estão associadas a determinada medição, manter o banco de dados com uma quantidade específica de dados para evitar sobrecarga de memória e, por fim, inserir os dados medidos no banco de dados remoto.
