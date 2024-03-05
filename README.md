@@ -53,36 +53,40 @@
 	- [Anexo XXV - Data ultima medição adicionada no local](#anexo-25)
 	- [Anexo XXVI - cria msg.last_update](#anexo-26)
 	- [Anexo XXVII - cria msg.last_upload](#anexo-27)
-	- [Anexo XXVIII - pega ID da ultima medição no banco local](#anexo-28)
-	- [Anexo XXIX - cria msg.last_update_id](#anexo-29)
-	- [Anexo XXX - incrementa](#anexo-30)
-	- [Anexo XXXI - Pega medição](#anexo-31)
-	- [Anexo XXXII - cria msg.measurement](#anexo-32)
-	- [Anexo XXXIII - Verifica se já existe](#anexo-33)
-	- [Anexo XXXIV - switch](#anexo-34)
-	- [Anexo XXXV - Pega frequency](#anexo-35)
-	- [Anexo XXXVI - cria msg.frequency](#anexo-36)
-	- [Anexo XXXVII - Pega power](#anexo-37)
+	- [Anexo XXVIII - Pega medição](#anexo-28)
+	- [Anexo XXIX - cria msg.measurement](#anexo-29)
+	- [Anexo XXX - instancia medição](#anexo-30)
+	- [Anexo XXXI - Pega temperature](#anexo-31)
+	- [Anexo XXXII - cria msg.temperatura](#anexo-32)
+	- [Anexo XXXIII - instancia Temperature](#anexo-33)
+	- [Anexo XXXIV - Pega power](#anexo-34)
+	- [Anexo XXXV - cria msg.power (ABC)](#anexo-35)
+	- [Anexo XXXVI - instancia Power](#anexo-36)
+	- [Anexo XXXVII -cria msg.frequency](#anexo-37)
 	- [Anexo XXXVIII - cria msg.power (ABC)](#anexo-38)
-	- [Anexo XXXIX - Pega sensor](#anexo-39)
-	- [Anexo XL - cria msg.sensor](#anexo-40)
-	- [Anexo XLI - Pega voltagelag](#anexo-41)
-	- [Anexo XLII - cria msg.voltagelag (ABC)](#anexo-42)
+	- [Anexo XXXIX - instancia Frequency](#anexo-39)
+	- [Anexo XL - Pega voltagelag](#anexo-40)
+	- [Anexo XLI - cria msg.voltagelag (ABC)](#anexo-41)
+	- [Anexo XLII - instancia Voltage lag](#anexo-42)
 	- [Anexo XLIII - Pega energy](#anexo-43)
 	- [Anexo XLIV - cria msg.energy (ABC)](#anexo-44)
-	- [Anexo XLV - instancia](#anexo-45)
-	- [Anexo XLVI - contador (access_user)](#anexo-46)
+	- [Anexo XLV - instancia Energy](#anexo-45)
+	- [Anexo XLVI - Start offset (access_user)](#anexo-46)
 	- [Anexo XLVII - NOCS](#anexo-47)
 	- [Anexo XLVIII - cria msg.nocs](#anexo-48)
 	- [Anexo XLIX - Local](#anexo-49)
 	- [Anexo L - cria msg.local](#anexo-50)
-	- [Anexo LI - criação e atualizção (access_user)](#anexo-51)
-	- [Anexo LII - Switch (access_user)](#anexo-52)
-	- [Anexo LIII - Local - Data do primeiro dado](#anexo-53)
-	- [Anexo LIV - Local - Data do ultimo dado](#anexo-54)
-	- [Anexo LV - cria msg.date_inicial](#anexo-55)
-	- [Anexo LVI - cria msg.date_atual](#anexo-56)
-	- [Anexo LVII - Verifica datas](#anexo-57)
+	- [Anexo LI - criação e atualização (access_user_local)](#anexo-51)
+	- [Anexo LII - Switch (access_user_local)](#anexo-52)
+	- [Anexo LIII - Data Inicial](#anexo-53)
+	- [Anexo LIV - Data final](#anexo-54)
+	- [Anexo LV - Permanencia](#anexo-55)
+	- [Anexo LVI - Memoria](#anexo-56)
+	- [Anexo LVII - cria msg.date_inicial](#anexo-57)
+	- [Anexo LVIII - cria msg.date_atual](#anexo-58)
+	- [Anexo LIX - cria msg.permanence_date](#anexo-59)
+	- [Anexo LX - cria msg.memory_use](#anexo-60)
+	- [Anexo LXI - Verifica datas](#anexo-61)
 
 # <a name=“node-red”><a/>Node-red
 
@@ -616,7 +620,7 @@ O segundo nó do fluxo é o nó de comunicação com o banco remoto **NOCS** (co
 Após as decisões tomadas, é gerado um novo payload com a instância escolhida, e a mensagem é enviada para dois nós no fluxo. Um deles é o nó **Local** do Postgres (verificar seção [Postgres](#postgres)), e o outro é o nó **switch** (configuração no [Anexo-LII](#anexo-52)), que realiza verificações constantes para verificar o término da sincronização. Essa verificação é executada com base no payload. Se o payload for vazio, o **switch** finaliza o loop, zerando o offset. Caso contrário, o switch retorna a mensagem para o nó **Start offset** no início do fluxo.
 
 #### <a name="sincronismo-tamanho-banco-local"><a/>Sincronismo tamanho banco local
-O fluxo deste subfluxo é dividido em dois subfluxos sequenciais. No primeiro, temos a requisição das datas da primeira e última mensagem registrada no banco local, referente a data inicial e atual, e também a requisição da data de permanencia dos dados definida pelo usuario e a porcentagem de memoria do sistema que esta sendo utilizado. A data inicial é obtida pelo nó **Data Inicial** (configuração no [Anexo-LIII](#anexo-53)), a data final é obtida pelo nó **Data final** (configuração no [Anexo-LIV](#anexo-54)), a permanencia dos dados é obtida pelo nó **Permanencia** (configuração no [Anexo-LV](#anexo-55)) e por fim  a permanencia dos dados é obtida pelo nó **Permanencia** (configuração no [Anexo-LVI](#anexo-56)). Como dito em outras seções, os nós do Postgres sobrescrevem o payload local. Logo, para cada um dos nós citados anteriormente a mensagem é colocada em outros payloads secundários: *msg.date_inicial*, instanciado pelo nó **cria msg.date_inicial** (configuração no [Anexo-LVII](#anexo-57)), *msg.date_atual*, instanciado pelo nó **cria msg.date_atual** (configuração no [Anexo-LVIII](#anexo-58)), *msg.permanence_date*, instanciado pelo nó **cria msg.permanence_date** (configuração no [Anexo-LXI](#anexo-59)) e *msg.memory_use*, instanciado pelo nó **cria msg.memory_use** (configuração no [Anexo-LX](#anexo-60)).
+O fluxo deste subfluxo é dividido em dois subfluxos sequenciais. No primeiro, temos a requisição das datas da primeira e última mensagem registrada no banco local, referente a data inicial e atual, e também a requisição da data de permanencia dos dados definida pelo usuario e a porcentagem de memoria do sistema que esta sendo utilizado. A data inicial é obtida pelo nó **Data Inicial** (configuração no [Anexo-LIII](#anexo-53)), a data final é obtida pelo nó **Data final** (configuração no [Anexo-LIV](#anexo-54)), a permanencia dos dados é obtida pelo nó **Permanencia** (configuração no [Anexo-LV](#anexo-55)) e por fim  a permanencia dos dados é obtida pelo nó **Permanencia** (configuração no [Anexo-LVI](#anexo-56)). Como dito em outras seções, os nós do Postgres sobrescrevem o payload local. Logo, para cada um dos nós citados anteriormente a mensagem é colocada em outros payloads secundários: *msg.date_inicial*, instanciado pelo nó **cria msg.date_inicial** (configuração no [Anexo-LVII](#anexo-57)), *msg.date_atual*, instanciado pelo nó **cria msg.date_atual** (configuração no [Anexo-LVIII](#anexo-58)), *msg.permanence_date*, instanciado pelo nó **cria msg.permanence_date** (configuração no [Anexo-LIX](#anexo-59)) e *msg.memory_use*, instanciado pelo nó **cria msg.memory_use** (configuração no [Anexo-LX](#anexo-60)).
 
 <div align="center">
 	<img src="Imagens/tamanho-local.png" width=750><br>
@@ -1546,14 +1550,14 @@ JOIN t ON f.measurement_id = t.id;
 ```
 
 ---
-### <a name="anexo-38"><a/><div align="center"> Anexo XXXVII - cria msg.frequency</div>
+### <a name="anexo-38"><a/><div align="center"> Anexo XXXVIII - cria msg.frequency</div>
 
 <div align=center>
-	<img src="Imagens/Anexo/Anexo XXXVII.png">
+	<img src="Imagens/Anexo/Anexo XXXVIII.png">
 </div>
 
 ---
-### <a name="anexo-39"><a/><div align="center"> Anexo XXXIX - Pega sensor</div>
+### <a name="anexo-39"><a/><div align="center"> Anexo XXXIX - instancia Frequency</div>
 
 ```javascript
 msg.payload = ""
@@ -1712,7 +1716,7 @@ SELECT * FROM public.core_access_user where id >= '{{msg.offset}}' order by id a
 </div>
 	
 ---
-### <a name="anexo-51"><a/><div align="center"> Anexo LI - criação e atualizção (access_user_local)</div>
+### <a name="anexo-51"><a/><div align="center"> Anexo LI - criação e atualização (access_user_local)</div>
 
 ```javascript
 let offset = global.get("access_user") | 0
@@ -1797,7 +1801,7 @@ order by date_time_stamp desc limit 1
 </div>
 	
 ---
-### <a name="anexo-59"><a/><div align="center"> Anexo LXI - cria msg.permanence_date</div>
+### <a name="anexo-59"><a/><div align="center"> Anexo LIX - cria msg.permanence_date</div>
 
 <div align="center">
 	<img src="Imagens/cria permanence_date.png"><br>
