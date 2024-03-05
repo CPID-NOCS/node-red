@@ -279,7 +279,7 @@ Neste flow, temos uma configuração importante a ser feita, que é configurar o
 
 O fluxo do Postgres funciona como uma ferramenta de conexão entre o Node-RED e o banco de dados, permitindo diversas interações com o banco. Por exemplo, é possível verificar o cadastro de um determinado usuário, sincronizar as tabelas locais com as informações do banco remoto, solicitar quais fases estão associadas a determinada medição, manter o banco de dados com uma quantidade específica de dados para evitar sobrecarga de memória e, por fim, inserir os dados medidos no banco de dados remoto.
 
-Dentro desse fluxo, temos vários subfluxos que facilitam o trabalho com o banco de dados. Por exemplo, o subfluxo ***Verifica cadastro*** e ***phase*** fazem requisições ao banco remoto para averiguar informações. O subfluxo ***cria instancia*** é responsável por criar a instância no formato correto para inserção no banco de dados, e dentro dele, temos o subfluxo oculto ***sincronismo medições***, que detecta discrepâncias entre medições locais e remotas e envia as medições locais faltantes para o banco remoto.
+Dentro desse fluxo, temos vários subfluxos que facilitam o trabalho com o banco de dados. Por exemplo, o subfluxo ***Verifica cadastro*** e ***phase*** fazem requisições ao banco remoto para averiguar informações. O subfluxo ***cria instancia*** é responsável por criar a instância no formato correto para inserção no banco de dados e o subfluxo ***sincronismo medições***, que detecta discrepâncias entre medições locais e remotas e envia as medições locais faltantes para o banco remoto.
 
 Temos também o subfluxo ***envia ao banco***, que envia a medição já instanciada para o banco local e remoto, e o subfluxo oculto ***sincronismo local***, que mantém as tabelas locais de cadastro atualizadas com o banco remoto. Por fim, o subfluxo ***sincronismo tamanho banco local*** mantém o tamanho do banco de dados local em um tamanho fixo.
 
@@ -287,27 +287,27 @@ Para termos um funcionamento adequado dos nodulos responsaveis pela comunicaçã
 	
 <img src="https://user-images.githubusercontent.com/56831082/225421968-c96b500e-1e16-48e9-bfa2-9093759b8164.png" width=135><br>
 	
-|<img src="https://user-images.githubusercontent.com/56831082/225422893-139e72af-4a6e-45d2-aff4-38fa75513808.png"><br><sub>Local</sub> | <img src="https://user-images.githubusercontent.com/56831082/225422904-bba64b54-7486-463e-8d6b-ad9557a4470c.png"><br><sub>Remoto</sub>|
+|<img src="Imagens/postgres-local.png"><br><sub>Local</sub> | <img src="Imagens/postgres-remoto.png"><br><sub>Remoto</sub>|
 | :---: | :---: |
 
 <img src="https://user-images.githubusercontent.com/56831082/225421982-4e365e48-6f93-4bb0-913a-2e15bd18cd66.png" width=135><br>
 
-|<img src="https://user-images.githubusercontent.com/56831082/225423581-d22b451d-b92d-4c74-b121-832b6113a40c.png"><br><sub>Local-Connection</sub> | <img src="https://user-images.githubusercontent.com/56831082/225423590-d27d0139-3865-4bc1-b2dc-de5640f114f0.png"><br><sub>Local-Security</sub>|
+|<img src="Imagens/postgresql-local-connection.png"><br><sub>Local-Connection</sub> | <img src="Imagens/postgresql-local-security.png"><br><sub>Local-Security</sub>|
 | :---: | :---: |
-|<img src="https://user-images.githubusercontent.com/56831082/225423596-ed72cf45-7990-483f-9403-f38ca76e4ca9.png"><br><sub>**Remoto-Connection**</sub> | <img src="https://user-images.githubusercontent.com/56831082/225423608-41da729e-3c66-4187-8b7a-2b06570547a6.png"><br><sub>**Remoto-Security**</sub>|
+|<img src="Imagens/postgresql-remoto-connection.png"><br><sub>**Remoto-Connection**</sub> | <img src="Imagens/postgresql-remoto-security.png"><br><sub>**Remoto-Security**</sub>|
 
 Perceba que no banco local o host é dado como postgres, pois o node-red esta no docker e esta na mesma rede do conteiner postgres.
-	
+
 >### <a name=“subflows”><a/>Subflows
 
-Agora vamos entrar em detalhes do funcionamento de cada subflow conttido nas dependencias do node-red.
+Agora vamos entrar em detalhes do funcionamento de cada subflow contido nas dependencias do node-red.
 
 #### <a name=“mqtt”><a/>MQTT
 
-O subflow ***MQTT*** tem a função de capturar as mensagens recebidas pelo Node-RED local por meio do MQTT na porta 1883. Para garantir a qualidade das mensagens, o subflow transmite apenas aquelas que não possuem falhas, como mensagens nulas ou com payload vazio.
+O subflow ***MQTT*** tem a função de capturar as mensagens recebidas pelo Node-RED local por meio do MQTT na porta 1883. Para garantir a qualidade das mensagens, o subflow transmite apenas aquelas que não possuem falhas, mensagens nulas ou com payload vazio.
 
 <div align="center">
-    <img src="https://github.com/CPID-NOCS/node-red/blob/master/Imagens/subflow-MQTT.png" width=850><br>
+    <img src="Imagens/mqtt.png" width=850>
 </div>
 
 O fluxo do subflow começa com um node chamado **Aedes MQTT** (configuração no [Anexo-I](#anexo-1)), que funciona como um mosquito broker e coleta todas as mensagens que chegam na porta 1883 da Raspberry Pi. Em seguida, a mensagem passa pelo node **Não nulos** (configuração no [Anexo-II](#anexo-2)), que verifica se a mensagem não está vazia e se está conectada. Essas informações são cruciais para garantir a consistência das mensagens recebidas. Por fim, a mensagem passa pelo node **Existe dados** (configuração no [Anexo-III](#anexo-3)), que verifica se o payload da mensagem contém dados ou está vazio.
@@ -322,7 +322,7 @@ O subfluxo ***Tratamento da mensagem*** é separado em dois fluxos:
 - E um *Identificação de Tópico e Junção*, que junta as mensagens de acordo com o tópico;
 
 <div align="center">
-    <img src="https://user-images.githubusercontent.com/56831082/225388516-8f52fca6-135b-4a26-a2fe-4a34ac3d677c.png" width=900><br>
+    <img src="Imagens/tratamento.png" width=900><br>
 </div>
 	
 O objeto inicial chega no formato:
@@ -422,7 +422,7 @@ Muitos desses valores não são utilizados pelo projeto. Após a recuperação d
 Este subfluxo é responsável por fazer as formatações necessárias para o banco de dados. Nele, temos um nó chamado **Formatação** (configuração no [Anexo-XII](#anexo-12)), que possui diversas funcionalidades, incluindo a separação das medidas com casas decimais e a representação dos valores em notação científica, onde o número de ponto flutuante se torna um inteiro e o valor que o tornou inteiro é representado em outra propriedade chamada ***sf*** (abreviação para "scientific format").
 
 <div align=center>
-	<img src="https://user-images.githubusercontent.com/56831082/225416305-f0331554-fa17-4f5b-8259-cd8eb22f9320.png" width=600><br>
+	<img src="Imagens/formatacao.png" width=600><br>
 </div>
 	
 Portanto, uma entrada equivalente a:
@@ -456,22 +456,22 @@ Torna-se:
 Outras funcionalidades deste nó é realizar o cálculo de medições que alguns módulos não executam, como a potência reativa, a potência aparente, o defasamento, entre outros, além disso temos um fluxo *Contador de mensagens* (configuração dos dois nodulos do fluxo no [Anexo-XIII](#anexo-13)) responsavel por zerar o contador de mensagens caso a varizavel do subflow **zerar** esteja selecionada nas opções de configuração do subflow, como a imagem abaixo mostra.
 
 <div align=center>
-	<img src="https://user-images.githubusercontent.com/56831082/225413648-047bb42d-350a-47ac-94e7-d199fbbdc9bf.png" width=400><br>
+	<img src="Imagens/zero-count.png" width=400><br>
 </div>
 
 #### <a name=“verifica-cadastro”><a/>Verifica cadastro
 Este subflow é responsável por verificar se o ID da mensagem que chegou no payload está cadastrado no banco de dados. Caso contrário, a mensagem não pode ser armazenada no banco. Para isso, no início do fluxo, a mensagem é duplicada pelo nó **Duplica** (configuração no [Anexo-XIV](#anexo-14)) pois o segundo nó utilizado, responsável pela verificação, sobrescreve o payload da mensagem. Logo, para não haver perdas, a mensagem é duplicada. No segundo nó **postgreSQL** (configuração no [Anexo-XV](#anexo-15)), temos uma query que busca o ID do mqtt_access referente ao ID do cliente da mensagem. Caso esse ID não seja definido, significa que o ID da mensagem não possui cadastro. Nesse caso, a mensagem é enviada ao subflow ***Sincronismo Local*** para verificar se as tabelas locais estão devidamente atualizadas, essa descisão e tomada pelo nó **Verifica Cadastro no banco** (configuração no [Anexo-XVI](#anexo-16)).
 
 <div align=center>
-	<img src="https://user-images.githubusercontent.com/56831082/225420298-4f21f277-3633-4af1-9756-56bd4bec12eb.png" width=950><br>
+	<img src="Imagens/verifica-cadastro.png" width=950><br>
 </div>
 	
-#### <a name=“phase”><a/>phase
+#### <a name=“hase”><a/>phase
 
 Este subflow funciona de forma similar ao subflow ***Verifica cadastro***, fazendo uma consulta ao banco de dados. Para isso, no início do fluxo, a mensagem é duplicada pelo nó **Duplica** (configuração no [Anexo-XIV](#anexo-14)). No segundo nó **postgreSQL** (configuração no [Anexo-XVII](#anexo-17)), temos uma consulta que busca as fases do circuito de acordo com o mqtt_id da mensagem. Caso nenhuma fase seja encontrada, a mensagem é descartada.
 	
 <div align=center>
-	<img src="https://user-images.githubusercontent.com/56831082/225436012-4d9ac3e6-d664-40fb-a7a1-b56c2bd107f5.png" width=800><br>
+	<img src="Imagens/phase.png" width=800><br>
 </div>
 
 Dessa forma, a mensagem que chega nesse formato:
@@ -511,7 +511,7 @@ Lembrando que phase_A, assim como todas medições com "_A" representa a primeir
 O subflow ***cria-instancia*** é responsável por criar uma mensagem de inserção no formato SQL com os dados vindos do payload.
 
 <div align="center">
-	<img src="https://user-images.githubusercontent.com/56831082/225604769-7679bdfb-df7f-4be7-b033-89d71f7b74ac.png" width=800><br>	
+	<img src="Imagens/instancia.png" width=800><br>	
 </div>
 	
 A mensagem que chega no subflow passa por um nó de switch para identificar o tipo de fase do circuito, semelhante ao **identificação fase** do subflow ***Tratamento da mensagem***. No entanto, a identificação é realizada com o objeto JSON, e não com a string JSON. O nó **Identificação instalação** é responsável por essa identificação e está configurado no  [Anexo-XIX](#anexo-19).
@@ -567,84 +567,62 @@ INSERT INTO public.organic_nodes_control_sensormeasure(
 INSERT INTO public.organic_nodes_control_energymeasure(
 	phase, current, ...
 ```
-
-É importante destacar que a cada mensagem instanciada, é enviada uma mensagem para o subflow ***Sincronismo medições***, a fim de manter a sincronia entre as tabelas de medições locais e remotas. Isso é essencial para garantir a precisão dos dados e evitar erros na sincronização, para que, o subflow irá sincronize antes de enviar novas mensagens para o banco remoto.
 	
 #### <a name="envio-ao-banco"><a/>Envio ao banco
 O subflow ***Envia ao banco*** é um subflow simplificado que contém três nós principais. No primeiro nó do fluxo, adiciona-se os parâmetros de envio da mensagem do postgres, nó **Parametros** (configuração no [Anexo-XXIII](#anexo-23)). Nesse nó, há também uma pequena verificação de uma variável global *sincronismo_remoto* referente à sincronização do banco local com o remoto. Se essa variável for verdadeira, significa que uma sincronização está em andamento, portanto, devemos enviar mensagens somente para o banco local, localizado no segundo output do nó. Caso contrário, os bancos estão sincronizados e a mensagem é enviada para ambos o dois outros nós (NOCS e Local), nós configurados conforme especificado em seções anteriores(verificar seção [Postgres](#postgres)).
 	
 <div align="center">
-	<img src="https://user-images.githubusercontent.com/56831082/225621699-1ff29810-3bc8-4772-bc8e-4d645424d769.png" wigth=800><br>
+	<img src="Imagens/envia.png" wigth=800><br>
 </div>
-
-Caso haja qualquer erro no banco local, é feita uma sincronização local através do subflow de ***Sincronização Local***, para corrigir qualquer falta de informações de cadastro que o banco local possa estar tendo. Após 1 segundo, a mensagem que ocasionou o erro é reenviada para ser armazenada no banco local.	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 #### <a name="sincronismo-medicoes"><a/>Sincronismo Medições
 
-Neste subfluxo, temos quatro fluxos: um para a comparação de datas, outro para o requerimento do ID da medição, outro para a obtenção dos dados das tabelas locais que serão dispostos na tabela remota e, por fim, um último fluxo sequencial, responsável por criar a instância e adicioná-la ao banco de dados.
+Neste subfluxo, temos dois fluxos: um para a comparação de datas e outro para o requerimento das medições das tabelas locais que serão dispostas na tabela remota e também ficara responsável por criar a instância e adicioná-la ao banco de dados.
 
-<img src="https://user-images.githubusercontent.com/56831082/225998749-b4b7de89-da10-4446-b146-ecd4416efe82.png" width=890> 
-<img src="https://user-images.githubusercontent.com/56831082/225998758-c855a4ae-a68c-4c48-8040-eaf431fa3c34.png" width=890> 
+<img src="Imagens/medicoes-1.png" width=890>
+<img src="Imagens/medicoes-2.png" width=890>
 	
 O funcionamento deste subfluxo se dá pela comparação das datas das últimas medições tanto do banco local quanto do banco remoto. Caso as datas estejam distintas, significa que temos que sincronizar o banco local com o remoto. A data é obtida pelos nós **Data última medição adicionada no remoto** e **Data última medição adicionada no local** (configurados no [Anexo-XXIV](#anexo-24) e [Anexo-XXV](#anexo-25), respctivamente). Para evitar a perda da mensagem dos payloads, ambas são salvas nos nós **Cria msg.last_update** para o banco remoto e **Cria msg.last_upload** para o banco local (configurados no [Anexo-XXVI](#anexo-26) e [Anexo-XXVII](#anexo-27), respctivamente). O próprio nó **cria msg.last_update** faz a comparação das datas e toma a decisão se é ou não necessário fazer a sincronia.
-		
-Caso seja necessário, passamos para um segundo fluxo, onde é obtido o ID no banco local referente à última medição do banco remoto pelo nó **Pega ID da última medição no banco local** (configuração no [Anexo-XXVIII](#anexo-28)). Feito isso, a mensagem é armazenada em outro payload pelo nó **Cria msg.last_update_id** (configuração no [Anexo-XXIX](#anexo-29)). Esse ID é acrescido pelo nó **Incrementa** (configuração no [Anexo-XXX](#anexo-30)) para que possamos começar a inserir as mensagens que não foram enviadas para o banco.
-	
-No próximo fluxo, pegamos todas as medições referentes ao ID da tabela de medições locais. A primeira tabela a ser obtida é a tabela *measurement* no nó **Pega medição** (configuração no [Anexo-XXXI](#anexo-31)), pois nela temos as informações essenciais para se instanciar as outras tabelas. Caso a tabela *measurement* retorne vazia, significa que chegamos ao final da sincronização e ambas as tabelas, local e remota, estão sincronizadas. Essa verificação é feita no próprio nó que duplica o payload **cria msg.measurement** (configuração no [Anexo-XXXII](#anexo-32)). Outro tratamento a ser feito é o de verificar se a medição já não está instanciada no banco remoto. Isso é verificado no nó **Verifica se já existe** (configuração no [Anexo-XXXIII](#anexo-33)), que retorna vazio caso não haja nenhuma referência à medição no banco remoto  (verificação efetuada no nó **switch** (configuração no [Anexo-XXXIV](#anexo-34)). Por fim, a instância é criada pelo nó **instancia** (configuração no [Anexo-XLV](#anexo-45)).
 
-> Obs: a inserção é feita mensagem por mensagem, e o restante das configurações dos nós que pegam as medições podem ser encontrados do [Anexo-XXXV](#anexo-35) ao [Anexo-XLIV](#anexo-44)).
-	
-	
-	
-	
-	
-	
-	
-	
+Caso seja necessário a sincronização, passamos para o segundo fluxo, onde é por meio de query sql as 10 medições nó **Pega medição** (configuração no [Anexo-XXVIII](#anexo-28)) partindo da data da ultima medição salva no banco de dados remoto. Feito isso, a mensagem é armazenada em outro payload pelo nó **cria msg.measurement** (configuração no [Anexo-XXIX](#anexo-29)), quando a sincronização é finalizada o retorno dessa query é um payload vazio portanto o nó de switch seguinte faz o filtro para indentificar o termino da sincronização, caso a sincronização tenha acabado o nó switch bloqueia a passagem da mensagem.
+
+Como são diversas medições, devido a quantidade de tabela, todas as medições após serem pegas nas querys, são instanciadas e enviadas para o banco de dados. Após passar pelo switch as medições são instanciadas enviadas para o banco de dados remoto **instancia medição** (configuração no [Anexo-XXX](#anexo-30)).
+
+> Obs: a instanciação é feita em todas as tabelas restantes do [Anexo-XXXV](#anexo-31) ao [Anexo-XLIV](#anexo-45)), é ao final da instanciação da última tabela, uma mensagem é reenviada ao primeiro fluxo para verificar se a sincronização esta completa.
+
 	
 #### <a name="sincronismo-local"><a/>Sincronismo Local
-Neste subflow, temos um destaque bastante importante: ele é chamado quando ocorre algum erro de sincronização em outros fluxos. Logo, inicialmente, precisamos de um nó que impeça uma sobrecarga de mensagens, de modo a evitar gargalos no sistema de sincronização. O nó utilizado para essa funcionalidade é o *stop timer* da palette **node-red-contrib-stoptimer**. Seu funcionamento é semelhante ao de um nó básico de delay, onde a mensagem espera um determinado tempo para continuar trafegando no fluxo. No entanto, ele difere porque todas as mensagens subsequentes são descartadas durante o intervalo de tempo determinado. Isso não interfere na execução do subflow, pois os nós de sincronização não utilizam a mensagem do payload para sincronizar o banco local. Portanto.
+Neste subflow, temos um destaque bastante importante: ele é chamado quando ocorre algum erro de sincronização em outros fluxos. Logo, inicialmente, precisamos de um nó que impeça uma sobrecarga de mensagens, de modo a evitar gargalos no sistema de sincronização. O nó utilizado para essa funcionalidade é o *dalay*, função basica do node-red. Seu funcionamento faz uma espera de um tempo pré-determinado para continuar trafegando do fluxo. No entanto, ele descarta todas as mensagens subsequentes durante o intervalo de tempo determinado. Isso não interfere na execução do subflow, pois os nós de sincronização não utilizam a mensagem do payload para sincronizar o banco local.
 	
-<img src="https://user-images.githubusercontent.com/56831082/225897255-15095e6b-d971-4a7b-9f57-cf3c13ed67ee.png" width=890> 
-<img src="https://user-images.githubusercontent.com/56831082/225897265-9e91cae8-fed9-4434-8e23-67a784d8ecff.png" width=890>
-<img src="https://user-images.githubusercontent.com/56831082/225897274-7b1a55da-a25d-4854-ad02-18406666d30d.png" width=890>
-<img src="https://user-images.githubusercontent.com/56831082/225901553-199b0f8c-3f34-4591-a393-d31a11f11807.png" width=890>
-<img src="https://user-images.githubusercontent.com/56831082/225898147-8b4a8af5-3da1-48a4-849e-72695ea4722c.png" width=950>
+<img src="Imagens/Sincronismo Local-1.png" width=890>
+<img src="Imagens/Sincronismo Local-2.png" width=890>
+<img src="Imagens/Sincronismo Local-3.png" width=890>
+<img src="Imagens/Sincronismo Local-4.png" width=890>
+<img src="Imagens/Sincronismo Local-5.png" width=890>
+<img src="Imagens/Sincronismo Local-6.png" width=890>
 
-O objetivo principal deste subflow é sincronizar as tabelas de cadastro locais com as do banco remoto, adicionando, removendo ou atualizando nas tabelas. No total, existem 17 tabelas cadastrais, incluindo access_user, country, state, city, company, area, hardware, firmware, devicesetup, devicecompany, devicetype, device, monitoreddevice, circuit, setup, mqttaccess e mqttdevice. O processo de sincronização é semelhante para todas as tabelas, e abaixo será apresentada a implementação de apenas uma tabela (access_user) para evitar repetições e tornar o arquivo de documentação mais conciso.
+O objetivo principal deste subflow é sincronizar as tabelas de cadastro locais com as do banco remoto, adicionando, removendo ou atualizando nas tabelas. No total, existem 19 tabelas cadastrais, incluindo access_user, country, state, city, company, area, hardware, firmware, devicesetup, devicecompany, devicetype, device, monitoreddevice, circuit, version, central, setup, mqttaccess e mqttdevice. O processo de sincronização é semelhante para todas as tabelas, e abaixo será apresentada a implementação de apenas uma tabela (access_user) para evitar repetições e tornar o arquivo de documentação mais conciso.
 
-Após o nó **espera sincronização** *stoptimer*, que aguarda 1 segundo antes de enviar a mensagem, a mensagem é encaminhada para todos os nós de sincronização das tabelas. Primeiramente, a mensagem passa por um nó **contador** (configuração no [Anexo-XLVI](#anexo-46)), que instancia um contador em uma variável global iniciada com o valor 1. Caso a variável já exista, apenas é obtido o valor que ela armazena. Esse contador será responsável por percorrer todas as linhas da tabela do banco remoto, já que é necessário verificar cada linha para atualizar eventuais mudanças em colunas específicas.
+Após o nó **1 s**, que aguarda 1 segundo antes de enviar a mensagem, a mensagem é encaminhada para todos os nós de sincronização das tabelas. Primeiramente, a mensagem passa por um nó **Start offset** (configuração no [Anexo-XLVI](#anexo-46)), que instancia um contador offset em uma variável global iniciada com o valor 0. Caso a variável já exista, apenas é obtido o valor que ela armazena. Esse contador será responsável por percorrer toda tabela do banco remoto por meio de um deslocamento de 100 tuplas.
 	
-O segundo nó do fluxo é o nó de comunicação com o banco remoto **NOCS** (configuração no [Anexo-XLVII](#anexo-47)). Nele, obtemos linha por linha da tabela de acordo com o valor do contador, que é utilizado como índice. Após pegarmos a linha no índice do contador, criamos outro payload para essa mensagem para evitar que ela seja apagada. Essa criação é feita pelo nó **cria msg.nocs** (configuração no [Anexo-XLVIII](#anexo-48)). A mesma coisa é feita para o banco local: pegamos a linha no índice do contador com o nó **Local** (configuração no [Anexo-XLIX](#anexo-49)) e criamos outro payload em **cria msg.local** (configuração no [Anexo-L](#anexo-50)). Com isso, temos três possibilidades a serem tratadas pelo próximo nó, **criação e atualização** (configuração no [Anexo-LI](#anexo-51)):
+O segundo nó do fluxo é o nó de comunicação com o banco remoto **NOCS** (configuração no [Anexo-XLVII](#anexo-47)). Nele, obtemos as 100 tuplas da tabela ordenando-a de forma cresente a partir do valor do offset, que é utilizado como índice. Após pegarmos as linhas a partir do índice do offset, criamos outro payload para essa mensagem, para evitar que ela seja apagada. Essa criação é feita pelo nó **cria msg.nocs** (configuração no [Anexo-XLVIII](#anexo-48)). A mesma coisa é feita para o banco local: pegamos as linha do índice do offset com o nó **Local** (configuração no [Anexo-XLIX](#anexo-49)) e criamos outro payload em **cria msg.local** (configuração no [Anexo-L](#anexo-50)). Com isso, temos três possibilidades a serem tratadas pelo próximo nó, **criação e atualização** (configuração no [Anexo-LI](#anexo-51)):
 	
 - **DELETE** : caso a mensagem exista no banco local, mas não exista mais no remoto.
 - **UPDATE** : caso a mensagem exista no banco local e no remoto, mas com diferenças entre elas.
 - **INSERT** : caso a mensagem não exista no banco local, mas exista no banco remoto.
-- > Caso nenhuma das duas mensagens exista, significa que chegamos ao final da sincronização, e o contador volta a ter o valor 1. Caso contrário, o contador é acrescido. 
-	
-Após as decisões tomadas, é gerado um novo payload com a instância escolhida e a mensagem é enviada para dois nós no fluxo. Um deles é o nó **Local** do Postgres (verificar seção [Postgres](#postgres)), e o outro é o nó **switch** (configuração no [Anexo-LII](#anexo-52)), que realiza verificações constantes para verificar o término da sincronização. Essa verificação é executada com base no contador. Se o contador for 1 novamente, o **switch** finaliza o loop. Caso contrário, o switch retorna a mensagem para o nó **contador** no início do fluxo.
+- > Caso o payload esteja vazio, significa que chegamos ao final da sincronização, e o offset deve ser zerado. Caso contrário, o offset é deslocado 100 índices à frente. 
+
+
+Após as decisões tomadas, é gerado um novo payload com a instância escolhida, e a mensagem é enviada para dois nós no fluxo. Um deles é o nó **Local** do Postgres (verificar seção [Postgres](#postgres)), e o outro é o nó **switch** (configuração no [Anexo-LII](#anexo-52)), que realiza verificações constantes para verificar o término da sincronização. Essa verificação é executada com base no payload. Se o payload for vazio, o **switch** finaliza o loop, zerando o offset. Caso contrário, o switch retorna a mensagem para o nó **Start offset** no início do fluxo.
 
 #### <a name="sincronismo-tamanho-banco-local"><a/>Sincronismo tamanho banco local
-O fluxo deste subfluxo é dividido em dois subfluxos sequenciais. No primeiro, temos a requisição das datas da primeira e última mensagem registrada no banco local, referente a data inicial e atual. A data inicial é obtida pelo nó **Local - Data do primeiro dado** (configuração no [Anexo-LIII](#anexo-53)), enquanto a data final é obtida pelo nó **Local - Data do último dado** (configuração no [Anexo-LVI](#anexo-54)). Como dito em outras seções, os nós do Postgres sobrescrevem o payload local. Logo, para cada um dos nós citados anteriormente a mensagem é colocada em outros payloads secundários: *msg.date_inicial*, instanciado pelo nó **cria msg.date_inicial** (configuração no [Anexo-LV](#anexo-55)), e *msg.date_atual*, instanciado pelo nó **cria msg.date_atual** (configuração no [Anexo-LVI](#anexo-56)).
-	
+O fluxo deste subfluxo é dividido em dois subfluxos sequenciais. No primeiro, temos a requisição das datas da primeira e última mensagem registrada no banco local, referente a data inicial e atual, e também a requisição da data de permanencia dos dados definida pelo usuario e a porcentagem de memoria do sistema que esta sendo utilizado. A data inicial é obtida pelo nó **Data Inicial** (configuração no [Anexo-LIII](#anexo-53)), a data final é obtida pelo nó **Data final** (configuração no [Anexo-LIV](#anexo-54)), a permanencia dos dados é obtida pelo nó **Permanencia** (configuração no [Anexo-LV](#anexo-55)) e por fim  a permanencia dos dados é obtida pelo nó **Permanencia** (configuração no [Anexo-LVI](#anexo-56)). Como dito em outras seções, os nós do Postgres sobrescrevem o payload local. Logo, para cada um dos nós citados anteriormente a mensagem é colocada em outros payloads secundários: *msg.date_inicial*, instanciado pelo nó **cria msg.date_inicial** (configuração no [Anexo-LVII](#anexo-57)), *msg.date_atual*, instanciado pelo nó **cria msg.date_atual** (configuração no [Anexo-LVIII](#anexo-58)), *msg.permanence_date*, instanciado pelo nó **cria msg.permanence_date** (configuração no [Anexo-LXI](#anexo-59)) e *msg.memory_use*, instanciado pelo nó **cria msg.memory_use** (configuração no [Anexo-LX](#anexo-60)).
+
 <div align="center">
-	<img src="https://user-images.githubusercontent.com/56831082/225642480-fb6cdbd2-fcd5-4c6c-b95c-a837988fc893.png" width=750><br>
+	<img src="Imagens/tamanho-local.png" width=750><br>
 </div>
 	
-Já no outro subfluxo, temos a verificação do distanciamento entre as duas datas pelo nó **Verifica datas** (configuração no [Anexo-LVII](#anexo-57)). Caso a mensagem inicial tenha extrapolado a quantidade de dias pré-definida, uma instância de delete é enviada ao banco local para apagar a mensagem, e o loop passa para a próxima mensagem do banco. Caso contrário, a sincronização está completa, e o loop se encerra.
+Já no outro subfluxo, temos a verificação do distanciamento entre as duas datas pelo nó **Verifica datas** (configuração no [Anexo-LXI](#anexo-61)). Caso a mensagem inicial tenha extrapolado a quantidade de dias pré-definida ou 85% da memória do sistema tenha sido utilizado, uma instância de delete em cascata é enviada ao banco local para apagar a mensagem, e o loop passa para a próxima mensagem do banco. Caso contrário, a sincronização está completa, e o loop se encerra.
 	
 # <a name="conclusao"><a/>Conclusão
 
@@ -660,64 +638,64 @@ Logo abaixo temos todos os anexos de configuração dos nodes
 ---
 ### <a name="anexo-1"><a/><div align="center"> Anexo I - Aedes MQTT </div>
 <div align="center">
-    <img src="https://user-images.githubusercontent.com/56831082/225341250-23ef31f5-1455-49b5-9dcf-1de866b6bcf2.png"><br>
+    <img src="Imagens/Anexo/Anexo I.png"><br>
 </div>
 
 ---
 ### <a name="anexo-2"><a/><div align="center"> Anexo II - Não nulos</div>
 	
-<div align="center"> 
-	<img src="https://user-images.githubusercontent.com/56831082/225341368-05790018-1f95-4c39-a57d-f6fca4bfbff7.png"><br>
+<div align="center">
+    <img src="Imagens/Anexo/Anexo II.png"><br>
 </div>
 	
 ---
 ### <a name="anexo-3"><a/><div align="center"> Anexo III - Existe dados</div>
 	
-<div align="center"> 
-	<img src="https://user-images.githubusercontent.com/56831082/225341533-9c9cc8cb-c337-4f1c-840f-75edd16527f3.png"><br>
+<div align="center">
+    <img src="Imagens/Anexo/Anexo III.png"><br>
 </div>
 
 ---
 ### <a name="anexo-4"><a/><div align="center"> Anexo IV - convert payload</div>
 	
-<div align="center"> 
-	<img src="https://user-images.githubusercontent.com/56831082/225396555-ce37938a-c7e1-477f-bab4-51a6f7cc325f.png"><br>
+<div align="center">
+    <img src="Imagens/Anexo/Anexo IV.png"><br>
 </div>
 
 ---
 ### <a name="anexo-5"><a/><div align="center"> Anexo V - Reconfigurção</div>
 	
-<div align="center"> 
-	<img src="https://user-images.githubusercontent.com/56831082/225396636-08726984-6480-42ce-9b1a-951ddd516efd.png"><br>
+<div align="center">
+    <img src="Imagens/Anexo/Anexo V.png"><br>
 </div>
 
 ---
 
 ### <a name="anexo-6"><a/><div align="center"> Anexo VI - Transformação String </div>
 	
-<div align="center"> 
-	<img src="https://user-images.githubusercontent.com/56831082/225396746-7df89b03-02bc-4353-997d-728c861875de.png"><br>
+<div align="center">
+    <img src="Imagens/Anexo/Anexo VI.png"><br>
 </div>
 
 ---
 ### <a name="anexo-7"><a/><div align="center"> Anexo VII - Identificação fase</div>
 	
-<div align="center"> 
-	<img src="https://user-images.githubusercontent.com/56831082/225400562-aff53b2c-6221-430b-b1fd-e53975087fac.png"><br>
+<div align="center">
+    <img src="Imagens/Anexo/Anexo VII.png"><br>
 </div>
 
 ---
 ### <a name="anexo-8"><a/><div align="center"> Anexo VIII - Junção (Monofasico/Bifasico/Trifasico)</div>
-	
-| <img src="https://user-images.githubusercontent.com/56831082/225396933-33cd8ec0-3122-4e3d-8be9-26bca8154986.png"><br><sub>Monofasico</sub> | <img src="https://user-images.githubusercontent.com/56831082/225396953-3b499743-6857-4631-86cf-26a9a929e883.png"><br><sub>Bifasico</sub>| <img src="https://user-images.githubusercontent.com/56831082/225396981-dcd6282b-eda2-40ec-863a-9b62e37565d3.png"><br><sub>Trifasico</sub> |
+
+| <img src="Imagens/Anexo/Anexo VIII-1.png"><br><sub>Monofasico</sub> | <img src="Imagens/Anexo/Anexo VIII-1.png"><br><sub>Bifasico</sub>|<img src="Imagens/Anexo/Anexo VIII-1.png"><br><sub>Trifasico</sub> |
 | :---: | :---: | :---: |
 
 ---	
 ### <a name="anexo-9"><a/><div align="center"> Anexo IX - Junção e Alteração</div>
 	
-| <img src="https://user-images.githubusercontent.com/56831082/225401425-fe39068c-d40c-49d1-b2d5-661e8ab01f0c.png"><br> | <img src="https://user-images.githubusercontent.com/56831082/225401443-b0b72c79-f5f0-4639-9981-89b10588d804.png"><br>| <img src="https://user-images.githubusercontent.com/56831082/225401458-95f8b920-7f37-4626-a913-0f88e865025c.png"><br> |
+| <img src="Imagens/Anexo/Anexo IX-1.png"><br> | <img src="Imagens/Anexo/Anexo IX-2.png"><br>| <img src="Imagens/Anexo/Anexo IX-3.png"><br> |
 | :---: | :---: | :---: |
-| <img src="https://user-images.githubusercontent.com/56831082/225401671-8dde46a5-5b66-4aea-b165-0516b2eadf37.png"><br> | <img src="https://user-images.githubusercontent.com/56831082/225401699-ba5ad67b-a5a3-4192-9e9a-5fdb64307aed.png"><br>| <img src="https://user-images.githubusercontent.com/56831082/225401724-fbfbd647-5203-4a6d-af4a-4458a6ef2b2b.png"><br> |
+| <img src="Imagens/Anexo/Anexo IX-4.png"><br> | <img src="Imagens/Anexo/Anexo IX-5.png"><br>| <img src="Imagens/Anexo/Anexo IX-6.png"><br> |
 
 	
 ---
@@ -731,7 +709,7 @@ Logo abaixo temos todos os anexos de configuração dos nodes
 ---
 ### <a name="anexo-11"><a/><div align="center"> Anexo XI - Remoção</div>
 	
-| <img src="https://user-images.githubusercontent.com/56831082/225400843-4cc488ad-d54b-4bd2-a309-66886b2e6aa2.png"><br> | <img src="https://user-images.githubusercontent.com/56831082/225400862-1a386b9b-ad6f-4b6d-89c7-3b51ce3e8ae9.png"><br>|
+| <img src="Imagens/Anexo/Anexo XI-1.png"><br> | <img src="Imagens/Anexo/Anexo XI-2.png"><br>|
 | :---: | :---: |
 
 ---
@@ -747,7 +725,11 @@ if (typeof msg.payload.current_A != "undefined") {
         msg.payload.current_A_sf = -1 * sf
     } else
         msg.payload.current_A_sf = 0
+}else{
+    msg.payload.current_A = 0
+    msg.payload.current_A_sf = 0
 }
+
 /*B*/
 if (typeof msg.payload.current_B != "undefined") {
     if (!Number.isInteger(msg.payload.current_B)) {
@@ -756,7 +738,11 @@ if (typeof msg.payload.current_B != "undefined") {
         msg.payload.current_B_sf = -1 * sf
     } else
         msg.payload.current_B_sf = 0
+} else {
+    msg.payload.current_B = 0
+    msg.payload.current_B_sf = 0
 }
+
 /*C*/
 if (typeof msg.payload.current_C != "undefined") {
     if (!Number.isInteger(msg.payload.current_C)) {
@@ -765,6 +751,9 @@ if (typeof msg.payload.current_C != "undefined") {
         msg.payload.current_C_sf = -1 * sf
     } else
         msg.payload.current_C_sf = 0
+} else {
+    msg.payload.current_C = 0
+    msg.payload.current_C_sf = 0
 }
 
 /*voltage*/
@@ -776,7 +765,11 @@ if (typeof msg.payload.voltage_A != "undefined") {
         msg.payload.voltage_A_sf = -1 * sf
     }else
         msg.payload.voltage_A_sf = 0
+} else {
+    msg.payload.voltage_A = 0
+    msg.payload.voltage_A_sf = 0
 }
+
 /*B*/
 if (typeof msg.payload.voltage_B != "undefined") {
     if (!Number.isInteger(msg.payload.voltage_B)) {
@@ -785,7 +778,11 @@ if (typeof msg.payload.voltage_B != "undefined") {
         msg.payload.voltage_B_sf = -1 * sf
     } else
         msg.payload.voltage_B_sf = 0
+} else {
+    msg.payload.voltage_B = 0
+    msg.payload.voltage_B_sf = 0
 }
+
 /*C*/
 if (typeof msg.payload.voltage_C != "undefined") {
     if (!Number.isInteger(msg.payload.voltage_C)) {
@@ -794,7 +791,23 @@ if (typeof msg.payload.voltage_C != "undefined") {
         msg.payload.voltage_C_sf = -1 * sf
     } else
         msg.payload.voltage_C_sf = 0
+} else {
+    msg.payload.voltage_C = 0
+    msg.payload.voltage_C_sf = 0
 }
+
+/*power_factor_A*/
+/*A*/
+if (typeof msg.payload.power_factor_A == "undefined" && typeof msg.payload.current_A != "undefined")
+    msg.payload.power_factor_A = 0.95
+
+/*B*/
+if (typeof msg.payload.power_factor_B == "undefined" && typeof msg.payload.current_B != "undefined")
+    msg.payload.power_factor_B = 0.95
+
+/*C*/
+if (typeof msg.payload.power_factor_C == "undefined" && typeof msg.payload.current_C != "undefined")
+    msg.payload.power_factor_C = 0.95
 
 /*voltage_current_angle*/
 /*A*/
@@ -808,10 +821,14 @@ if (typeof msg.payload.voltage_current_angle_A != "undefined") {
 }else if (typeof msg.payload.current_A != "undefined"){
     msg.payload.voltage_current_angle_A = ((Math.acos(msg.payload.power_factor_A) * 180) / Math.PI).toFixed(3)
     
-    let sf = ("" + ("" + msg.payload.voltage_current_angle_A).split('.')[1]).length
-    msg.payload.voltage_current_angle_A = Math.trunc(msg.payload.voltage_current_angle_A * Math.pow(10, sf))
-    msg.payload.voltage_current_angle_A_sf = -1 * sf
-} 
+    if (!Number.isInteger(msg.payload.voltage_current_angle_A)) {
+        let sf = ("" + ("" + msg.payload.voltage_current_angle_A).split('.')[1]).length
+        msg.payload.voltage_current_angle_A = Math.trunc(msg.payload.voltage_current_angle_A * Math.pow(10, sf))
+        msg.payload.voltage_current_angle_A_sf = -1 * sf
+    } else
+        msg.payload.voltage_current_angle_A_sf = 0
+}
+
 /*B*/
 if (typeof msg.payload.voltage_current_angle_B != "undefined") {
     if (!Number.isInteger(msg.payload.voltage_current_angle_B)) {
@@ -823,10 +840,14 @@ if (typeof msg.payload.voltage_current_angle_B != "undefined") {
 } else if (typeof msg.payload.current_B != "undefined") {
     msg.payload.voltage_current_angle_B = ((Math.acos(msg.payload.power_factor_B) * 180) / Math.PI).toFixed(3)
 
-    let sf = ("" + ("" + msg.payload.voltage_current_angle_B).split('.')[1]).length
-    msg.payload.voltage_current_angle_B = Math.trunc(msg.payload.voltage_current_angle_B * Math.pow(10, sf))
-    msg.payload.voltage_current_angle_B_sf = -1 * sf
+    if (!Number.isInteger(msg.payload.voltage_current_angle_B)) {
+        let sf = ("" + ("" + msg.payload.voltage_current_angle_B).split('.')[1]).length
+        msg.payload.voltage_current_angle_B = Math.trunc(msg.payload.voltage_current_angle_B * Math.pow(10, sf))
+        msg.payload.voltage_current_angle_B_sf = -1 * sf
+    } else
+        msg.payload.voltage_current_angle_B_sf = 0
 } 
+
 /*C*/
 if (typeof msg.payload.voltage_current_angle_C != "undefined") {
     if (!Number.isInteger(msg.payload.voltage_current_angle_C)) {
@@ -838,9 +859,12 @@ if (typeof msg.payload.voltage_current_angle_C != "undefined") {
 } else if (typeof msg.payload.current_C != "undefined") {
     msg.payload.voltage_current_angle_C = ((Math.acos(msg.payload.power_factor_C) * 180) / Math.PI).toFixed(3)
 
-    let sf = ("" + ("" + msg.payload.voltage_current_angle_C).split('.')[1]).length
-    msg.payload.voltage_current_angle_C = Math.trunc(msg.payload.voltage_current_angle_C * Math.pow(10, sf))
-    msg.payload.voltage_current_angle_C_sf = -1 * sf
+    if (!Number.isInteger(msg.payload.voltage_current_angle_C)) {
+        let sf = ("" + ("" + msg.payload.voltage_current_angle_C).split('.')[1]).length
+        msg.payload.voltage_current_angle_C = Math.trunc(msg.payload.voltage_current_angle_C * Math.pow(10, sf))
+        msg.payload.voltage_current_angle_C_sf = -1 * sf
+    } else
+        msg.payload.voltage_current_angle_C_sf = 0
 } 
 
 /*active_power*/
@@ -855,7 +879,11 @@ if (typeof msg.payload.active_power_A != "undefined") {
 } else if (typeof msg.payload.current_A != "undefined"){
     msg.payload.active_power_A = msg.payload.current_A * msg.payload.voltage_A * Math.trunc(msg.payload.power_factor_A*100)
     msg.payload.active_power_A_sf = msg.payload.current_A_sf + msg.payload.voltage_A_sf - 2
+
+    if (msg.payload.active_power_A == 0)
+        msg.payload.active_power_A_sf = 0
 }
+
 /*B*/
 if (typeof msg.payload.active_power_B != "undefined") {
     if (!Number.isInteger(msg.payload.active_power_B)) {
@@ -867,7 +895,11 @@ if (typeof msg.payload.active_power_B != "undefined") {
 } else if (typeof msg.payload.current_B != "undefined") {
     msg.payload.active_power_B = msg.payload.current_B * msg.payload.voltage_B * Math.trunc(msg.payload.power_factor_B * 100)
     msg.payload.active_power_B_sf = msg.payload.current_B_sf + msg.payload.voltage_B_sf - 2
+
+    if (msg.payload.active_power_B == 0)
+        msg.payload.active_power_B_sf = 0
 }
+
 /*C*/
 if (typeof msg.payload.active_power_C != "undefined") {
     if (!Number.isInteger(msg.payload.active_power_C)) {
@@ -879,6 +911,9 @@ if (typeof msg.payload.active_power_C != "undefined") {
 } else if (typeof msg.payload.current_C != "undefined") {
     msg.payload.active_power_C = msg.payload.current_C * msg.payload.voltage_C * Math.trunc(msg.payload.power_factor_C * 100)
     msg.payload.active_power_C_sf = msg.payload.current_C_sf + msg.payload.voltage_C_sf - 2
+
+    if (msg.payload.active_power_C == 0)
+        msg.payload.active_power_C_sf = 0
 }
 
 /*apparent_power*/
@@ -892,11 +927,15 @@ if (typeof msg.payload.apparent_power_A != "undefined") {
         msg.payload.apparent_power_A_sf = 0
 }else if (typeof msg.payload.current_A != "undefined") {
     msg.payload.apparent_power_A = ((msg.payload.active_power_A * Math.pow(10, msg.payload.active_power_A_sf)) / msg.payload.power_factor_A).toFixed(5)
-    
-    let sf = ("" + ("" + msg.payload.apparent_power_A).split('.')[1]).length
-    msg.payload.apparent_power_A = Math.trunc(msg.payload.apparent_power_A * Math.pow(10, sf))
-    msg.payload.apparent_power_A_sf = -1 * sf
+
+    if (!Number.isInteger(msg.payload.apparent_power_A)) {
+        let sf = ("" + ("" + msg.payload.apparent_power_A).split('.')[1]).length
+        msg.payload.apparent_power_A = Math.trunc(msg.payload.apparent_power_A * Math.pow(10, sf))
+        msg.payload.apparent_power_A_sf = -1 * sf
+    } else
+        msg.payload.apparent_power_A_sf = 0
 }
+
 /*B*/
 if (typeof msg.payload.apparent_power_B != "undefined") {
     if (!Number.isInteger(msg.payload.apparent_power_B)) {
@@ -908,9 +947,12 @@ if (typeof msg.payload.apparent_power_B != "undefined") {
 } else if (typeof msg.payload.current_B != "undefined") {
     msg.payload.apparent_power_B = ((msg.payload.active_power_B * Math.pow(10, msg.payload.active_power_B_sf)) / msg.payload.power_factor_B).toFixed(5)
 
-    let sf = ("" + ("" + msg.payload.apparent_power_B).split('.')[1]).length
-    msg.payload.apparent_power_B = Math.trunc(msg.payload.apparent_power_B * Math.pow(10, sf))
-    msg.payload.apparent_power_B_sf = -1 * sf
+    if (!Number.isInteger(msg.payload.apparent_power_B)) {
+        let sf = ("" + ("" + msg.payload.apparent_power_B).split('.')[1]).length
+        msg.payload.apparent_power_B = Math.trunc(msg.payload.apparent_power_B * Math.pow(10, sf))
+        msg.payload.apparent_power_B_sf = -1 * sf
+    } else
+        msg.payload.apparent_power_B_sf = 0
 }
 /*C*/
 if (typeof msg.payload.apparent_power_C != "undefined") {
@@ -923,9 +965,12 @@ if (typeof msg.payload.apparent_power_C != "undefined") {
 } else if (typeof msg.payload.current_C != "undefined") {
     msg.payload.apparent_power_C = ((msg.payload.active_power_C * Math.pow(10, msg.payload.active_power_C_sf)) / msg.payload.power_factor_C).toFixed(5)
 
-    let sf = ("" + ("" + msg.payload.apparent_power_C).split('.')[1]).length
-    msg.payload.apparent_power_C = Math.trunc(msg.payload.apparent_power_C * Math.pow(10, sf))
-    msg.payload.apparent_power_C_sf = -1 * sf
+    if (!Number.isInteger(msg.payload.apparent_power_C)) {
+        let sf = ("" + ("" + msg.payload.apparent_power_C).split('.')[1]).length
+        msg.payload.apparent_power_C = Math.trunc(msg.payload.apparent_power_C * Math.pow(10, sf))
+        msg.payload.apparent_power_C_sf = -1 * sf
+    } else
+        msg.payload.apparent_power_C_sf = 0
 }
 
 /*reactive_power*/
@@ -940,10 +985,19 @@ if (typeof msg.payload.reactive_power_A != "undefined") {
 } else if (typeof msg.payload.current_A != "undefined") {
     msg.payload.reactive_power_A = (Math.sqrt(Math.pow((msg.payload.apparent_power_A * Math.pow(10, msg.payload.apparent_power_A_sf)), 2) - Math.pow((msg.payload.active_power_A * Math.pow(10, msg.payload.active_power_A_sf)), 2))).toFixed(5)
     
-    let sf = ("" + ("" + msg.payload.reactive_power_A).split('.')[1]).length
-    msg.payload.reactive_power_A = Math.trunc(msg.payload.reactive_power_A * Math.pow(10, sf))
-    msg.payload.reactive_power_A_sf = -1 * sf
-}
+    if (!Number.isInteger(msg.payload.reactive_power_A)) {
+        let sf = ("" + ("" + msg.payload.reactive_power_A).split('.')[1]).length
+        msg.payload.reactive_power_A = Math.trunc(msg.payload.reactive_power_A * Math.pow(10, sf))
+        msg.payload.reactive_power_A_sf = -1 * sf
+    } else
+        msg.payload.reactive_power_A_sf = 0
+        
+    if (msg.payload.reactive_power_A == null || Number.isNaN(msg.payload.reactive_power_A)) {
+        msg.payload.reactive_power_A = 0
+        msg.payload.reactive_power_A_sf = 0
+    }
+} 
+
 /*B*/
 if (typeof msg.payload.reactive_power_B != "undefined") {
     if (!Number.isInteger(msg.payload.reactive_power_B)) {
@@ -955,10 +1009,19 @@ if (typeof msg.payload.reactive_power_B != "undefined") {
 } else if (typeof msg.payload.current_B != "undefined") {
     msg.payload.reactive_power_B = (Math.sqrt(Math.pow((msg.payload.apparent_power_B * Math.pow(10, msg.payload.apparent_power_B_sf)), 2) - Math.pow((msg.payload.active_power_B * Math.pow(10, msg.payload.active_power_B_sf)), 2))).toFixed(5)
 
-    let sf = ("" + ("" + msg.payload.reactive_power_B).split('.')[1]).length
-    msg.payload.reactive_power_B = Math.trunc(msg.payload.reactive_power_B * Math.pow(10, sf))
-    msg.payload.reactive_power_B_sf = -1 * sf
+    if (!Number.isInteger(msg.payload.reactive_power_B)) {
+        let sf = ("" + ("" + msg.payload.reactive_power_B).split('.')[1]).length
+        msg.payload.reactive_power_B = Math.trunc(msg.payload.reactive_power_B * Math.pow(10, sf))
+        msg.payload.reactive_power_B_sf = -1 * sf
+    } else
+        msg.payload.reactive_power_B_sf = 0
+
+    if (msg.payload.reactive_power_B == null || Number.isNaN(msg.payload.reactive_power_B)) {
+        msg.payload.reactive_power_B = 0
+        msg.payload.reactive_power_B_sf = 0
+    }
 }
+
 /*C*/
 if (typeof msg.payload.reactive_power_C != "undefined") {
     if (!Number.isInteger(msg.payload.reactive_power_C)) {
@@ -969,10 +1032,17 @@ if (typeof msg.payload.reactive_power_C != "undefined") {
         msg.payload.reactive_power_C_sf = 0
 } else if (typeof msg.payload.current_C != "undefined") {
     msg.payload.reactive_power_C = (Math.sqrt(Math.pow((msg.payload.apparent_power_C * Math.pow(10, msg.payload.apparent_power_C_sf)), 2) - Math.pow((msg.payload.active_power_C * Math.pow(10, msg.payload.active_power_C_sf)), 2))).toFixed(5)
+    if (!Number.isInteger(msg.payload.reactive_power_C)) {
+        let sf = ("" + ("" + msg.payload.reactive_power_C).split('.')[1]).length
+        msg.payload.reactive_power_C = Math.trunc(msg.payload.reactive_power_C * Math.pow(10, sf))
+        msg.payload.reactive_power_C_sf = -1 * sf
+    } else
+        msg.payload.reactive_power_C_sf = 0
 
-    let sf = ("" + ("" + msg.payload.reactive_power_C).split('.')[1]).length
-    msg.payload.reactive_power_C = Math.trunc(msg.payload.reactive_power_C * Math.pow(10, sf))
-    msg.payload.reactive_power_C_sf = -1 * sf
+    if (msg.payload.reactive_power_C == null || Number.isNaN(msg.payload.reactive_power_C)) {
+        msg.payload.reactive_power_C = 0
+        msg.payload.reactive_power_C_sf = 0
+    }
 }
 
 /*voltage_lag*/
@@ -982,27 +1052,46 @@ if (typeof msg.payload.angle_voltage_A_B != "undefined") {
         let sf = ("" + ("" + msg.payload.angle_voltage_A_B).split('.')[1]).length
         msg.payload.angle_voltage_A_B = Math.trunc(msg.payload.angle_voltage_A_B * Math.pow(10, sf))
         msg.payload.angle_voltage_A_B_sf = -1 * sf
-    }
-    else
+
+        if (msg.payload.angle_voltage_A_B == 0)
+            msg.payload.angle_voltage_A_B_sf = 0
+    }else
         msg.payload.angle_voltage_A_B_sf = 0
+} else{
+    msg.payload.angle_voltage_A_B = 0   
+    msg.payload.angle_voltage_A_B_sf = 0
 }
+
 /*AC*/
 if (typeof msg.payload.angle_voltage_A_C != "undefined") {
     if (!Number.isInteger(msg.payload.angle_voltage_A_C)) {
         let sf = ("" + ("" + msg.payload.angle_voltage_A_C).split('.')[1]).length
         msg.payload.angle_voltage_A_C = Math.trunc(msg.payload.angle_voltage_A_C * Math.pow(10, sf))
         msg.payload.angle_voltage_A_C_sf = -1 * sf
+
+        if (msg.payload.angle_voltage_A_C == 0)
+            msg.payload.angle_voltage_A_C_sf = 0
     } else
         msg.payload.angle_voltage_A_C_sf = 0
+} else {
+    msg.payload.angle_voltage_A_C = 0
+    msg.payload.angle_voltage_A_C_sf = 0
 }
+
 /*BC*/
 if (typeof msg.payload.angle_voltage_B_C != "undefined") {
     if (!Number.isInteger(msg.payload.angle_voltage_B_C)) {
         let sf = ("" + ("" + msg.payload.angle_voltage_B_C).split('.')[1]).length
         msg.payload.angle_voltage_B_C = Math.trunc(msg.payload.angle_voltage_B_C * Math.pow(10, sf))
         msg.payload.angle_voltage_B_C_sf = -1 * sf
+
+        if (msg.payload.angle_voltage_B_C == 0)
+            msg.payload.angle_voltage_B_C_sf = 0
     } else
         msg.payload.angle_voltage_B_C_sf = 0
+} else {
+    msg.payload.angle_voltage_B_C = 0
+    msg.payload.angle_voltage_B_C_sf = 0
 }
 
 /*temperature*/
@@ -1011,8 +1100,14 @@ if (typeof msg.payload.temperature != "undefined") {
         let sf = ("" + ("" + msg.payload.temperature).split('.')[1]).length
         msg.payload.temperature = Math.trunc(msg.payload.temperature * Math.pow(10, sf))
         msg.payload.temperature_sf = -1 * sf
+
+        if (msg.payload.temperature == 0)
+            msg.payload.temperature_sf = 0
     } else
         msg.payload.temperature_sf = 0
+} else {
+    msg.payload.temperature = 0
+    msg.payload.temperature_sf = 0
 }
 
 /*frequency*/
@@ -1021,6 +1116,9 @@ if (typeof msg.payload.frequency != "undefined") {
         let sf = ("" + ("" + msg.payload.frequency).split('.')[1]).length
         msg.payload.frequency = Math.trunc(msg.payload.frequency * Math.pow(10, sf))
         msg.payload.frequency_sf = -1 * sf
+
+        if (msg.payload.frequency == 0)
+            msg.payload.frequency_sf = 0
     } else
         msg.payload.frequency_sf = 0
 } else{
@@ -1028,6 +1126,12 @@ if (typeof msg.payload.frequency != "undefined") {
     msg.payload.frequency_sf = 0
 }
 
+/*Verifica Geração*/
+msg.payload.generation = false;
+if (typeof msg.payload.EPT_G != "undefined")
+    if (msg.payload.EPT_G > 0)
+        msg.payload.generation = true;
+        
 /*date_time_stamp*/
 msg.payload.date_time_stamp = new Date()
 msg.payload = JSON.parse(JSON.stringify(msg.payload));
@@ -1039,19 +1143,21 @@ flow.set("count", count)
 
 msg.payload.message_counter     = count
 
+
+
 return msg;
 ```
 ---
 ### <a name="anexo-13"><a/><div align="center"> Anexo XIII - Contador de mensagens</div>
 	
-|<img src="https://user-images.githubusercontent.com/56831082/225415813-955765d0-9607-411c-835a-959d5c736322.png"><br><sub>Verifica</sub>|<img src="https://user-images.githubusercontent.com/56831082/225415841-1f6f79ff-6c02-4082-939f-142eadfd89de.png"><br><sub>Zara contador</sub>|
+|<img src="Imagens/Anexo/Anexo XIII-1.png"><br><sub>Verifica</sub>|<img src="Imagens/Anexo/Anexo XIII-2.png"><br><sub>Zara contador</sub>|
 | :---: | :---: |
 
 ---
 ### <a name="anexo-14"><a/><div align="center"> Anexo XIV -Duplica</div>
 	
 <div align="center"> 
-	<img src="https://user-images.githubusercontent.com/56831082/225429013-b1c3c64a-56e2-4551-8ef7-3443d3cc5bbd.png"><br>
+	<img src="Imagens/Anexo/Anexo XIV.png"><br>
 </div>
 
 ---
@@ -1067,7 +1173,7 @@ return msg;
 ### <a name="anexo-16"><a/><div align="center"> Anexo XVI - Verifica Cadastro no banco</div>
 	
 <div align="center"> 
-	<img src="https://user-images.githubusercontent.com/56831082/225429027-ecfd82dd-b59c-43c5-ac7e-0ad7f93c418a.png"><br>
+	<img src="Imagens/Anexo/Anexo XVI.png"><br>
 </div>
 
 ---
@@ -1099,7 +1205,7 @@ if (typeof msg.payload[0].phase != "undefined"){
 ### <a name="anexo-19"><a/><div align="center"> Anexo XIX - Identificação instalação</div>
 	
 <div align="center">
-	<img src="https://user-images.githubusercontent.com/56831082/225612131-ab817d37-0f29-4c0f-8883-da8a06071543.png"><br>	
+	<img src="Imagens/Anexo/Anexo XIX.png"><br>	
 </div>
 
 ---
@@ -1275,168 +1381,302 @@ try{
 ```
 
 ---
-### <a name="anexo-28"><a/><div align="center"> Anexo XXVIII - pega ID da ultima medição no banco local</div>
+### <a name="anexo-28"><a/><div align="center"> Anexo XXVIII - Pega medição</div>
 
 **Query**
 ```SQL
-SELECT id FROM public.organic_nodes_control_measurement WHERE date_time_stamp = '{{{msg.last_update.date_time_stamp}}}';
+SELECT *
+FROM public.organic_nodes_control_measurement
+WHERE setup_id 
+IN (
+    Select id 
+    from public.organic_nodes_control_setup 
+    where central_id = '{{msg.central_id}}'
+    ) 
+AND date_time_stamp > '{{msg.last_remoto.date_time_stamp}}'
+ORDER BY id 
+ASC LIMIT 10;
 ```
 
 ---
-### <a name="anexo-29"><a/><div align="center"> Anexo XXIX - cria msg.last_update_id</div>
+### <a name="anexo-29"><a/><div align="center"> Anexo XXIX - cria msg.measurement</div>
 <div align=center>
-	<img src="https://user-images.githubusercontent.com/56831082/226146972-661e7735-3934-438e-9c33-d4e2eb27bb9e.jpg">
+	<img src="Imagens/Anexo/Anexo-XXIX.png">
 </div>
 
 ---
-### <a name="anexo-30"><a/><div align="center"> Anexo XXX - incrementa</div>
+### <a name="anexo-30"><a/><div align="center"> Anexo XXX - instancia medição</div>
 
 ```javascript
-msg.last_update_id.id = msg.last_update_id.id + 1
-return msg;
+msg.payload = ""
+
+// Measurement
+for (let measurement of JSON.parse(JSON.stringify(msg.measurement)))
+    msg.payload = msg.payload + "INSERT INTO public.organic_nodes_control_measurement (date_time_stamp, message_counter, setup_id, source, generation) VALUES('" + 
+    measurement.date_time_stamp + "', " + measurement.message_counter + ", " + measurement.setup_id + ", " + measurement.source + ", " + measurement.generation + ");"
+    
+msg.queryParameters = msg.payload
+
+return msg
 ```
 
 ---
-### <a name="anexo-31"><a/><div align="center"> Anexo XXXI - Pega medição</div>
+### <a name="anexo-31"><a/><div align="center"> Anexo XXXI - Pega temperature</div>
 
 **Query**
 ```SQL
-SELECT * FROM public.organic_nodes_control_measurement WHERE id = {{{msg.last_update_id.id}}}	
+with t as (
+	SELECT *
+	FROM public.organic_nodes_control_measurement
+	WHERE setup_id 
+	IN (
+		Select id 
+		from public.organic_nodes_control_setup 
+		where central_id = 1
+		) 
+	AND date_time_stamp > '{{msg.last_remoto.date_time_stamp}}'
+	ORDER BY id 
+	ASC LIMIT 10
+)
+
+SELECT temp.*, t.date_time_stamp
+FROM public.organic_nodes_control_temperaturemeasurement AS temp
+JOIN t ON temp.measurement_id = t.id;	
 ```
 
 ---
-### <a name="anexo-32"><a/><div align="center"> Anexo XXXII - cria msg.measurement</div>
+### <a name="anexo-32"><a/><div align="center"> Anexo XXXII - cria msg.temperatura</div>
+
+<div align=center>
+	<img src="Imagens/Anexo/Anexo XXXII.png">
+</div>
+
+---
+### <a name="anexo-33"><a/><div align="center"> Anexo XXXIII - instancia Temperature</div>
 
 ```javascript
-if (msg.payload.length){
-    msg.measurement = JSON.parse(JSON.stringify(msg.payload[0]))
-    return msg;
-}else{
-    global.set("sincronizando_remoto", false);
-}	
+msg.payload = ""
+
+// Temperature
+if (typeof msg.temperatura != "undefined")
+    for (let temperatura of JSON.parse(JSON.stringify(msg.temperatura)))
+        msg.payload = msg.payload + "INSERT INTO public.organic_nodes_control_temperaturemeasurement(temperature, temperature_sf, measurement_id) VALUES(" +
+            temperatura.temperature + ", " + temperatura.temperature_sf + 
+            ", (SELECT id FROM public.organic_nodes_control_measurement WHERE(date_time_stamp = '" + temperatura.date_time_stamp + "') LIMIT 1));"
+
+msg.queryParameters = msg.payload
+
+return msg
 ```
 
 ---
-### <a name="anexo-33"><a/><div align="center"> Anexo XXXIII - Verifica se já existe</div>
+### <a name="anexo-34"><a/><div align="center"> Anexo XXXIV - Pega power</div>
 
 **Query**
 ```SQL
-SELECT * FROM public.organic_nodes_control_measurement WHERE(message_counter = {{{msg.measurement.message_counter}}} AND date_time_stamp = '{{{msg.measurement.date_time_stamp}}}')
+msg.payload = ""
+
+// Temperature
+with t as (
+	SELECT *
+	FROM public.organic_nodes_control_measurement
+	WHERE setup_id 
+	IN (
+		Select id 
+		from public.organic_nodes_control_setup 
+		where central_id = 1
+		) 
+	AND date_time_stamp > '{{msg.last_remoto.date_time_stamp}}'
+	ORDER BY id 
+	ASC LIMIT 10
+)
+
+SELECT p.*, t.date_time_stamp
+FROM public.organic_nodes_control_powermeasure AS p
+JOIN t ON p.measurement_id = t.id;
 ```
 
 ---
-### <a name="anexo-34"><a/><div align="center"> Anexo XXXIV - switch</div>
+### <a name="anexo-35"><a/><div align="center"> Anexo XXXV - cria msg.power (ABC)</div>
 
 <div align=center>
-	<img src="https://user-images.githubusercontent.com/56831082/226147140-4f1c145f-16db-4a77-ac56-dd158bc66591.jpg">
+	<img src="Imagens/Anexo/Anexo XXXV.png">
 </div>
 
 ---
-### <a name="anexo-35"><a/><div align="center"> Anexo XXXV - Pega frequency</div>
+### <a name="anexo-36"><a/><div align="center"> Anexo XXXVI - instancia Power</div>
 
-**Query**
-```SQL
-SELECT * FROM public.organic_nodes_control_frequencymeasure WHERE measurement_id = {{{msg.last_update_id.id}}}
+```javascript
+msg.payload = ""
+
+// Power
+if (typeof msg.power != "undefined") 
+    for (let power of JSON.parse(JSON.stringify(msg.power)))
+        msg.payload = msg.payload + "INSERT INTO public.organic_nodes_control_powermeasure(phase, voltage_current_angle, voltage_current_angle_sf, power_factor, active_power, active_power_sf, reactive_power, reactive_power_sf, apparent_power, apparent_power_sf, measurement_id)VALUES('" 
+            + power.phase + "', " + power.voltage_current_angle + ", " + power.voltage_current_angle_sf + ", " + power.power_factor + ", " + power.active_power + ", " + power.active_power_sf + ", " + power.reactive_power + ", " + power.reactive_power_sf + ", " + power.apparent_power + ", " + power.apparent_power_sf + 
+            ", (SELECT id FROM public.organic_nodes_control_measurement WHERE(date_time_stamp = '" + power.date_time_stamp + "') LIMIT 1));"
+
+msg.queryParameters = msg.payload
+
+return msg
 ```
 
 ---
-### <a name="anexo-36"><a/><div align="center"> Anexo XXXVI - cria msg.frequency</div>
-
-<div align=center>
-	<img src="https://user-images.githubusercontent.com/56831082/226147113-c9b1722a-8400-480a-8686-0e05ed0d947f.jpg">
-</div>
-
----
-### <a name="anexo-37"><a/><div align="center"> Anexo XXXVII - Pega power</div>
+### <a name="anexo-37"><a/><div align="center"> Anexo XXXVII - Pega frequency</div>
 
 **Query**
 ```SQL
-SELECT * FROM public.organic_nodes_control_powermeasure WHERE measurement_id = {{{msg.last_update_id.id}}}
+with t as (
+	SELECT *
+	FROM public.organic_nodes_control_measurement
+	WHERE setup_id 
+	IN (
+		Select id 
+		from public.organic_nodes_control_setup 
+		where central_id = 1
+		) 
+	AND date_time_stamp > '{{msg.last_remoto.date_time_stamp}}'
+	ORDER BY id 
+	ASC LIMIT 10
+)
+
+SELECT f.*, t.date_time_stamp
+FROM public.organic_nodes_control_frequencymeasure AS f
+JOIN t ON f.measurement_id = t.id;
 ```
 
 ---
-### <a name="anexo-38"><a/><div align="center"> Anexo XXXVII - cria msg.power (ABC)</div>
+### <a name="anexo-38"><a/><div align="center"> Anexo XXXVII - cria msg.frequency</div>
 
 <div align=center>
-	<img src="https://user-images.githubusercontent.com/56831082/226147127-6866d9a2-a82d-48c0-960f-f2dd1ede9ad2.jpg">
+	<img src="Imagens/Anexo/Anexo XXXVII.png">
 </div>
 
 ---
 ### <a name="anexo-39"><a/><div align="center"> Anexo XXXIX - Pega sensor</div>
 
-**Query**
-```SQL
-SELECT * FROM public.organic_nodes_control_sensormeasure WHERE measurement_id = {{{msg.last_update_id.id}}}
+```javascript
+msg.payload = ""
+
+// Frequency
+if (typeof msg.frequency != "undefined")
+    for (let frequency of JSON.parse(JSON.stringify(msg.frequency)))
+        msg.payload = msg.payload + "INSERT INTO public.organic_nodes_control_frequencymeasure(frequency, frequency_sf, measurement_id) VALUES(" + 
+            frequency.frequency + ", " + frequency.frequency_sf + 
+            ", (SELECT id FROM public.organic_nodes_control_measurement WHERE(date_time_stamp = '" + frequency.date_time_stamp + "') LIMIT 1));"
+            
+msg.queryParameters = msg.payload
+
+return msg
 ```
 
 ---
-### <a name="anexo-40"><a/><div align="center"> Anexo XL - cria msg.sensor</div>
-
-<div align=center>
-	<img src="https://user-images.githubusercontent.com/56831082/226147156-31108d61-c464-4485-b3cd-58ea23422f3c.png">
-</div>
-
----
-### <a name="anexo-41"><a/><div align="center"> Anexo XLI - Pega voltagelag</div>
+### <a name="anexo-40"><a/><div align="center"> Anexo XL - Pega voltagelag</div>
 
 **Query**
 ```SQL
-SELECT * FROM public.organic_nodes_control_voltagelagmeasure WHERE measurement_id = {{{msg.last_update_id.id}}}
+with t as (
+	SELECT *
+	FROM public.organic_nodes_control_measurement
+	WHERE setup_id 
+	IN (
+		Select id 
+		from public.organic_nodes_control_setup 
+		where central_id = 1
+		) 
+	AND date_time_stamp > '{{msg.last_remoto.date_time_stamp}}'
+	ORDER BY id 
+	ASC LIMIT 10
+)
+
+SELECT v.*, t.date_time_stamp
+FROM public.organic_nodes_control_voltagelagmeasure AS v
+JOIN t ON v.measurement_id = t.id;
 ```
 
 ---
-### <a name="anexo-42"><a/><div align="center"> Anexo XLII - cria msg.voltagelag (ABC)</div>
+### <a name="anexo-41"><a/><div align="center"> Anexo XLI - cria msg.voltagelag (ABC)</div>
 
 <div align=center>
-	<img src="https://user-images.githubusercontent.com/56831082/226147167-dd915a6b-09de-47ce-b733-a1ab57d7e83f.png">
+	<img src="Imagens/Anexo/Anexo XLI.png">
 </div>
+
+---
+### <a name="anexo-42"><a/><div align="center"> Anexo XLII - instancia Voltage lag</div>
+
+```javascript
+msg.payload = ""
+
+// Voltage lag
+if (typeof msg.voltagelag != "undefined") 
+    for (let voltagelag of JSON.parse(JSON.stringify(msg.voltagelag)))
+        msg.payload = msg.payload + "INSERT INTO public.organic_nodes_control_voltagelagmeasure(angle, angle_sf, phase_combination, measurement_id)VALUES(" +
+            voltagelag.angle + ", " + voltagelag.angle_sf + ", '" + voltagelag.phase_combination + 
+            "', (SELECT id FROM public.organic_nodes_control_measurement WHERE(date_time_stamp = '" + voltagelag.date_time_stamp + "') LIMIT 1));"
+
+msg.queryParameters = msg.payload
+
+return msg
+```
 
 ---
 ### <a name="anexo-43"><a/><div align="center"> Anexo XLIII - Pega energy</div>
 
 **Query**
 ```SQL
-SELECT * FROM public.organic_nodes_control_energymeasure WHERE measurement_id = {{{msg.last_update_id.id}}}
+with t as (
+	SELECT *
+	FROM public.organic_nodes_control_measurement
+	WHERE setup_id 
+	IN (
+		Select id 
+		from public.organic_nodes_control_setup 
+		where central_id = 1
+		) 
+	AND date_time_stamp > '{{msg.last_remoto.date_time_stamp}}'
+	ORDER BY id 
+	ASC LIMIT 10
+)
+
+SELECT e.*, t.date_time_stamp
+FROM public.organic_nodes_control_energymeasure AS e
+JOIN t ON e.measurement_id = t.id;
 ```
 
 ---
 ### <a name="anexo-44"><a/><div align="center"> Anexo XLIV - cria msg.energy (ABC)</div>
 
 <div align=center>
-	<img src="https://user-images.githubusercontent.com/56831082/226147176-b88f2fc2-558b-40c9-9048-cd281a648fbc.png">
+	<img src="Imagens/Anexo/Anexo XLIV.png">
 </div>
 
 ---
-### <a name="anexo-45"><a/><div align="center"> Anexo XLV - instancia</div>
+### <a name="anexo-45"><a/><div align="center"> Anexo XLV - instancia Energy</div>
 
 ```javascript
-msg.last_update_id.id = msg.last_update_id.id + 1
 msg.payload = ""
 
-msg.payload = msg.payload + "INSERT INTO public.organic_nodes_control_measurement (date_time_stamp, message_counter, setup_id, source) VALUES('" + msg.measurement.date_time_stamp + "', " + msg.measurement.message_counter + ", " + msg.measurement.setup_id + ", " + msg.measurement.source + ");"
-msg.payload = msg.payload + "INSERT INTO public.organic_nodes_control_frequencymeasure(frequency, frequency_sf, measurement_id) VALUES(" + msg.frequency.frequency + ", " + msg.frequency.frequency_sf + ", (SELECT id FROM public.organic_nodes_control_measurement WHERE(message_counter = " + msg.measurement.message_counter + " AND date_time_stamp = '" + msg.measurement.date_time_stamp +"') LIMIT 1));"
-msg.payload = msg.payload + "INSERT INTO public.organic_nodes_control_sensormeasure(temperature, temperature_sf, measurement_id) VALUES(" + msg.sensor.temperature + ", " + msg.sensor.temperature_sf + ", (SELECT id FROM public.organic_nodes_control_measurement WHERE(message_counter = " + msg.measurement.message_counter + " AND date_time_stamp = '" + msg.measurement.date_time_stamp +"') LIMIT 1));"
-for (let energy of msg.energy)
-    msg.payload = msg.payload + "INSERT INTO public.organic_nodes_control_energymeasure(phase, current, current_sf, voltage, voltage_sf, measurement_id)VALUES('" + energy.phase + "', " + energy.current + ", " + energy.current_sf + ", " + energy.voltage + ", " + energy.voltage_sf + ", (SELECT id FROM public.organic_nodes_control_measurement WHERE(message_counter = " + msg.measurement.message_counter + " AND date_time_stamp = '" + msg.measurement.date_time_stamp +"') LIMIT 1));"
-for (let power of msg.power)
-    msg.payload = msg.payload + "INSERT INTO public.organic_nodes_control_powermeasure(phase, voltage_current_angle, voltage_current_angle_sf, power_factor, active_power, active_power_sf, reactive_power, reactive_power_sf, apparent_power, apparent_power_sf, measurement_id)VALUES('" + power.phase + "', " + power.voltage_current_angle + ", " + power.voltage_current_angle_sf + ", " + power.power_factor + ", " + power.active_power + ", " + power.active_power_sf + ", " + power.reactive_power + ", " + power.reactive_power_sf + ", " + power.apparent_power + ", " + power.apparent_power_sf + ", (SELECT id FROM public.organic_nodes_control_measurement WHERE(message_counter = " + msg.measurement.message_counter + " AND date_time_stamp = '" + msg.measurement.date_time_stamp +"') LIMIT 1));"
-if (typeof msg.voltagelag != "undefined")
-    for (let voltagelag of msg.voltagelag)
-        msg.payload = msg.payload + "INSERT INTO public.organic_nodes_control_voltagelagmeasure(angle, angle_sf, phase_combination, measurement_id)VALUES(" + voltagelag.angle + ", " + voltagelag.angle_sf + ", '" + voltagelag.phase_combination + "', (SELECT id FROM public.organic_nodes_control_measurement WHERE(message_counter = " + msg.measurement.message_counter + " AND date_time_stamp = '" + msg.measurement.date_time_stamp +"') LIMIT 1));"
+// Energy
+if (typeof msg.energy != "undefined")
+    for (let energy of JSON.parse(JSON.stringify(msg.energy)))
+        msg.payload = msg.payload + "INSERT INTO public.organic_nodes_control_energymeasure(phase, current, current_sf, voltage, voltage_sf, measurement_id)VALUES('" + 
+            energy.phase + "', " + energy.current + ", " + energy.current_sf + ", " + energy.voltage + ", " + energy.voltage_sf + 
+            ", (SELECT id FROM public.organic_nodes_control_measurement WHERE(date_time_stamp = '" + energy.date_time_stamp + "') LIMIT 1));"
 
 msg.queryParameters = msg.payload
+
 return msg
 ```
 
 ---
-### <a name="anexo-46"><a/><div align="center"> Anexo XLVI - contador (access_user_local)</div>
+### <a name="anexo-46"><a/><div align="center"> Anexo XLVI - Start offset (access_user_local)</div>
 
 ```javascript
-msg.contador = global.get("access_user")
+msg.offset = global.get("access_user")
 
-if (typeof msg.contador == "undefined"){
-    global.set("access_user", 1)
-    msg.contador =1
+if (typeof msg.offset == "undefined"){
+    global.set("access_user", 0)
+    msg.offset = 0
 }
 return msg;
 ```
@@ -1446,14 +1686,14 @@ return msg;
 
 **Query**
 ```SQL
-SELECT * FROM public.core_access_user WHERE id = {{msg.contador}};
+SELECT * FROM public.core_access_user where id >= '{{msg.offset}}' order by id asc limit 100;
 ```
 
 ---
 ### <a name="anexo-48"><a/><div align="center"> Anexo XLVIII - cria msg.nocs</div>
 
 <div align="center">
-	<img src="https://user-images.githubusercontent.com/56831082/225919697-a4a13c66-6d4f-4191-a347-5709c1ed0bc7.png">
+	<img src="Imagens/Anexo/Anexo XLVIII.png">
 </div>
 	
 ---
@@ -1461,40 +1701,40 @@ SELECT * FROM public.core_access_user WHERE id = {{msg.contador}};
 
 **Query**
 ```SQL
-SELECT * FROM public.core_access_user WHERE id = {{msg.contador}};
+SELECT * FROM public.core_access_user where id >= '{{msg.offset}}' order by id asc limit 100;
 ```
 
 ---
 ### <a name="anexo-50"><a/><div align="center"> Anexo L - cria msg.local</div>
 
 <div align="center">
-	<img src="https://user-images.githubusercontent.com/56831082/225919964-fb652194-3db8-4e79-8f84-837b8fdcb39d.png">
+	<img src="Imagens/Anexo/Anexo L.png">
 </div>
 	
 ---
 ### <a name="anexo-51"><a/><div align="center"> Anexo LI - criação e atualizção (access_user_local)</div>
 
 ```javascript
-let count = global.get("access_user") | 0
-count = count + 1;
-global.set("access_user", count)
+let offset = global.get("access_user") | 0
+offset = offset + 100;
+global.set("access_user", offset)
 
 msg.payload = ""
 
-let access_user_nocs = JSON.parse(JSON.stringify(msg.nocs))[0]
-let access_user_local = JSON.parse(JSON.stringify(msg.local))[0]
-
-if (typeof access_user_local != "undefined"){
-    if (typeof access_user_nocs == "undefined") // Deleta dados no banco caso o não existam no remoto
-        msg.payload = msg.payload + "DELETE FROM public.core_access_user WHERE id = " + access_user_local.id +";"
-    else if (JSON.stringify(access_user_nocs) != JSON.stringify(access_user_local)) // Atualiza dados no banco local caso ele exista
-        msg.payload = msg.payload + "UPDATE public.core_access_user SET id = " + access_user_nocs.id + ", password = '-' , last_login = '2023-03-06 15:59:09.823184-03', is_superuser = " + access_user_nocs.is_superuser + ", username = '" + access_user_nocs.username + "', first_name = '" + access_user_nocs.first_name + "', last_name = '" + access_user_nocs.last_name + "', email = '" + access_user_nocs.email + "', is_staff = " + access_user_nocs.is_staff + ", is_active = " + access_user_nocs.is_active + ", date_joined = '" + access_user_nocs.date_joined + "', cpf = '" + access_user_nocs.cpf + "', telephone = '" + access_user_nocs.telephone + "' WHERE id = "+access_user_local.id+";"
-}
-else if (typeof access_user_nocs != "undefined") // Cria dados no banco caso eles não existão
-    msg.payload = msg.payload + "INSERT INTO public.core_access_user VALUES(" + access_user_nocs.id + ", '-' , '2023-03-06 15:59:09.823184-03', " + access_user_nocs.is_superuser + ", '" + access_user_nocs.username + "', '" + access_user_nocs.first_name + "', '" + access_user_nocs.last_name + "', '" + access_user_nocs.email + "', " + access_user_nocs.is_staff + ", " + access_user_nocs.is_active + ", '" + access_user_nocs.date_joined + "', '" + access_user_nocs.cpf + "', '" + access_user_nocs.telephone + "');"
-else
-    global.set("access_user", 1)
+for (let index = 0; index < 100; index++) {
+    const access_user_nocs = JSON.parse(JSON.stringify(msg.nocs))[index]
+    const access_user_local = JSON.parse(JSON.stringify(msg.local))[index]
     
+    if (typeof access_user_local != "undefined"){
+        if (typeof access_user_nocs == "undefined") // Deleta dados no banco caso o não existam no remoto
+            msg.payload = msg.payload + "DELETE FROM public.core_access_user WHERE id = " + access_user_local.id +";"
+        else if (JSON.stringify(access_user_nocs) != JSON.stringify(access_user_local)) // Atualiza dados no banco local caso ele exista
+            msg.payload = msg.payload + "UPDATE public.core_access_user SET id = " + access_user_nocs.id + ", password = '-' , last_login = '2023-03-06 15:59:09.823184-03', is_superuser = " + access_user_nocs.is_superuser + ", username = '" + access_user_nocs.username + "', first_name = '" + access_user_nocs.first_name + "', last_name = '" + access_user_nocs.last_name + "', email = '" + access_user_nocs.email + "', is_staff = " + access_user_nocs.is_staff + ", is_active = " + access_user_nocs.is_active + ", date_joined = '" + access_user_nocs.date_joined + "', cpf = '" + access_user_nocs.cpf + "', telephone = '" + access_user_nocs.telephone + "' WHERE id = "+access_user_local.id+";"
+    }
+    else if (typeof access_user_nocs != "undefined") // Cria dados no banco caso eles não existão
+        msg.payload = msg.payload + "INSERT INTO public.core_access_user VALUES(" + access_user_nocs.id + ", '-' , '2023-03-06 15:59:09.823184-03', " + access_user_nocs.is_superuser + ", '" + access_user_nocs.username + "', '" + access_user_nocs.first_name + "', '" + access_user_nocs.last_name + "', '" + access_user_nocs.email + "', " + access_user_nocs.is_staff + ", " + access_user_nocs.is_active + ", '" + access_user_nocs.date_joined + "', '" + access_user_nocs.cpf + "', '" + access_user_nocs.telephone + "');"
+}
+
 msg.queryParameters = msg.payload
 return msg;
 ```
@@ -1503,41 +1743,77 @@ return msg;
 ### <a name="anexo-52"><a/><div align="center"> Anexo LII - Switch (access_user_local)</div>
 
 <div align="center">
-	<img src="https://user-images.githubusercontent.com/56831082/225920466-32516b33-8dfe-4e30-80f3-13f04a82d0dd.png">
+	<img src="Imagens/Anexo/Anexo LII.png">
 </div>
 
 ---
-### <a name="anexo-53"><a/><div align="center"> Anexo LIII - Local - Data do primeiro dado</div>
+### <a name="anexo-53"><a/><div align="center"> Anexo LIII - Data Inicial</div>
 
 **Query**
 ```SQL
-SELECT date_time_stamp FROM public.organic_nodes_control_measurement ORDER BY id ASC LIMIT 1;
+SELECT * FROM public.organic_nodes_control_measurement order by date_time_stamp asc limit 1
 ```
 
 ---
-### <a name="anexo-54"><a/><div align="center"> Anexo LIV - Local - Data do ultimo dado</div>
+### <a name="anexo-54"><a/><div align="center"> Anexo LIV - Data final</div>
 	
 **Query**
 ```SQL
-SELECT date_time_stamp FROM public.organic_nodes_control_measurement ORDER BY id DESC LIMIT 1;
+SELECT * FROM public.organic_nodes_control_measurement order by date_time_stamp desc limit 1
 ```
 
 ---
-### <a name="anexo-55"><a/><div align="center"> Anexo LV - cria msg.date_inicial</div>
+---
+### <a name="anexo-55"><a/><div align="center"> Anexo LV - Permanencia</div>
+	
+**Query**
+```SQL
+SELECT * FROM public.organic_nodes_control_central where id = 1
+```
+
+---
+---
+### <a name="anexo-56"><a/><div align="center"> Anexo LVI -Memoria</div>
+	
+**Query**
+```SQL
+SELECT (100 - (memory_free * 100 / memory_total)) as memory_use FROM public.organic_nodes_control_memoryassessment 
+where central_id =1
+order by date_time_stamp desc limit 1
+```
+
+---
+### <a name="anexo-57"><a/><div align="center"> Anexo LVII - cria msg.date_inicial</div>
 
 <div align="center">
-	<img src="https://user-images.githubusercontent.com/56831082/225643844-29d192f3-a0cc-4bac-aed5-f2590f290c40.png"><br>
+	<img src="Imagens/cria msg.date_inicial.png"><br>
 </div>
 
 ---
-### <a name="anexo-56"><a/><div align="center"> Anexo LVI - cria msg.date_atual</div>
+### <a name="anexo-58"><a/><div align="center"> Anexo LVIII - cria msg.date_atual</div>
 
 <div align="center">
-	<img src="https://user-images.githubusercontent.com/56831082/225643865-1c453754-3f5e-47e6-9d85-50e5105c774f.png"><br>
+	<img src="Imagens/cria msg.date_atual.png"><br>
 </div>
 	
 ---
-### <a name="anexo-57"><a/><div align="center"> Anexo LVII - Verifica datas</div>
+### <a name="anexo-59"><a/><div align="center"> Anexo LXI - cria msg.permanence_date</div>
+
+<div align="center">
+	<img src="Imagens/cria permanence_date.png"><br>
+</div>
+	
+---
+---
+### <a name="anexo-60"><a/><div align="center"> Anexo LX - cria msg.memory_use</div>
+
+<div align="center">
+	<img src="Imagens/cria memory_use.png"><br>
+</div>
+	
+---
+
+### <a name="anexo-61"><a/><div align="center"> Anexo LXI - Verifica datas</div>
 	
 ```javascript
 var periodo = msg.date_atual.date_time_stamp - msg.date_inicial.date_time_stamp
@@ -1546,8 +1822,26 @@ var qtd_dias = ((periodo / 1000) / 3600) / 24
 msg.payload = ""
 var data  = JSON.parse(JSON.stringify(msg.date_inicial))
 
-if (qtd_dias > msg.permanence_date){
-    msg.payload = "DELETE FROM public.organic_nodes_control_measurement WHERE date_time_stamp = '" + data.date_time_stamp +"';"
+msg.qtd = data
+let sinc = global.get("sincronizando_remoto") || false
+
+if ((qtd_dias > msg.permanence_date || msg.memory_use > 85) && sinc == false){
+    msg.payload = "DELETE FROM public.organic_nodes_control_temperaturemeasurement " +
+    "WHERE measurement_id IN (SELECT id FROM "+"(SELECT id FROM public.organic_nodes_control_measurement WHERE date_time_stamp <= '" + data.date_time_stamp +"') t);" +
+    "DELETE FROM public.organic_nodes_control_energymeasure " +
+    "WHERE measurement_id IN (SELECT id FROM "+"(SELECT id FROM public.organic_nodes_control_measurement WHERE date_time_stamp <= '" + data.date_time_stamp +"') t);" +
+    "DELETE FROM public.organic_nodes_control_powermeasure " +
+    "WHERE measurement_id IN (SELECT id FROM "+"(SELECT id FROM public.organic_nodes_control_measurement WHERE date_time_stamp <= '" + data.date_time_stamp +"') t);" +
+    "DELETE FROM public.organic_nodes_control_voltagelagmeasure " +
+    "WHERE measurement_id IN (SELECT id FROM "+"(SELECT id FROM public.organic_nodes_control_measurement WHERE date_time_stamp <= '" + data.date_time_stamp +"') t);" +
+    "DELETE FROM public.organic_nodes_control_frequencymeasure " +
+    "WHERE measurement_id IN (SELECT id FROM "+"(SELECT id FROM public.organic_nodes_control_measurement WHERE date_time_stamp <= '" + data.date_time_stamp +"') t);" +
+    "DELETE FROM public.organic_nodes_control_measurement " +
+    "WHERE id IN (SELECT id FROM "+"(SELECT id FROM public.organic_nodes_control_measurement WHERE date_time_stamp <= '" + data.date_time_stamp +"') t);" +
+    
+    "DELETE FROM public.organic_nodes_control_cpuassessment WHERE date_time_stamp <= '" + data.date_time_stamp + "';" +
+    "DELETE FROM public.organic_nodes_control_memoryassessment WHERE date_time_stamp <= '" + data.date_time_stamp + "';" 
+    
     msg.queryParameters = msg.payload
     return msg;
 }
