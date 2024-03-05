@@ -1767,7 +1767,6 @@ SELECT * FROM public.organic_nodes_control_measurement order by date_time_stamp 
 ```
 
 ---
----
 ### <a name="anexo-55"><a/><div align="center"> Anexo LV - Permanencia</div>
 	
 **Query**
@@ -1775,7 +1774,6 @@ SELECT * FROM public.organic_nodes_control_measurement order by date_time_stamp 
 SELECT * FROM public.organic_nodes_control_central where id = 1
 ```
 
----
 ---
 ### <a name="anexo-56"><a/><div align="center"> Anexo LVI -Memoria</div>
 	
@@ -1806,8 +1804,7 @@ order by date_time_stamp desc limit 1
 <div align="center">
 	<img src="Imagens/cria permanence_date.png"><br>
 </div>
-	
----
+
 ---
 ### <a name="anexo-60"><a/><div align="center"> Anexo LX - cria msg.memory_use</div>
 
