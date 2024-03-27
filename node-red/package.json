@@ -1,0 +1,16 @@
+{
+    "name": "node-red-project",
+    "description": "A Node-RED Project",
+    "version": "0.0.1",
+    "private": true,
+    "scripts": {
+        "start": "node $NODE_OPTIONS node_modules/node-red/red.js $FLOWS"
+    },
+    "dependencies": {
+        "node-red-contrib-aedes": "~0.13.0",
+        "node-red-contrib-ovia-os": "~0.1.10",
+        "node-red-contrib-postgresql": "~0.14.0",
+        "node-red-contrib-stoptimer": "~0.0.7",
+        "node-red-dashboard": "~3.6.5"
+    }
+}
