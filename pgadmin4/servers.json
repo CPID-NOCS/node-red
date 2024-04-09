@@ -1,0 +1,25 @@
+{
+    "Servers": {
+      "1": {
+        "Name": "Local",
+        "Group": "Servers",
+        "Host": "${HOST_DB}",
+        "Port": ${PORT_DB},
+        "MaintenanceDB": "${NAME_DB}",
+        "Username": "${USER_DB}",
+        "PassFile": "/tmp/pgpass",
+        "SSLMode": "prefer"
+      },
+      "2": {
+        "Name": "Remoto",
+        "Group": "Servers",
+        "Host": "${HOST_RDB}",
+        "Port": ${PORT_RDB},
+        "MaintenanceDB": "${NAME_RDB}",
+        "Username": "${USER_RDB}",
+        "PassFile": "/tmp/pgpass",
+        "SSLMode": "prefer"
+      }
+    }
+  }
+  

@@ -1,0 +1,98 @@
+version: '3.7'
+
+services:
+  node-red:
+    container_name: node-red
+    build: 
+      context: ./node-red
+    restart: unless-stopped 
+    stdin_open: true
+    tty: true
+    ports: 
+      - ${PORT_NODE_RED}:1880
+      - ${PORT_MQTT}:1883
+    depends_on:
+      - postgres
+    env_file: .env
+    volumes:
+      - node-red:/data
+    networks:
+      - mynet
+  
+  postgres:
+    container_name: postgres
+    image: postgres:15.4-bullseye
+    restart: unless-stopped
+    env_file: .env
+    ports:
+      - ${PORT_DB}:5432
+    environment:
+      - POSTGRES_PASSWORD=${PASSWORD_DB}
+    volumes:
+      - ./postgres/init:/docker-entrypoint-initdb.d
+      - postgres:/var/lib/postgresql/data
+    networks:
+      - mynet
+
+  pgadmin4:
+    container_name: pgadmin4
+    build: 
+      context: ./pgadmin4
+    restart: unless-stopped
+    ports:
+      - ${PORT_PGADMIN}:80
+    user: 'root'
+    env_file: .env
+    environment:
+      # Usuario
+      PGADMIN_DEFAULT_EMAIL:                    ${EMAIL}
+      PGADMIN_DEFAULT_PASSWORD:                 ${PASSWORD}
+      # Configuração
+      PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED:  ${PASSWORD_REQUIRED}
+      PGADMIN_CONFIG_SERVER_MODE:               'False'
+    volumes:
+      - pgadmin4:/var/lib/pgadmin
+
+    entrypoint: >
+      /bin/sh -c '
+
+        envsubst < /tmp/pgpass > /tmp/pgpass.temp
+        envsubst < /pgadmin4/servers.json > /pgadmin4/servers.json.temp
+
+        cp /tmp/pgpass.temp /tmp/pgpass
+        cp /pgadmin4/servers.json.temp /pgadmin4/servers.json
+
+        rm /tmp/pgpass.temp
+        rm /pgadmin4/servers.json.temp
+
+        chmod 600 /tmp/pgpass
+
+        /entrypoint.sh
+      '
+    depends_on:
+      - postgres
+    networks:
+      - mynet
+
+  portainer:
+    container_name: portainer
+    image: portainer/portainer-ce:alpine
+    restart: always
+    env_file: .env
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer:/data portainer/
+    ports:
+      - ${PORT_PORTAINER}:9000
+    networks:
+      - mynet
+
+volumes:
+  postgres:
+  pgadmin4:
+  node-red:
+  portainer:
+
+networks:
+  mynet:
+    driver: bridge
